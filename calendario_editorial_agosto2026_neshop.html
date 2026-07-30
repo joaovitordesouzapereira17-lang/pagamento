@@ -41,57 +41,58 @@
   .dot{width:9px;height:9px;border-radius:3px;flex:none}
 
   .cal{max-width:1680px;margin:14px auto 0;padding:0 28px}
-  .dow{display:grid;grid-template-columns:180px repeat(5,1fr);gap:14px;margin-bottom:10px}
+  .dow{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:8px}
   .dow div{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--p700);padding:0 4px}
-  .week{display:grid;grid-template-columns:180px repeat(5,1fr);gap:14px;margin-bottom:14px}
+  .week{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:10px}
 
-  .wk-label{background:var(--p700);color:#fff;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
-  .wk-label .wn{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--p200)}
-  .wk-label .wt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;line-height:1.3}
-  .valor{align-self:flex-start;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,224,226,.18);border:1px solid rgba(191,224,226,.4);color:var(--p200);border-radius:999px;padding:4px 11px}
-  .wk-label .wd{font-size:13px;color:var(--p200);line-height:1.55;margin-top:auto}
-  .wk-label.close{background:var(--p900)}
-  .wk-label.zero{background:#3E5C50}
+  /* barra horizontal com o contexto da semana, acima da grade de dias */
+  .wk-bar{background:var(--p700);color:#fff;border-radius:12px;padding:12px 20px;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+  .wk-bar .wn{font-family:'Space Grotesk',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--p200);flex:none}
+  .wk-bar .wt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;line-height:1.25;flex:none}
+  .valor{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,224,226,.18);border:1px solid rgba(191,224,226,.4);color:var(--p200);border-radius:999px;padding:3px 10px;flex:none}
+  .wk-bar .wd{font-size:12.5px;color:var(--p200);line-height:1.5;flex:1 1 320px;min-width:200px}
+  .wk-bar.close{background:var(--p900)}
+  .wk-bar.zero{background:#3E5C50}
 
-  .day{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px}
+  .day{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:9px}
   .day.empty{background:transparent;border:1px dashed var(--line)}
   .dnum{display:flex;align-items:baseline;justify-content:space-between}
   .dnum b{font-family:'Space Grotesk',sans-serif;font-size:20px;color:var(--p900)}
   .dnum .tag{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8fa3a5}
 
-  .chip{border-left:3px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:9px 11px 10px;font-size:13.5px;line-height:1.4}
-  .chip .k{display:flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--p700)}
-  .chip .k .st{margin-left:auto;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.04em;border-radius:4px;padding:2px 6px;color:#fff}
+  /* card: título em destaque, metadados discretos, status em evidência */
+  .chip{border-left:3px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
+  .chip .k{display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#8fa3a5}
+  .chip .k .st{margin-left:auto;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:3px 9px;color:#fff;box-shadow:0 1px 2px rgba(6,38,43,.15)}
   .st.ok{background:var(--ok)} .st.edit{background:var(--edit)} .st.shoot{background:var(--shoot)}
-  .fu{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;border-radius:4px;padding:2px 6px;border:1px solid}
-  .fu.topo{color:#1C6E79;border-color:#9CCBD0;background:#EAF4F5}
-  .fu.meio{color:#0E4650;border-color:#7FA8AD;background:#E4EEEF}
-  .fu.fundo{color:#7A3B12;border-color:#D8A27E;background:#FAF0E8}
-  .fu.rel{color:#7A5C8A;border-color:#C9B3D6;background:#F5F1F8}
-  .chip .t{margin-top:3px;color:#22383b;font-weight:500}
-  .chip .n{color:#7b8a8c;font-weight:400;margin-right:2px}
+  .fu{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.03em;background:none;border:none;padding:0}
+  .fu.topo{color:#1C6E79}
+  .fu.meio{color:#0E4650}
+  .fu.fundo{color:#A34A2A}
+  .fu.rel{color:#8A6D9A}
+  .chip .t{margin-top:2px;color:var(--p900);font-weight:600;font-size:14px}
+  .chip .n{color:#9aa8aa;font-weight:400;margin-right:3px}
 
+  /* a identidade do formato agora é só a borda lateral + o ícone; o texto do rótulo fica neutro */
   .chip.carrossel{border-color:var(--p900);background:#EDF2F2}
-  .chip.carrossel .k{color:var(--p900)}
   .chip.estatico{border-color:#7FA8AD;background:#F4F8F8}
   .chip.yt{border-color:var(--yt);background:#FBF1EF}
-  .chip.yt .k{color:var(--yt)}
   .chip.li{border-color:var(--li);background:#EFF5FB}
-  .chip.li .k{color:var(--li)}
   .chip.blog{border-color:var(--blog);background:#F1F4F5}
-  .chip.blog .k{color:var(--blog)}
   .chip.data{border-color:var(--data);background:#F5F1F8}
-  .chip.data .k{color:var(--data)}
   .chip.aprova{border-color:var(--p200);background:#F7FBFB}
-  .chip.aprova .k{color:var(--p500)}
   .chip.exec{border-color:var(--casa);background:#FBF6EF}
-  .chip.exec .k{color:var(--casa)}
   .chip.diaria{border-color:var(--shoot);background:#FBF2ED}
-  .chip.diaria .k{color:var(--shoot)}
 
-  .sts{border-top:1px dashed var(--line);padding-top:9px;margin-top:2px}
-  .sts .sh{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8fa3a5;margin-bottom:5px}
-  .sts ol{list-style:none;display:flex;flex-direction:column;gap:5px}
+  /* stories: recolhidos por padrão, clique no resumo pra expandir */
+  .sts{border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
+  .sts summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;user-select:none}
+  .sts summary::-webkit-details-marker{display:none}
+  .sts summary::before{content:'▸';font-size:9px;color:#b8c4c5;transition:transform .12s;flex:none}
+  .sts[open] summary::before{transform:rotate(90deg)}
+  .sts[open] summary{margin-bottom:6px}
+  .sts summary:hover{color:var(--p500)}
+  .sts ol{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:2px}
   .sts li{font-size:12.5px;line-height:1.45;color:#43585b;display:flex;gap:7px}
   .sts li b{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10.5px;color:var(--p500);flex:none;margin-top:2px}
   .sts li em{font-style:normal;font-weight:600;color:var(--p700)}
@@ -151,13 +152,32 @@
   .chip.exec .k::before{content:'🛠️'}
   .chip.diaria .k::before{content:'🎥'}
 
-  /* ===== resumo de status ===== */
-  .status-summary{max-width:1680px;margin:12px auto 0;padding:0 28px;display:flex;flex-wrap:wrap;gap:9px}
+  /* ===== dashboard (status, formato, funil) ===== */
+  .dashboard{max-width:1680px;margin:12px auto 0;padding:0 28px;display:flex;flex-direction:column;gap:7px}
+  .dash-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .dash-row-label{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;min-width:58px;flex:none}
   .summary-pill{display:inline-flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;border-radius:10px;padding:9px 15px;color:#fff}
   .summary-pill.ok{background:var(--ok)}
   .summary-pill.edit{background:var(--edit)}
   .summary-pill.shoot{background:var(--shoot)}
   .summary-pill span{font-family:'Inter',sans-serif;font-weight:500;opacity:.85;font-size:12px}
+  .mini-pill{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#3c4d4f;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .mini-pill b{color:var(--p900);font-weight:700}
+
+  /* ===== gráficos simples da aba de metas ===== */
+  .kpi-charts{max-width:1680px;margin:14px auto 16px;padding:0 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(6,38,43,.06)}
+  .chart-card h4{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p700);margin-bottom:13px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px}
+  .bar-row .bar-label{width:120px;flex:none;color:#43585b;font-weight:500;display:flex;align-items:center;gap:5px}
+  .bar-track{flex:1;height:10px;background:#F1F6F6;border-radius:6px;overflow:hidden}
+  .bar-fill{display:block;height:100%;border-radius:6px}
+  .bar-row .bar-count{width:24px;flex:none;text-align:right;font-weight:700;color:var(--p900)}
+  .stack-track{display:flex;height:16px;border-radius:8px;overflow:hidden;background:#F1F6F6}
+  .stack-seg{height:100%}
+  .stack-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;color:#43585b}
+  .stack-legend span{display:inline-flex;align-items:center;gap:5px}
+  .stack-legend .sw{width:9px;height:9px;border-radius:3px;flex:none}
 
   /* ===== filtros ===== */
   .filter-bar{max-width:1680px;margin:6px auto 0;padding:0 28px;display:flex;flex-wrap:wrap;gap:11px;align-items:center}
@@ -172,7 +192,8 @@
   .st{cursor:pointer;user-select:none}
 
   /* ===== anexos ===== */
-  .attach-badge{margin-left:auto;flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;line-height:1;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;cursor:pointer;color:#8fa3a5}
+  .attach-badge{margin-left:auto;flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;line-height:1;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;cursor:pointer;color:#8fa3a5;opacity:0;transition:opacity .12s}
+  .chip:hover .attach-badge, .chip:focus-within .attach-badge, .attach-badge.has{opacity:1}
   .attach-badge.has{background:var(--p200);border-color:var(--p500);color:var(--p900)}
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(6,38,43,.55);z-index:200;align-items:center;justify-content:center;padding:20px}
   .modal-overlay.open{display:flex}
@@ -220,6 +241,7 @@
     </div>
     <div class="header-actions">
       <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
+      <button type="button" class="hdr-btn" id="toggle-stories" title="Mostrar ou esconder a lista de stories em todos os dias de uma vez">▾ Expandir stories</button>
       <button type="button" class="hdr-btn" id="reset-local">Limpar alterações salvas neste navegador</button>
     </div>
   </div>
@@ -230,7 +252,7 @@
 
 <div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto (títulos, descrições, stories, tabela de metas) para alterá-lo. As mudanças ficam salvas neste navegador.</div>
 
-<div class="status-summary" id="status-summary"></div>
+<div class="dashboard" id="dashboard"></div>
 
 <div class="legend">
   <span class="lg"><span class="dot" style="background:var(--p500)"></span>Reel</span>
@@ -245,262 +267,262 @@
 <div class="filter-bar" id="filter-post"></div>
 
 <div class="cal">
-  <div class="dow"><div></div><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
+  <div class="dow"><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
 
   <!-- SEMANA 1 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 1 · 03–07</div>
       <div class="wt">O preço da parada</div>
       <span class="valor">Valor: Sucesso do cliente</span>
       <span class="valor">Funil: topo</span>
       <div class="wd">Reunião mensal nesta semana (dia a definir): no dia, os stories da tarde viram bastidor dela — discurso, destaque do mês e vendedor destaque.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">03</b></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#01</span>Neshop Cultura: Gabriel Carrenho</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu topo">TOPO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#02</span>Downtime é problema estratégico</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana + gancho do tema</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor do estoque abrindo a semana</span></li>
         <li><b>S4</b><span>Enquete leve: "sua operação já parou por falta de peça?"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">04</b></div>
-      <div class="sts"><div class="sh">Stories (dia sem feed)</div><ol>
+      <details class="sts"><summary class="sh">Stories (dia sem feed)</summary><ol>
         <li><b>S1</b><span>Bastidor de operação da manhã (captura do dia)</span></li>
         <li><b>S2</b><span>Peça sendo separada, pessoa nomeada na tela</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma e do livro</span></li>
         <li><b>S4</b><span>Card: "precisa urgente? Respondemos hoje" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">05</b></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#03</span>InfraFM: Alex</div></div>
       <div class="chip data"><div class="k">Data · Estático <span class="fu rel">REL.</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#04</span>Dia Nacional da Saúde</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor do dia</span></li>
         <li><b>S4</b><span>Teaser: "amanhã tem vídeo novo no canal"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui">06</b></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#05</span>Confraternização de junho</div></div>
       <div class="chip yt"><div class="k">YouTube <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#06</span>Super El Niño (institucional)</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em> do dia</span></li>
         <li><b>S2</b><span><em>Anúncio do vídeo novo no canal</em> (1 story só)</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
         <li><b>S4</b><span>Card: "manda a etiqueta que respondemos hoje"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">07</b></div>
       <div class="chip carrossel"><div class="k">Carrossel <span class="fu topo">TOPO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#07</span>5 riscos do prazo do fabricante</div></div>
       <div class="chip blog"><div class="k">Blog <span class="fu topo">TOPO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#08</span>O custo invisível da peça errada</div></div>
       <div class="chip data"><div class="k">Agendar p/ domingo <span class="fu rel">REL.</span></div><div class="t"><span class="n">#09</span>Estático Dia dos Pais (dom 09/08)</div></div>
       <div class="chip aprova"><div class="k">Gaveta</div><div class="t">Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">CAFÉ TURBINADO</em>: vídeo do time na mesa</span></li>
         <li><b>S2</b><span>Recap curto da semana + resultado da enquete</span></li>
         <li><b>S3</b><span>Bastidor: fechando a semana no galpão</span></li>
         <li><b>S4</b><span><em class="casa">Neshop + frase</em>: bom fim de semana</span></li>
-      </ol></div>
+      </ol></details>
     </div>
   </div>
 
   <!-- SEMANA 2 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 2 · 10–14</div>
       <div class="wt">Comprar certo</div>
       <span class="valor">Valor: Melhoria contínua</span>
       <span class="valor">Funil: topo → meio</span>
       <div class="wd">Procedência, critérios de fornecedor e estoque crítico.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">10</b></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#10</span>Neshop Cultura: Guilherme Biazzi</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#11</span>O que exigir de um fornecedor VRF</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana + gancho "peça certa de primeira"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor: recebimento de peça original</span></li>
         <li><b>S4</b><span>Enquete: "você confere procedência antes de comprar?"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">11</b></div>
       <div class="chip"><div class="k">Reel <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#12</span>Essas duas placas parecem idênticas</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor: conferência de procedência (caixa, código, sistema)</span></li>
         <li><b>S2</b><span>Close na embalagem e nota original</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma</span></li>
         <li><b>S4</b><span>Card: "urgência de campo se mede em minutos" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">12</b></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#13</span>InfraFM: Marcos</div></div>
       <div class="chip yt"><div class="k">Short <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#14</span>Corte 1 do vídeo El Niño</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Tema El Niño: repost do Short #14</span></li>
         <li><b>S4</b><span>Quiz rápido sobre o verão 2026-27</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui">13</b></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#15</span>Novos uniformes</div></div>
       <div class="chip blog"><div class="k">Blog <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#16</span>Estoque buffer de peças críticas</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: novos uniformes</span></li>
         <li><b>S2</b><span>Bastidor do dia</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
         <li><b>S4</b><span>Caixa: "dúvida técnica? Manda que o time responde"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">14</b></div>
       <div class="chip carrossel"><div class="k">Carrossel <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#17</span>Checklist: 7 critérios de fornecedor</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> da sexta: momento do time</span></li>
         <li><b>S2</b><span>Repost do carrossel #17: "salva pra próxima cotação"</span></li>
         <li><b>S3</b><span>Resultado do quiz de quarta</span></li>
         <li><b>S4</b><span><em class="casa">Neshop + frase</em>: bom fim de semana</span></li>
-      </ol></div>
+      </ol></details>
     </div>
   </div>
 
   <!-- SEMANA 3 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 3 · 17–21</div>
       <div class="wt">Verão El Niño</div>
       <span class="valor">Valor: Mentalidade eco</span>
       <span class="valor">Funil: meio</span>
       <div class="wd">Semana temática: preparar o parque para o calor extremo de 2026-27.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">17</b></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#18</span>Neshop Cultura: Isaac</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#19</span>Super El Niño como risco operacional</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "o verão que vem não é um verão comum"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor do estoque com foco nas peças de verão</span></li>
         <li><b>S4</b><span>Enquete: "sua operação está pronta pro verão?"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">18</b></div>
       <div class="chip"><div class="k">Reel · Ref. de Campo <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#20</span>As peças que o Super El Niño mais vai derrubar</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor da gravação da bancada (Diária C)</span></li>
         <li><b>S2</b><span>Repost do Reel #20 com sticker "salva"</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma</span></li>
         <li><b>S4</b><span>Card: "comenta VERÃO no Reel que enviamos o Checklist El Niño em PDF"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">19</b></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#21</span>InfraFM: Caique (fim da série)</div></div>
       <div class="chip yt"><div class="k">Short <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#22</span>Corte 2 do vídeo El Niño</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Tema El Niño: repost do Short #22 + mentalidade eco (eureciclo)</span></li>
         <li><b>S4</b><span>CTA: "a gente monta a lista do seu parque"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui">20</b></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#23</span>Confraternização de julho</div></div>
       <div class="chip estatico"><div class="k">Estático <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#24</span>Quarto interditado no verão do Super El Niño</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: confraternização de julho</span></li>
         <li><b>S2</b><span>Bastidor do dia</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
         <li><b>S4</b><span>Card: "gestor de hotel? Manda a etiqueta" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">21</b></div>
       <div class="chip"><div class="k">Reel · Ref. de Campo <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#25</span>3 peças que derrubam a hotelaria</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> da sexta</span></li>
         <li><b>S2</b><span>Recap da semana El Niño + repost do Reel #25</span></li>
         <li><b>S3</b><span>Print real de cotação (dados ocultos, horários visíveis)</span></li>
         <li><b>S4</b><span><em class="casa">Neshop + frase</em>: bom fim de semana</span></li>
-      </ol></div>
+      </ol></details>
     </div>
   </div>
 
   <!-- SEMANA 4 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 4 · 24–28</div>
       <div class="wt">Prova e conversão</div>
       <span class="valor">Valor: Senso de dono</span>
       <span class="valor">Funil: fundo</span>
       <div class="wd">Fundo de funil: prova real e CTAs de conversa. Inside Sales avisado. Sexta é dos aniversariantes.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">24</b></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#26</span>Neshop Cultura: Alexandre</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu fundo">FUNDO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#27</span>Oferta: lista crítica sem custo</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "Fabricante: 90 dias. Neshop: hoje."</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor: os 3 galpões e o suporte de fábrica</span></li>
         <li><b>S4</b><span>Card: "manda sua cotação agora" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">25</b></div>
       <div class="chip"><div class="k">Reel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#28</span>Fabricante: 90 dias. A gente: hoje.</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor: etiqueta chegando e time identificando</span></li>
         <li><b>S2</b><span>Print real: horário entre mensagem e resposta</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma</span></li>
         <li><b>S4</b><span>Card: "manda a sua" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">26</b></div>
       <div class="chip"><div class="k">Reel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#29</span>O que acontece com a sua etiqueta</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Selfie Caique: oferta dos 30 min sem custo</span></li>
         <li><b>S4</b><span>Caixa: "qual peça você precisa agora?" + WhatsApp</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui">27</b></div>
       <div class="chip carrossel"><div class="k">Carrossel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#30</span>Fornecedor institucional: além do preço</div></div>
       <div class="chip yt"><div class="k">YouTube <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#31</span>Original x paralela em VRF (bancada)</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em>Anúncio do vídeo novo no canal</em> (1 story só)</span></li>
         <li><b>S2</b><span>Bastidor do dia</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
         <li><b>S4</b><span>Caixa: "dúvida sobre procedência? Manda aqui"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">28</b></div>
       <div class="chip estatico"><div class="k">Estático <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#32</span>09h04 cotação | 13h10 entregue (RPS Global)</div></div>
       <div class="chip aprova"><div class="k">Gaveta</div><div class="t">Story padrão de sexta é produzido e guardado (os aniversariantes ocupam o slot)</div></div>
-      <div class="sts"><div class="sh">Stories · Aniversariantes do mês</div><ol>
+      <details class="sts"><summary class="sh">Stories · Aniversariantes do mês</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> + preparação da comemoração</span></li>
         <li><b>S2</b><span>Vídeo: parabéns e o primeiro pedaço do bolo</span></li>
         <li><b>S3</b><span>Vídeo: o discurso da comemoração</span></li>
         <li><b>S4</b><span><em class="casa">Neshop + frase</em>: bom fim de semana</span></li>
-      </ol></div>
+      </ol></details>
     </div>
   </div>
 
   <!-- SEMANA 5 -->
-  <div class="week">
-    <div class="wk-label close">
+  <div class="wk-bar close">
       <div class="wn">Seg 31/08</div>
       <div class="wt">Última segunda</div>
       <span class="valor">Valor: Trabalho em equipe</span>
       <div class="wd">Segunda normal da casa, com a ponte para setembro no último story.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">31</b></div>
       <div class="chip aprova"><div class="k">Fechamento interno</div><div class="t"><span class="n">#33</span>Retro de produção do mês (não é post)</div></div>
-      <div class="sts"><div class="sh">Stories</div><ol>
+      <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana: bastidor da operação abrindo o dia</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Bastidor: peça do dia sendo separada, pessoa nomeada</span></li>
         <li><b>S4</b><span>Caixa: "o que você quer ver por aqui em setembro?"</span></li>
-      </ol></div>
+      </ol></details>
     </div>
     <div class="day empty"></div>
     <div class="day empty"></div>
@@ -546,11 +568,10 @@
 <div class="filter-bar" id="filter-exec"></div>
 
 <div class="cal">
-  <div class="dow"><div></div><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
+  <div class="dow"><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
 
   <!-- SEMANA 0 -->
-  <div class="week">
-    <div class="wk-label zero">
+  <div class="wk-bar zero">
       <div class="wn">Semana 0 · 30–31/07</div>
       <div class="wt">Pré-produção</div>
       <div class="wd">Pré-produção concentrada na sexta. Se não couber tudo, o InfraFM #03 desliza para a manhã de segunda.</div>
@@ -560,7 +581,8 @@
     <div class="day empty"></div>
     <div class="day"><div class="dnum"><b data-dow="qui">30/07</b><span class="tag">hoje · sem produção</span></div>
       <div class="chip aprova"><div class="k">Dia de alinhamento</div><div class="t">Reuniões do dia · montar o conteúdo do LinkedIn #02</div></div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="sex">31/07</b><span class="tag">dia cheio</span></div>
       <div class="chip exec"><div class="k">Prioridade 1</div><div class="t">Montar os 3 templates (card de story, carrossel, estático)</div></div>
       <div class="chip exec"><div class="k">Prioridade 2</div><div class="t">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div></div>
@@ -569,12 +591,12 @@
   </div>
 
   <!-- SEMANA 1 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 1 · 03–07</div>
       <div class="wt">Publica S1 · Produz S2</div>
       <div class="wd">O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">03</b></div>
       <div class="chip exec"><div class="k">Manhã</div><div class="t">Ajustes do que sobrou da sexta · editar Cultura #10 (pacote S2)</div></div>
       <div class="chip diaria"><div class="k">Diária A · tarde (14h–17h)</div><div class="t">Gravar Reel #12 + fotos das artes #07, #09 e #17</div></div>
@@ -597,12 +619,12 @@
   </div>
 
   <!-- SEMANA 2 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 2 · 10–14</div>
       <div class="wt">Publica S2 · Produz S3</div>
       <div class="wd">Semana da Diária B: os Reels do tema El Niño saem daqui.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">10</b></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Finalizar Blog #16 (transcrição do bloco de preparação do vídeo El Niño) · editar Cultura #18 (pacote S3)</div></div>
     </div>
@@ -624,12 +646,12 @@
   </div>
 
   <!-- SEMANA 3 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 3 · 17–21</div>
       <div class="wt">Publica S3 · Produz S4</div>
       <div class="wd">Semana da Diária C: a bancada do YouTube e os Reels de conversão saem daqui.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">17</b></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Confirmar especialista e bancada da Diária C1 · separar as peças · editar Cultura #26 (pacote S4)</div></div>
     </div>
@@ -652,12 +674,12 @@
   </div>
 
   <!-- SEMANA 4 -->
-  <div class="week">
-    <div class="wk-label">
+  <div class="wk-bar">
       <div class="wn">Semana 4 · 24–28</div>
       <div class="wt">Publica S4 · Fecha o mês</div>
       <div class="wd">A semana é dominada pela edição do YouTube #31, que publica quinta.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">24</b></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Edição do YouTube #31 (bloco de 4h)</div></div>
     </div>
@@ -678,12 +700,12 @@
   </div>
 
   <!-- SEMANA 5 -->
-  <div class="week">
-    <div class="wk-label close">
+  <div class="wk-bar close">
       <div class="wn">Seg 31/08</div>
       <div class="wt">Retro</div>
       <div class="wd">Insumo para calibrar setembro.</div>
-    </div>
+  </div>
+  <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg">31</b></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Retro de produção: horas reais por frente, o que apertou, o que sobrou · rascunho da grade de setembro (já tem 6 peças de estoque)</div></div>
     </div>
@@ -718,6 +740,7 @@
 
 <div class="cal" style="margin-top:18px">
   <p class="obs" style="margin-bottom:6px"><b>Toda meta aqui sai de um número real do perfil.</b> A coluna "Base real" mostra de onde veio. Onde não existe histórico medido (YouTube, material de captura, automação), agosto é mês de baseline: a meta é registrar o número, não bater um alvo inventado.</p>
+  <div class="kpi-charts" id="kpi-charts"></div>
   <p class="obs" style="margin-bottom:12px"><b>Base do Instagram</b> (20 publicações, 25/abr a 24/jul): maior post do trimestre 1.617 views (repost LG) · melhor post sem apoio externo 880 views e 646 de alcance · faixa comum de 350 a 666 views · engajamento entre 1,34% (pior, CTA de link na bio) e 9,36% (melhor, bastidor Trane) · 4 salvamentos em 90 dias · stories entre 85 e 154 views · direct com 66,7% de resposta. <b>Base do LinkedIn</b> (29/jun a 28/jul): 952 seguidores · 2 posts · 634 impressões · 10 reações · +4 seguidores · CTR de 13,39% e 13,64%.</p>
 </div>
 
@@ -847,23 +870,10 @@ function initStatusClicks(){
       STATE.status[id] = next.cls;
       saveState();
       refreshFilters();
-      renderStatusSummary();
+      renderDashboard();
+      renderKpiCharts();
     });
   });
-}
-
-/* ===================== RESUMO DE STATUS ===================== */
-function renderStatusSummary(){
-  var box = document.getElementById('status-summary');
-  if(!box) return;
-  var counts = {ok:0, edit:0, shoot:0};
-  Array.from(document.querySelectorAll('#view-post .chip .st')).forEach(function(b){
-    STATUS_CYCLE.forEach(function(s){ if(b.classList.contains(s.cls)) counts[s.cls]++; });
-  });
-  box.innerHTML =
-    '<span class="summary-pill ok">✅ ' + counts.ok + '<span>prontos</span></span>' +
-    '<span class="summary-pill edit">🖊️ ' + counts.edit + '<span>em edição</span></span>' +
-    '<span class="summary-pill shoot">🎬 ' + counts.shoot + '<span>para gravar</span></span>';
 }
 
 /* ===================== ANEXOS ===================== */
@@ -1024,6 +1034,89 @@ function chipFunilKey(chip){
   return 'none';
 }
 
+var TYPE_ICONS = {reel:'🎬', carrossel:'🖼️', estatico:'🧩', yt:'▶️', li:'💼', blog:'✍️', data:'📅', aprova:'🗂️', exec:'🛠️', diaria:'🎥'};
+var FUNIL_COLORS = {topo:'#1C6E79', meio:'#0E4650', fundo:'#A34A2A', rel:'#8A6D9A'};
+
+function countChips(){
+  var chips = Array.from(document.querySelectorAll('#view-post .chip'));
+  var status = {ok:0, edit:0, shoot:0};
+  var type = {};
+  var funil = {};
+  chips.forEach(function(c){
+    var sk = chipStatusKey(c); if(status[sk] !== undefined) status[sk]++;
+    var tk = chipType(c); type[tk] = (type[tk] || 0) + 1;
+    var fk = chipFunilKey(c); if(fk !== 'none') funil[fk] = (funil[fk] || 0) + 1;
+  });
+  return {status:status, type:type, funil:funil};
+}
+
+/* ===================== DASHBOARD (status + formato + funil) ===================== */
+function renderDashboard(){
+  var box = document.getElementById('dashboard');
+  if(!box) return;
+  var c = countChips();
+
+  var statusHtml =
+    '<span class="summary-pill ok">✅ ' + c.status.ok + '<span>prontos</span></span>' +
+    '<span class="summary-pill edit">🖊️ ' + c.status.edit + '<span>em edição</span></span>' +
+    '<span class="summary-pill shoot">🎬 ' + c.status.shoot + '<span>para gravar</span></span>';
+
+  var typeHtml = TYPE_DEFS.filter(function(d){ return c.type[d.key]; }).map(function(d){
+    return '<span class="mini-pill">' + (TYPE_ICONS[d.key] || '') + ' <b>' + c.type[d.key] + '</b> ' + d.label + '</span>';
+  }).join('');
+
+  var funilHtml = FUNIL_DEFS.filter(function(d){ return d.key !== 'none' && c.funil[d.key]; }).map(function(d){
+    return '<span class="mini-pill">🔻 <b>' + c.funil[d.key] + '</b> ' + d.label + '</span>';
+  }).join('');
+
+  box.innerHTML =
+    '<div class="dash-row"><span class="dash-row-label">Status</span>' + statusHtml + '</div>' +
+    '<div class="dash-row"><span class="dash-row-label">Formato</span>' + typeHtml + '</div>' +
+    '<div class="dash-row"><span class="dash-row-label">Funil</span>' + funilHtml + '</div>';
+}
+
+/* ===================== GRÁFICOS DA ABA DE METAS ===================== */
+function renderKpiCharts(){
+  var box = document.getElementById('kpi-charts');
+  if(!box) return;
+  var c = countChips();
+  var totalStatus = (c.status.ok + c.status.edit + c.status.shoot) || 1;
+
+  var stackHtml =
+    '<div class="stack-track">' +
+      '<span class="stack-seg" style="width:' + (c.status.ok / totalStatus * 100) + '%;background:var(--ok)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.edit / totalStatus * 100) + '%;background:var(--edit)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.shoot / totalStatus * 100) + '%;background:var(--shoot)"></span>' +
+    '</div>' +
+    '<div class="stack-legend">' +
+      '<span><span class="sw" style="background:var(--ok)"></span>Pronto · ' + c.status.ok + '</span>' +
+      '<span><span class="sw" style="background:var(--edit)"></span>Edição · ' + c.status.edit + '</span>' +
+      '<span><span class="sw" style="background:var(--shoot)"></span>Gravar · ' + c.status.shoot + '</span>' +
+    '</div>';
+
+  var maxType = Math.max.apply(null, TYPE_DEFS.map(function(d){ return c.type[d.key] || 0; }).concat([1]));
+  var typeHtml = TYPE_DEFS.filter(function(d){ return c.type[d.key]; }).map(function(d){
+    var v = c.type[d.key] || 0;
+    return '<div class="bar-row"><span class="bar-label">' + (TYPE_ICONS[d.key] || '') + ' ' + d.label + '</span>' +
+      '<span class="bar-track"><span class="bar-fill" style="width:' + (v / maxType * 100) + '%;background:var(--p500)"></span></span>' +
+      '<span class="bar-count">' + v + '</span></div>';
+  }).join('');
+
+  var funilDefsReal = FUNIL_DEFS.filter(function(d){ return d.key !== 'none'; });
+  var maxFunil = Math.max.apply(null, funilDefsReal.map(function(d){ return c.funil[d.key] || 0; }).concat([1]));
+  var funilHtml = funilDefsReal.filter(function(d){ return c.funil[d.key]; }).map(function(d){
+    var v = c.funil[d.key] || 0;
+    return '<div class="bar-row"><span class="bar-label">' + d.label + '</span>' +
+      '<span class="bar-track"><span class="bar-fill" style="width:' + (v / maxFunil * 100) + '%;background:' + (FUNIL_COLORS[d.key] || 'var(--p500)') + '"></span></span>' +
+      '<span class="bar-count">' + v + '</span></div>';
+  }).join('');
+
+  box.innerHTML =
+    '<div class="chart-card"><h4>Andamento da produção</h4>' + stackHtml + '</div>' +
+    '<div class="chart-card"><h4>Peças por formato</h4>' + typeHtml + '</div>' +
+    '<div class="chart-card"><h4>Distribuição por funil</h4>' + funilHtml + '</div>';
+}
+
 var filterState = {};
 
 function buildFilterBar(viewId){
@@ -1098,8 +1191,8 @@ function refreshFilters(){
 var EDITABLE_SELECTORS = [
   'h1',
   '.meta-pill',
-  '.wk-label .wt',
-  '.wk-label .wd',
+  '.wk-bar .wt',
+  '.wk-bar .wd',
   '.valor',
   '.chip .t',
   '.sts li span',
@@ -1146,6 +1239,17 @@ function initEditMode(){
   });
 }
 
+/* ===================== EXPANDIR/RECOLHER TODOS OS STORIES ===================== */
+var storiesExpanded = false;
+function initStoriesToggle(){
+  var btn = document.getElementById('toggle-stories');
+  btn.addEventListener('click', function(){
+    storiesExpanded = !storiesExpanded;
+    Array.from(document.querySelectorAll('.sts')).forEach(function(d){ d.open = storiesExpanded; });
+    btn.textContent = storiesExpanded ? '▴ Recolher stories' : '▾ Expandir stories';
+  });
+}
+
 /* ===================== INIT ===================== */
 assignChipIds();
 assignEditIds();
@@ -1154,8 +1258,10 @@ initStatusClicks();
 initAttachments();
 buildFilterBar('post');
 buildFilterBar('exec');
-renderStatusSummary();
+renderDashboard();
+renderKpiCharts();
 initEditMode();
+initStoriesToggle();
 
 document.getElementById('reset-local').addEventListener('click', function(){
   if(confirm('Isso vai apagar status alterados, anexos e textos editados salvos neste navegador para este calendário. Confirmar?')){
