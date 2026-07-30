@@ -123,6 +123,42 @@
     .tab{padding:10px 14px;font-size:13px}
   }
 
+  /* ===== cabeçalho fixo + ações ===== */
+  header{position:sticky;top:0;z-index:80;box-shadow:0 2px 16px rgba(6,38,43,.22)}
+  .header-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .hdr-btn{font-family:'Inter',sans-serif;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+  .hdr-btn:hover{background:rgba(255,255,255,.18)}
+  .hdr-btn.on{background:var(--p200);border-color:var(--p200);color:var(--p900)}
+
+  /* ===== toques visuais ===== */
+  .day{box-shadow:0 1px 3px rgba(6,38,43,.06);transition:box-shadow .15s,transform .15s}
+  .day:not(.empty):hover{box-shadow:0 6px 16px rgba(6,38,43,.12);transform:translateY(-2px)}
+  .day:has(.tag){border-color:var(--p500);box-shadow:0 0 0 2px rgba(28,110,121,.18)}
+  .note{box-shadow:0 1px 3px rgba(6,38,43,.06)}
+  .kpi table{box-shadow:0 1px 3px rgba(6,38,43,.06)}
+  .kpi table tr:not(.grp):hover td{background:#FAFCFC}
+
+  /* ícones por tipo de conteúdo, pra reconhecer de relance */
+  .chip .k::before{flex:none}
+  .chip:not(.carrossel):not(.estatico):not(.yt):not(.li):not(.blog):not(.data):not(.aprova):not(.exec):not(.diaria) .k::before{content:'🎬'}
+  .chip.carrossel .k::before{content:'🖼️'}
+  .chip.estatico .k::before{content:'🧩'}
+  .chip.yt .k::before{content:'▶️'}
+  .chip.li .k::before{content:'💼'}
+  .chip.blog .k::before{content:'✍️'}
+  .chip.data .k::before{content:'📅'}
+  .chip.aprova .k::before{content:'🗂️'}
+  .chip.exec .k::before{content:'🛠️'}
+  .chip.diaria .k::before{content:'🎥'}
+
+  /* ===== resumo de status ===== */
+  .status-summary{max-width:1280px;margin:12px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:8px}
+  .summary-pill{display:inline-flex;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;border-radius:10px;padding:8px 14px;color:#fff}
+  .summary-pill.ok{background:var(--ok)}
+  .summary-pill.edit{background:var(--edit)}
+  .summary-pill.shoot{background:var(--shoot)}
+  .summary-pill span{font-family:'Inter',sans-serif;font-weight:500;opacity:.85;font-size:11px}
+
   /* ===== filtros ===== */
   .filter-bar{max-width:1280px;margin:6px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
   .filter-group{display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
@@ -155,8 +191,13 @@
   .attach-link-row input{flex:1;height:38px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font-size:12.5px;font-family:'Inter',sans-serif}
   .attach-link-row button{background:var(--p700);color:#fff;border:none;border-radius:8px;padding:0 14px;font-size:12.5px;cursor:pointer;flex:none}
   .modal-close{width:100%;height:42px;background:var(--p900);color:#fff;border:none;border-radius:10px;font-size:14px;cursor:pointer;margin-top:18px}
-  .reset-local{background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:8px;padding:6px 12px;font-size:11.5px;cursor:pointer;margin-top:10px;font-family:'Inter',sans-serif}
-  .reset-local:hover{background:rgba(255,255,255,.16)}
+
+  /* ===== modo de edição de texto ===== */
+  body.edit-mode [contenteditable="true"]{outline:1px dashed var(--p500);outline-offset:2px;border-radius:4px;cursor:text}
+  body.edit-mode [contenteditable="true"]:hover{background:rgba(28,110,121,.07)}
+  body.edit-mode [contenteditable="true"]:focus{outline:2px solid var(--p500);background:#fff}
+  .edit-banner{display:none;max-width:1280px;margin:10px auto 0;padding:10px 24px;font-size:12.5px;color:var(--p700);background:#EAF4F5;border:1px solid #9CCBD0;border-radius:10px}
+  body.edit-mode .edit-banner{display:block}
 </style>
 </head>
 <body>
@@ -177,12 +218,19 @@
       <button class="tab" id="tab-exec" role="tab" aria-selected="false" onclick="showView('exec')">🛠️ Execução e Produção</button>
       <button class="tab" id="tab-kpi" role="tab" aria-selected="false" onclick="showView('kpi')">📊 Metas e Resultados</button>
     </div>
-    <button type="button" class="reset-local" id="reset-local">Limpar alterações salvas neste navegador</button>
+    <div class="header-actions">
+      <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
+      <button type="button" class="hdr-btn" id="reset-local">Limpar alterações salvas neste navegador</button>
+    </div>
   </div>
 </header>
 
 <!-- ============ CALENDÁRIO DE POSTAGEM ============ -->
 <div class="view active" id="view-post">
+
+<div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto (títulos, descrições, stories, tabela de metas) para alterá-lo. As mudanças ficam salvas neste navegador.</div>
+
+<div class="status-summary" id="status-summary"></div>
 
 <div class="legend">
   <span class="lg"><span class="dot" style="background:var(--p500)"></span>Reel</span>
@@ -486,6 +534,8 @@
 <!-- ============ CALENDÁRIO DE EXECUÇÃO E PRODUÇÃO ============ -->
 <div class="view" id="view-exec">
 
+<div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto para alterá-lo. As mudanças ficam salvas neste navegador.</div>
+
 <div class="legend">
   <span class="lg"><span class="dot" style="background:var(--casa)"></span>Bloco de produção do dia</span>
   <span class="lg"><span class="dot" style="background:var(--shoot)"></span>Diária de gravação</span>
@@ -651,7 +701,7 @@
   </div>
   <div class="note">
     <h3>Lógica D+7</h3>
-    <p>O pacote da semana N+1 fecha até a QUARTA da semana N e é aprovado na quarta às 16h. Quinta e sexta ficam para refações, agendamentos e as outras demandas — nada garante aprovação de primeira, e o Adailson tem a agenda dele de gerente. <b>Gap de revisão:</b> nada publica com menos de 2 dias úteis entre finalização e postagem. Se uma dependência atrasar, a peça desliza — a esteira não para, e a gaveta cobre o furo.</p>
+    <p>O pacote da semana N+1 fecha até a QUARTA da semana N e é aprovado na quarta às 16h. Quinta e sexta ficam para refações, agendamentos e as outras demandas — nada garante aprovação de primeira, e o Adailson tem a agenda dele de gerente. <b>Gap de revisão:</b> nada publica com menos de 2 dias úteis entre finalização e postagem. Se uma dependência atrasar, a peça desliza — a esteira não para, e a gaveta cobre o furo. O pacote de cada semana inclui também os 2 reaproveitamentos do LinkedIn (Reel da quarta como vídeo nativo + carrossel/estático da sexta como documento PDF), adaptados em ~1h.</p>
   </div>
   <div class="note">
     <h3>As 3 diárias</h3>
@@ -664,43 +714,49 @@
 <!-- ============ METAS E RESULTADOS ============ -->
 <div class="view" id="view-kpi">
 
+<div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer célula da tabela (inclusive Resultado e Aprendizado) para preencher.</div>
+
 <div class="cal" style="margin-top:18px">
-  <p class="obs" style="margin-bottom:12px">Metas calibradas pelos dados reais do perfil (maior post do trimestre: 1.617 views · 4 salvamentos em 90 dias · média de story entre 85 e 154 views). Meta boa é a que dá para bater com esforço, não número de agência. Preencher Resultado e Aprendizado na sexta de cada semana; o consolidado vira a retro de 31/08 e calibra setembro.</p>
+  <p class="obs" style="margin-bottom:6px"><b>Toda meta aqui sai de um número real do perfil.</b> A coluna "Base real" mostra de onde veio. Onde não existe histórico medido (YouTube, material de captura, automação), agosto é mês de baseline: a meta é registrar o número, não bater um alvo inventado.</p>
+  <p class="obs" style="margin-bottom:12px"><b>Base do Instagram</b> (20 publicações, 25/abr a 24/jul): maior post do trimestre 1.617 views (repost LG) · melhor post sem apoio externo 880 views e 646 de alcance · faixa comum de 350 a 666 views · engajamento entre 1,34% (pior, CTA de link na bio) e 9,36% (melhor, bastidor Trane) · 4 salvamentos em 90 dias · stories entre 85 e 154 views · direct com 66,7% de resposta. <b>Base do LinkedIn</b> (29/jun a 28/jul): 952 seguidores · 2 posts · 634 impressões · 10 reações · +4 seguidores · CTR de 13,39% e 13,64%.</p>
 </div>
 
 <div class="kpi">
   <table>
-    <tr><th style="width:26%">Peça / Frente</th><th style="width:18%">Objetivo</th><th style="width:24%">Meta (KPI)</th><th style="width:16%">Resultado</th><th style="width:16%">Aprendizado</th></tr>
+    <tr><th style="width:20%">Peça / Frente</th><th style="width:13%">Objetivo</th><th style="width:23%">Base real</th><th style="width:20%">Meta de agosto</th><th style="width:12%">Resultado</th><th style="width:12%">Aprendizado</th></tr>
 
-    <tr class="grp"><td colspan="5">Métricas do mês (consolidado)</td></tr>
-    <tr><td class="pc">Stories (4/dia, 21 dias)</td><td>Alcance e presença</td><td>Média ≥ 120 views/story · ≥ 10 respostas de interativos por semana</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">Perfil</td><td>Crescimento</td><td>+100 seguidores no mês · ≥ 40 salvamentos somados (10x o trimestre anterior)</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">Direct</td><td>Atendimento</td><td>≥ 90% das mensagens respondidas em até 4h úteis</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">Teste das 19h (ter/qui)</td><td>Aprendizado</td><td>Comparar views médias do story das 19h vs o das 17h</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">Consolidado do mês</td></tr>
+    <tr><td class="pc">Stories (84 no mês)</td><td>Alcance</td><td>Faixa medida de 85 a 154 views por story</td><td>Média ≥ 120 views · nenhum dia abaixo de 4 stories</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">Interativos dos stories</td><td>Pauta e lead</td><td>Sem contagem sistemática até hoje</td><td>Baseline: registrar as respostas de cada enquete, quiz e caixa toda sexta</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">Salvamentos do perfil</td><td>Conteúdo consultável</td><td>4 em 90 dias (≈1,3 por mês)</td><td>≥ 12 no mês, somando as 3 peças da série Referência de Campo</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">Engajamento médio do feed</td><td>Qualidade</td><td>Piores 1,34% · melhor 9,36%</td><td>Média do mês ≥ 4% · nenhuma peça abaixo de 2%</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">Direct</td><td>Atendimento</td><td>66,7% das mensagens respondidas</td><td>≥ 90% respondidas em até 4h úteis</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">Teste do story das 19h</td><td>Aprendizado</td><td>Quase sem amostra nesse horário</td><td>Baseline: comparar a média das 19h com a das 17h ao fim do mês</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
-    <tr class="grp"><td colspan="5">Semana 1 · O preço da parada</td></tr>
-    <tr><td class="pc">#01 Cultura: Gabriel</td><td>Relacionamento</td><td>≥ 500 views · ≥ 3 comentários do próprio time/rede</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#06 YouTube El Niño</td><td>Autoridade + topo</td><td>≥ 300 views na 1ª semana · retenção ≥ 35% · coletar baseline de cliques no link</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#07 Carrossel 5 riscos</td><td>Alcance topo</td><td>≥ 600 contas alcançadas · ≥ 5 salvamentos</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">Semana 1 · O preço da parada</td></tr>
+    <tr><td class="pc">#01 Cultura: Gabriel</td><td>Relacionamento</td><td>Conteúdo com pessoa rendeu 2,3x mais views que sem pessoa</td><td>≥ 600 views (acima da faixa comum de 350 a 666)</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#06 YouTube El Niño</td><td>Autoridade</td><td>Sem histórico medido do canal</td><td>Baseline: registrar views, retenção média e cliques no link da descrição</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#07 Carrossel 5 riscos</td><td>Alcance de topo</td><td>Melhor alcance sem apoio externo: 646 contas</td><td>≥ 500 contas alcançadas · ≥ 3 salvamentos</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
-    <tr class="grp"><td colspan="5">Semana 2 · Comprar certo</td></tr>
-    <tr><td class="pc">#12 Reel duas placas</td><td>Engajamento</td><td>≥ 800 views · ≥ 10 etiquetas/modelos recebidos em comentário ou DM</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#17 Carrossel checklist</td><td>Salvamento</td><td>≥ 10 salvamentos (2,5x o trimestre inteiro) · ≥ 3 comentários com o 8º critério</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">Semana 2 · Comprar certo</td></tr>
+    <tr><td class="pc">#12 Reel duas placas</td><td>Engajamento</td><td>Melhor post próprio: 880 views · pico de interações medido: 52</td><td>≥ 700 views · ≥ 30 interações · ≥ 5 etiquetas ou modelos recebidos</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#17 Carrossel checklist</td><td>Salvamento</td><td>4 salvamentos em 90 dias no perfil inteiro</td><td>≥ 5 salvamentos nesta peça só · ≥ 2 comentários com o oitavo critério</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
-    <tr class="grp"><td colspan="5">Semana 3 · Verão El Niño</td></tr>
-    <tr><td class="pc">#20 Reel peças do El Niño</td><td>Lead (checklist PDF)</td><td>≥ 1.000 views · ≥ 15 salvamentos · ≥ 10 comentários VERÃO convertidos em lead no CRM</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#25 Reel hotelaria</td><td>Salvamento + lead</td><td>≥ 8 salvamentos · ≥ 5 comentários HOTEL</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">Semana 3 · Verão El Niño</td></tr>
+    <tr><td class="pc">#20 Reel peças do El Niño</td><td>Captura de lead</td><td>Tema já validado no carrossel publicado · nunca houve material de captura</td><td>≥ 800 views · ≥ 5 salvamentos · baseline: quantos comentários VERÃO viram lead no CRM</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#25 Reel hotelaria</td><td>Salvamento</td><td>Faixa comum de 350 a 666 views</td><td>≥ 500 views · ≥ 4 salvamentos · ≥ 3 comentários HOTEL</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
-    <tr class="grp"><td colspan="5">Semana 4 · Prova e conversão</td></tr>
-    <tr><td class="pc">#28 Reel 90 dias vs hoje</td><td>Conversão</td><td>≥ 1.000 views · ≥ 10 cotações iniciadas no WhatsApp na semana (validar com Inside Sales)</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#29 Reel etiqueta</td><td>Conversão</td><td>≥ 8 etiquetas recebidas na DM/WhatsApp</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#31 YouTube bancada</td><td>Autoridade técnica</td><td>≥ 300 views na 1ª semana · retenção ≥ 40%</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#32 Estático case RPS</td><td>Prova + conversão</td><td>≥ 400 contas alcançadas · ≥ 5 cliques no WhatsApp</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">Semana 4 · Prova e conversão</td></tr>
+    <tr><td class="pc">#28 Reel 90 dias vs hoje</td><td>Conversão</td><td>CTA de link na bio rendeu 1,34% de engajamento; CTA de conversa nunca foi medido</td><td>≥ 700 views · baseline: nº de cotações abertas no WhatsApp na semana (validar com Inside Sales)</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#29 Reel etiqueta</td><td>Conversão</td><td>Sem histórico de pedido por etiqueta vindo do perfil</td><td>Baseline: quantas etiquetas chegam na DM e no WhatsApp na semana</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#31 YouTube bancada</td><td>Autoridade técnica</td><td>Comparar com o #06 do mesmo mês</td><td>Views e retenção ≥ as do #06</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#32 Estático case RPS</td><td>Prova social</td><td>Bastidor real (Trane) foi o melhor engajamento do trimestre: 9,36%</td><td>Engajamento ≥ 6% · ≥ 400 contas alcançadas</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
-    <tr class="grp"><td colspan="5">LinkedIn (mês de baseline)</td></tr>
-    <tr><td class="pc">#02 · #11 · #19 · #27</td><td>Autoridade B2B</td><td>1º mês medido: registrar impressões e comentários de cada post para criar a régua de setembro · #27: ≥ 5 pedidos de LISTA</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr class="grp"><td colspan="6">LinkedIn</td></tr>
+    <tr><td class="pc">Página (12+ posts por reaproveitamento)</td><td>Frequência</td><td>2 posts · 634 impressões · +4 seguidores · CTR de 13,4%</td><td>≥ 12 posts · ≥ 2.000 impressões · +15 seguidores · CTR acima de 10%</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#02 · #11 · #19 · #27 (perfil do Adailson)</td><td>Autoridade B2B</td><td>Perfil pessoal nunca foi medido separado da página</td><td>Baseline: impressões e comentários de cada post · #27: ≥ 3 pedidos de LISTA</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
   </table>
-  <p class="obs">Onde a meta diz "baseline": ainda não existe histórico medido nesse formato, então agosto coleta a régua em vez de chutar número. Metas de conversão (#28, #29, #32) dependem do SLA do Inside Sales ativo — sem resposta rápida, o número cai e a causa não é o conteúdo.</p>
+  <p class="obs">As metas de conversão dependem do SLA do direct e do Inside Sales. Se a resposta demorar, o número cai e a causa não é o conteúdo. Onde está escrito "baseline", o sucesso é ter o número anotado no fim do mês: sem ele, setembro repete o chute.</p>
 </div>
 
 </div><!-- /view-kpi -->
@@ -734,14 +790,14 @@ function showView(which){
   window.scrollTo({top:0});
 }
 
-/* ===================== ESTADO LOCAL (status + anexos) ===================== */
+/* ===================== ESTADO LOCAL (status + anexos + textos editados) ===================== */
 var STORAGE_KEY = 'neshop_cal_agosto2026_v1';
 
 function loadState(){
   try{
     var raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return raw || {status:{}, attach:{}};
-  }catch(e){ return {status:{}, attach:{}}; }
+    return raw || {status:{}, attach:{}, edits:{}};
+  }catch(e){ return {status:{}, attach:{}, edits:{}}; }
 }
 function saveState(){
   try{
@@ -751,9 +807,11 @@ function saveState(){
   }
 }
 var STATE = loadState();
+STATE.status = STATE.status || {};
+STATE.attach = STATE.attach || {};
+STATE.edits = STATE.edits || {};
 
 function allChips(){ return Array.from(document.querySelectorAll('.chip')); }
-
 function assignChipIds(){
   allChips().forEach(function(chip, i){ chip.dataset.chipId = 'c' + i; });
 }
@@ -789,8 +847,23 @@ function initStatusClicks(){
       STATE.status[id] = next.cls;
       saveState();
       refreshFilters();
+      renderStatusSummary();
     });
   });
+}
+
+/* ===================== RESUMO DE STATUS ===================== */
+function renderStatusSummary(){
+  var box = document.getElementById('status-summary');
+  if(!box) return;
+  var counts = {ok:0, edit:0, shoot:0};
+  Array.from(document.querySelectorAll('#view-post .chip .st')).forEach(function(b){
+    STATUS_CYCLE.forEach(function(s){ if(b.classList.contains(s.cls)) counts[s.cls]++; });
+  });
+  box.innerHTML =
+    '<span class="summary-pill ok">✅ ' + counts.ok + '<span>prontos</span></span>' +
+    '<span class="summary-pill edit">🖊️ ' + counts.edit + '<span>em edição</span></span>' +
+    '<span class="summary-pill shoot">🎬 ' + counts.shoot + '<span>para gravar</span></span>';
 }
 
 /* ===================== ANEXOS ===================== */
@@ -1021,15 +1094,71 @@ function refreshFilters(){
   Object.keys(filterState).forEach(function(v){ applyFilters(v); });
 }
 
+/* ===================== MODO DE EDIÇÃO DE TEXTO ===================== */
+var EDITABLE_SELECTORS = [
+  'h1',
+  '.meta-pill',
+  '.wk-label .wt',
+  '.wk-label .wd',
+  '.valor',
+  '.chip .t',
+  '.sts li span',
+  '.note h3',
+  '.note p',
+  '.note li',
+  '.kpi .obs',
+  '.kpi th',
+  '.kpi td'
+];
+
+function allEditable(){ return Array.from(document.querySelectorAll(EDITABLE_SELECTORS.join(','))); }
+function assignEditIds(){
+  allEditable().forEach(function(el, i){ el.dataset.editId = 'ed' + i; });
+}
+function applyEditState(){
+  allEditable().forEach(function(el){
+    var saved = STATE.edits[el.dataset.editId];
+    if(saved !== undefined) el.innerHTML = saved;
+  });
+}
+function saveEditedEl(el){
+  STATE.edits[el.dataset.editId] = el.innerHTML;
+  saveState();
+}
+
+var editModeOn = false;
+function initEditMode(){
+  var btn = document.getElementById('edit-toggle');
+  allEditable().forEach(function(el){
+    el.addEventListener('blur', function(){
+      if(editModeOn) saveEditedEl(el);
+    });
+  });
+  btn.addEventListener('click', function(){
+    editModeOn = !editModeOn;
+    document.body.classList.toggle('edit-mode', editModeOn);
+    allEditable().forEach(function(el){
+      el.contentEditable = editModeOn ? 'true' : 'false';
+      if(!editModeOn) saveEditedEl(el);
+    });
+    btn.textContent = editModeOn ? '💾 Concluir edição' : '✏️ Editar textos';
+    btn.classList.toggle('on', editModeOn);
+  });
+}
+
 /* ===================== INIT ===================== */
 assignChipIds();
+assignEditIds();
+applyEditState();
 initStatusClicks();
 initAttachments();
 buildFilterBar('post');
 buildFilterBar('exec');
+renderStatusSummary();
+initEditMode();
 
 document.getElementById('reset-local').addEventListener('click', function(){
-  if(confirm('Isso vai apagar os status alterados e os anexos salvos neste navegador para este calendário. Confirmar?')){
+  if(confirm('Isso vai apagar status alterados, anexos e textos editados salvos neste navegador para este calendário. Confirmar?')){
     localStorage.removeItem(STORAGE_KEY);
     location.reload();
   }
