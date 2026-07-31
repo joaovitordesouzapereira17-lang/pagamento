@@ -59,6 +59,7 @@
   .dnum{display:flex;align-items:baseline;justify-content:space-between}
   .dnum b{font-family:'Space Grotesk',sans-serif;font-size:20px;color:var(--p900)}
   .dnum .tag{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8fa3a5}
+  .dow-tag{display:none}
 
   /* card: título em destaque, metadados discretos, status em evidência */
   .chip{border-left:3px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
@@ -119,7 +120,7 @@
     .dow{display:none}
     .week{grid-template-columns:1fr}
     .day.empty{display:none}
-    .day .dnum b::after{content:attr(data-dow);font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#8fa3a5;margin-left:8px;text-transform:uppercase;letter-spacing:.08em}
+    .dow-tag{display:inline;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#8fa3a5;margin-left:8px;text-transform:uppercase;letter-spacing:.08em}
     .notes{grid-template-columns:1fr}
     .tab{padding:10px 14px;font-size:13px}
   }
@@ -279,9 +280,9 @@
       <div class="wd">Reunião mensal nesta semana (dia a definir): no dia, os stories da tarde viram bastidor dela — discurso, destaque do mês e vendedor destaque.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">03</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">03</b><span class="dow-tag">seg</span></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#01</span>Neshop Cultura: Gabriel Carrenho</div></div>
-      <div class="chip li"><div class="k">LinkedIn <span class="fu topo">TOPO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#02</span>Downtime é problema estratégico</div></div>
+      <div class="chip li"><div class="k">LinkedIn <span class="fu topo">TOPO</span></div><div class="t"><span class="n">#02</span>Downtime é problema estratégico</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana + gancho do tema</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
@@ -289,7 +290,7 @@
         <li><b>S4</b><span>Enquete leve: "sua operação já parou por falta de peça?"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">04</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">04</b><span class="dow-tag">ter</span></div>
       <details class="sts"><summary class="sh">Stories (dia sem feed)</summary><ol>
         <li><b>S1</b><span>Bastidor de operação da manhã (captura do dia)</span></li>
         <li><b>S2</b><span>Peça sendo separada, pessoa nomeada na tela</span></li>
@@ -297,9 +298,9 @@
         <li><b>S4</b><span>Card: "precisa urgente? Respondemos hoje" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">05</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">05</b><span class="dow-tag">qua</span></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#03</span>InfraFM: Alex</div></div>
-      <div class="chip data"><div class="k">Data · Estático <span class="fu rel">REL.</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#04</span>Dia Nacional da Saúde</div></div>
+      <div class="chip data"><div class="k">Data · Estático <span class="fu rel">REL.</span></div><div class="t"><span class="n">#04</span>Dia Nacional da Saúde</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
@@ -307,7 +308,7 @@
         <li><b>S4</b><span>Teaser: "amanhã tem vídeo novo no canal"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">06</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">06</b><span class="dow-tag">qui</span></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#05</span>Confraternização de junho</div></div>
       <div class="chip yt"><div class="k">YouTube <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#06</span>Super El Niño (institucional)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
@@ -317,9 +318,9 @@
         <li><b>S4</b><span>Card: "manda a etiqueta que respondemos hoje"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">07</b></div>
-      <div class="chip carrossel"><div class="k">Carrossel <span class="fu topo">TOPO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#07</span>5 riscos do prazo do fabricante</div></div>
-      <div class="chip blog"><div class="k">Blog <span class="fu topo">TOPO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#08</span>O custo invisível da peça errada</div></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">07</b><span class="dow-tag">sex</span></div>
+      <div class="chip carrossel"><div class="k">Carrossel <span class="fu topo">TOPO</span></div><div class="t"><span class="n">#07</span>5 riscos do prazo do fabricante</div></div>
+      <div class="chip blog"><div class="k">Blog <span class="fu topo">TOPO</span></div><div class="t"><span class="n">#08</span>O custo invisível da peça errada</div></div>
       <div class="chip data"><div class="k">Agendar p/ domingo <span class="fu rel">REL.</span></div><div class="t"><span class="n">#09</span>Estático Dia dos Pais (dom 09/08)</div></div>
       <div class="chip aprova"><div class="k">Gaveta</div><div class="t">Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
@@ -340,9 +341,9 @@
       <div class="wd">Procedência, critérios de fornecedor e estoque crítico.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">10</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">10</b><span class="dow-tag">seg</span></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#10</span>Neshop Cultura: Guilherme Biazzi</div></div>
-      <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#11</span>O que exigir de um fornecedor VRF</div></div>
+      <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#11</span>O que exigir de um fornecedor VRF</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana + gancho "peça certa de primeira"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
@@ -350,7 +351,7 @@
         <li><b>S4</b><span>Enquete: "você confere procedência antes de comprar?"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">11</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">11</b><span class="dow-tag">ter</span></div>
       <div class="chip"><div class="k">Reel <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#12</span>Essas duas placas parecem idênticas</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor: conferência de procedência (caixa, código, sistema)</span></li>
@@ -359,7 +360,7 @@
         <li><b>S4</b><span>Card: "urgência de campo se mede em minutos" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">12</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">12</b><span class="dow-tag">qua</span></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#13</span>InfraFM: Marcos</div></div>
       <div class="chip yt"><div class="k">Short <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#14</span>Corte 1 do vídeo El Niño</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
@@ -369,9 +370,9 @@
         <li><b>S4</b><span>Quiz rápido sobre o verão 2026-27</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">13</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">13</b><span class="dow-tag">qui</span></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#15</span>Novos uniformes</div></div>
-      <div class="chip blog"><div class="k">Blog <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#16</span>Estoque buffer de peças críticas</div></div>
+      <div class="chip blog"><div class="k">Blog <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#16</span>Estoque buffer de peças críticas</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: novos uniformes</span></li>
         <li><b>S2</b><span>Bastidor do dia</span></li>
@@ -379,8 +380,8 @@
         <li><b>S4</b><span>Caixa: "dúvida técnica? Manda que o time responde"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">14</b></div>
-      <div class="chip carrossel"><div class="k">Carrossel <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#17</span>Checklist: 7 critérios de fornecedor</div></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">14</b><span class="dow-tag">sex</span></div>
+      <div class="chip carrossel"><div class="k">Carrossel <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#17</span>Checklist: 7 critérios de fornecedor</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> da sexta: momento do time</span></li>
         <li><b>S2</b><span>Repost do carrossel #17: "salva pra próxima cotação"</span></li>
@@ -399,9 +400,9 @@
       <div class="wd">Semana temática: preparar o parque para o calor extremo de 2026-27.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">17</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">17</b><span class="dow-tag">seg</span></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#18</span>Neshop Cultura: Isaac</div></div>
-      <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#19</span>Super El Niño como risco operacional</div></div>
+      <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#19</span>Super El Niño como risco operacional</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "o verão que vem não é um verão comum"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
@@ -409,7 +410,7 @@
         <li><b>S4</b><span>Enquete: "sua operação está pronta pro verão?"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">18</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">18</b><span class="dow-tag">ter</span></div>
       <div class="chip"><div class="k">Reel · Ref. de Campo <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#20</span>As peças que o Super El Niño mais vai derrubar</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor da gravação da bancada (Diária C)</span></li>
@@ -418,7 +419,7 @@
         <li><b>S4</b><span>Card: "comenta VERÃO no Reel que enviamos o Checklist El Niño em PDF"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">19</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">19</b><span class="dow-tag">qua</span></div>
       <div class="chip"><div class="k">Reel · InfraFM <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#21</span>InfraFM: Caique (fim da série)</div></div>
       <div class="chip yt"><div class="k">Short <span class="fu meio">MEIO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#22</span>Corte 2 do vídeo El Niño</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
@@ -428,9 +429,9 @@
         <li><b>S4</b><span>CTA: "a gente monta a lista do seu parque"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">20</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">20</b><span class="dow-tag">qui</span></div>
       <div class="chip"><div class="k">Reel · TBT <span class="fu rel">REL.</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#23</span>Confraternização de julho</div></div>
-      <div class="chip estatico"><div class="k">Estático <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#24</span>Quarto interditado no verão do Super El Niño</div></div>
+      <div class="chip estatico"><div class="k">Estático <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#24</span>Quarto interditado no verão do Super El Niño</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: confraternização de julho</span></li>
         <li><b>S2</b><span>Bastidor do dia</span></li>
@@ -438,7 +439,7 @@
         <li><b>S4</b><span>Card: "gestor de hotel? Manda a etiqueta" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">21</b></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">21</b><span class="dow-tag">sex</span></div>
       <div class="chip"><div class="k">Reel · Ref. de Campo <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#25</span>3 peças que derrubam a hotelaria</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> da sexta</span></li>
@@ -458,9 +459,9 @@
       <div class="wd">Fundo de funil: prova real e CTAs de conversa. Inside Sales avisado. Sexta é dos aniversariantes.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">24</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">24</b><span class="dow-tag">seg</span></div>
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#26</span>Neshop Cultura: Alexandre</div></div>
-      <div class="chip li"><div class="k">LinkedIn <span class="fu fundo">FUNDO</span> <span class="st ok">PRONTO</span></div><div class="t"><span class="n">#27</span>Oferta: lista crítica sem custo</div></div>
+      <div class="chip li"><div class="k">LinkedIn <span class="fu fundo">FUNDO</span></div><div class="t"><span class="n">#27</span>Oferta: lista crítica sem custo</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "Fabricante: 90 dias. Neshop: hoje."</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
@@ -468,7 +469,7 @@
         <li><b>S4</b><span>Card: "manda sua cotação agora" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">25</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">25</b><span class="dow-tag">ter</span></div>
       <div class="chip"><div class="k">Reel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#28</span>Fabricante: 90 dias. A gente: hoje.</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bastidor: etiqueta chegando e time identificando</span></li>
@@ -477,7 +478,7 @@
         <li><b>S4</b><span>Card: "manda a sua" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">26</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">26</b><span class="dow-tag">qua</span></div>
       <div class="chip"><div class="k">Reel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#29</span>O que acontece com a sua etiqueta</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
@@ -486,8 +487,8 @@
         <li><b>S4</b><span>Caixa: "qual peça você precisa agora?" + WhatsApp</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">27</b></div>
-      <div class="chip carrossel"><div class="k">Carrossel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#30</span>Fornecedor institucional: além do preço</div></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">27</b><span class="dow-tag">qui</span></div>
+      <div class="chip carrossel"><div class="k">Carrossel <span class="fu fundo">FUNDO</span></div><div class="t"><span class="n">#30</span>Fornecedor institucional: além do preço</div></div>
       <div class="chip yt"><div class="k">YouTube <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#31</span>Original x paralela em VRF (bancada)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em>Anúncio do vídeo novo no canal</em> (1 story só)</span></li>
@@ -496,8 +497,8 @@
         <li><b>S4</b><span>Caixa: "dúvida sobre procedência? Manda aqui"</span></li>
       </ol></details>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">28</b></div>
-      <div class="chip estatico"><div class="k">Estático <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#32</span>09h04 cotação | 13h10 entregue (RPS Global)</div></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">28</b><span class="dow-tag">sex</span></div>
+      <div class="chip estatico"><div class="k">Estático <span class="fu fundo">FUNDO</span></div><div class="t"><span class="n">#32</span>09h04 cotação | 13h10 entregue (RPS Global)</div></div>
       <div class="chip aprova"><div class="k">Gaveta</div><div class="t">Story padrão de sexta é produzido e guardado (os aniversariantes ocupam o slot)</div></div>
       <details class="sts"><summary class="sh">Stories · Aniversariantes do mês</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> + preparação da comemoração</span></li>
@@ -516,7 +517,7 @@
       <div class="wd">Segunda normal da casa, com a ponte para setembro no último story.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">31</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">31</b><span class="dow-tag">seg</span></div>
       <div class="chip aprova"><div class="k">Fechamento interno</div><div class="t"><span class="n">#33</span>Retro de produção do mês (não é post)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana: bastidor da operação abrindo o dia</span></li>
@@ -580,11 +581,11 @@
     <div class="day empty"></div>
     <div class="day empty"></div>
     <div class="day empty"></div>
-    <div class="day"><div class="dnum"><b data-dow="qui">30/07</b><span class="tag">hoje · sem produção</span></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">30/07</b><span class="dow-tag">qui</span><span class="tag">hoje · sem produção</span></div>
       <div class="chip aprova"><div class="k">Dia de alinhamento</div><div class="t">Reuniões do dia · montar o conteúdo do LinkedIn #02</div></div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="sex">31/07</b><span class="tag">dia cheio</span></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">31/07</b><span class="dow-tag">sex</span><span class="tag">dia cheio</span></div>
       <div class="chip exec"><div class="k">Prioridade 1</div><div class="t">Montar os 3 templates (card de story, carrossel, estático)</div></div>
       <div class="chip exec"><div class="k">Prioridade 2</div><div class="t">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div></div>
       <div class="chip aprova"><div class="k">Organização + 16h30</div><div class="t">Aprovação do pacote S1 com o Adailson</div></div>
@@ -598,23 +599,23 @@
       <div class="wd">O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">03</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">03</b><span class="dow-tag">seg</span></div>
       <div class="chip exec"><div class="k">Manhã</div><div class="t">Ajustes do que sobrou da sexta · editar Cultura #10 (pacote S2)</div></div>
       <div class="chip diaria"><div class="k">Diária A · tarde (14h–17h)</div><div class="t">Gravar Reel #12 + fotos das artes #07, #09 e #17</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">04</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">04</b><span class="dow-tag">ter</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Fechar o YouTube #06 e enviar para revisão · editar Reels #12 e #13</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Bastidor de terça no celular (20–30 min) + Cumbuca à tarde</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">05</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">05</b><span class="dow-tag">qua</span></div>
       <div class="chip exec"><div class="k">Manhã</div><div class="t">Ajustes do YouTube #06 pós-revisão · Blog #08 final (transcrição da Diária A) · arte do Carrossel #07</div></div>
       <div class="chip aprova"><div class="k">Tarde · 16h</div><div class="t">APROVAÇÃO do pacote S2 com o Adailson (inclui #07 e #08 desta semana)</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Cumbuca da manhã</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">06</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">06</b><span class="dow-tag">qui</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Publicar o YouTube #06 · refações da aprovação · cortar Shorts #14 e #22 · artes #09 e #17</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">07</b></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">07</b><span class="dow-tag">sex</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Agendamentos da S2 · agendar #09 para domingo · rascunho do Blog #16 · story de gaveta do café</div></div>
     </div>
   </div>
@@ -626,22 +627,22 @@
       <div class="wd">Semana da Diária B: os Reels do tema El Niño saem daqui.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">10</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">10</b><span class="dow-tag">seg</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Finalizar Blog #16 (transcrição do bloco de preparação do vídeo El Niño) · editar Cultura #18 (pacote S3)</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">11</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">11</b><span class="dow-tag">ter</span></div>
       <div class="chip diaria"><div class="k">Diária B · manhã (9h–12h)</div><div class="t">Gravar Reels #20 e #25 + foto do Estático #24</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Bastidor de terça + Cumbuca à tarde</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">12</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">12</b><span class="dow-tag">qua</span></div>
       <div class="chip exec"><div class="k">Manhã</div><div class="t">Editar Reel #20 · texto do LinkedIn #19 · arte do Estático #24</div></div>
       <div class="chip aprova"><div class="k">Tarde · 16h</div><div class="t">APROVAÇÃO do pacote S3 com o Adailson</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Cumbuca da manhã</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">13</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">13</b><span class="dow-tag">qui</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Editar Reel #25 · refações da aprovação · publicar Blog #16 (já revisado)</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">14</b></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">14</b><span class="dow-tag">sex</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Agendamentos da S3 · story de gaveta do café · folga de segurança</div></div>
     </div>
   </div>
@@ -653,23 +654,23 @@
       <div class="wd">Semana da Diária C: a bancada do YouTube e os Reels de conversão saem daqui.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">17</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">17</b><span class="dow-tag">seg</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Confirmar especialista e bancada da Diária C1 · separar as peças · editar Cultura #26 (pacote S4)</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">18</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">18</b><span class="dow-tag">ter</span></div>
       <div class="chip diaria"><div class="k">Diária C1 · manhã (9h–12h)</div><div class="t">Foco total: YouTube #31 na bancada + Reel #28</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Bastidor da própria gravação vira story · Cumbuca à tarde</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">19</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">19</b><span class="dow-tag">qua</span></div>
       <div class="chip diaria"><div class="k">Diária C2 · manhã (1h)</div><div class="t">Gravar Reel #29 + foto do Estático #32</div></div>
       <div class="chip exec"><div class="k">Manhã</div><div class="t">Editar Reel #28 · artes #30 e #32</div></div>
       <div class="chip aprova"><div class="k">Tarde · 16h</div><div class="t">APROVAÇÃO do pacote S4 com o Adailson (Reel #29 segue por aprovação assíncrona na quinta)</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Cumbuca da manhã</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">20</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">20</b><span class="dow-tag">qui</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Editar Reel #29 (envia por mensagem para o Adailson) · refações da aprovação</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">21</b></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">21</b><span class="dow-tag">sex</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Agendamentos da S4 · entregar a matriz de objeções ao Inside Sales · configurar automação do direct · iniciar edição do YouTube #31 (2h)</div></div>
     </div>
   </div>
@@ -681,21 +682,21 @@
       <div class="wd">A semana é dominada pela edição do YouTube #31, que publica quinta.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">24</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">24</b><span class="dow-tag">seg</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Edição do YouTube #31 (bloco de 4h)</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="ter">25</b></div>
+    <div class="day"><div class="dnum"><b data-dow="ter">25</b><span class="dow-tag">ter</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Continuar edição do YouTube #31</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Bastidor de terça + Cumbuca à tarde</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qua">26</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qua">26</b><span class="dow-tag">qua</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Finalizar o YouTube #31 (publica amanhã) · 16h: aprovação do fechamento com o Adailson</div></div>
       <div class="chip exec"><div class="k">Captura</div><div class="t">Cumbuca da manhã</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="qui">27</b></div>
+    <div class="day"><div class="dnum"><b data-dow="qui">27</b><span class="dow-tag">qui</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Publicar YouTube #31 · finalizar Estático #32</div></div>
     </div>
-    <div class="day"><div class="dnum"><b data-dow="sex">28</b></div>
+    <div class="day"><div class="dnum"><b data-dow="sex">28</b><span class="dow-tag">sex</span></div>
       <div class="chip exec"><div class="k">Dia</div><div class="t">Cobrir a comemoração dos aniversariantes · compilar números do mês</div></div>
     </div>
   </div>
@@ -707,7 +708,7 @@
       <div class="wd">Insumo para calibrar setembro.</div>
   </div>
   <div class="week">
-    <div class="day"><div class="dnum"><b data-dow="seg">31</b></div>
+    <div class="day"><div class="dnum"><b data-dow="seg">31</b><span class="dow-tag">seg</span></div>
       <div class="chip exec"><div class="k">Bloco</div><div class="t">Retro de produção: horas reais por frente, o que apertou, o que sobrou · rascunho da grade de setembro (já tem 6 peças de estoque)</div></div>
     </div>
     <div class="day empty"></div>
@@ -1199,6 +1200,7 @@ var EDITABLE_SELECTORS = [
   '.wk-bar .wd',
   '.valor',
   '.dnum b',
+  '.dow-tag',
   '.dnum .tag',
   '.chip .t',
   '.sts li span',
