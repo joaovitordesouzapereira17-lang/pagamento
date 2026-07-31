@@ -233,6 +233,7 @@
       <span class="meta-pill"><b>3</b> diárias de gravação</span>
       <span class="meta-pill">Produção sempre <b>1 semana à frente</b></span>
       <span class="meta-pill">Aprovação: <b>Adailson</b>, quartas à tarde (31/07 excepcionalmente sexta 16h30)</span>
+      <span class="meta-pill">Expediente: <b>7h30 às 17h30</b> (sexta até <b>16h30</b>) — nada agendado ou publicado fora desse horário</span>
     </div>
     <div class="tabs" role="tablist">
       <button class="tab active" id="tab-post" role="tab" aria-selected="true" onclick="showView('post')">📅 Postagem</button>
@@ -547,7 +548,7 @@
       <li>Blog #16 desliza para setembro (o #08 segura o SEO).</li>
       <li>Carrossel #30 vira estático de imagem única.</li>
     </ol>
-    <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #28 e #29, YouTube #31. <span class="warn">Pendência:</span> data da reunião mensal e autorização RPS Global.</p>
+    <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #28 e #29, YouTube #31.</p>
   </div>
 </div>
 
@@ -586,7 +587,7 @@
     <div class="day"><div class="dnum"><b data-dow="sex">31/07</b><span class="tag">dia cheio</span></div>
       <div class="chip exec"><div class="k">Prioridade 1</div><div class="t">Montar os 3 templates (card de story, carrossel, estático)</div></div>
       <div class="chip exec"><div class="k">Prioridade 2</div><div class="t">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div></div>
-      <div class="chip aprova"><div class="k">Organização + 16h30</div><div class="t">Agendar as 3 diárias · autorização RPS Global · data da reunião mensal · aprovação do pacote S1 com o Adailson</div></div>
+      <div class="chip aprova"><div class="k">Organização + 16h30</div><div class="t">Aprovação do pacote S1 com o Adailson</div></div>
     </div>
   </div>
 
@@ -1189,17 +1190,22 @@ function refreshFilters(){
 
 /* ===================== MODO DE EDIÇÃO DE TEXTO ===================== */
 var EDITABLE_SELECTORS = [
+  '.brand',
   'h1',
   '.meta-pill',
+  '.legend .lg',
+  '.wk-bar .wn',
   '.wk-bar .wt',
   '.wk-bar .wd',
   '.valor',
+  '.dnum b',
+  '.dnum .tag',
   '.chip .t',
   '.sts li span',
   '.note h3',
   '.note p',
   '.note li',
-  '.kpi .obs',
+  '.obs',
   '.kpi th',
   '.kpi td'
 ];
