@@ -131,6 +131,8 @@
   .hdr-btn{font-family:'Inter',sans-serif;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
   .hdr-btn:hover{background:rgba(255,255,255,.18)}
   .hdr-btn.on{background:var(--p200);border-color:var(--p200);color:var(--p900)}
+  .sync-indicator{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--p200);display:inline-flex;align-items:center;padding:7px 4px}
+  .sync-indicator.off{color:#e08080}
 
   /* ===== toques visuais ===== */
   .day{box-shadow:0 1px 3px rgba(6,38,43,.06);transition:box-shadow .15s,transform .15s}
@@ -244,7 +246,8 @@
     <div class="header-actions">
       <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
       <button type="button" class="hdr-btn" id="toggle-stories" title="Mostrar ou esconder a lista de stories em todos os dias de uma vez">▾ Expandir stories</button>
-      <button type="button" class="hdr-btn" id="reset-local">Limpar alterações salvas neste navegador</button>
+      <button type="button" class="hdr-btn" id="reset-local" title="Apaga o status, os anexos e os textos editados para todo mundo">Limpar tudo (afeta todo mundo)</button>
+      <span id="sync-indicator" class="sync-indicator" title="Este calendário é compartilhado — mudanças aparecem para todo mundo que tiver o arquivo aberto">🔄 Conectando à nuvem…</span>
     </div>
   </div>
 </header>
@@ -803,6 +806,8 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script>
 function showView(which){
   ['post','exec','kpi'].forEach(function(v){
@@ -815,30 +820,77 @@ function showView(which){
   window.scrollTo({top:0});
 }
 
-/* ===================== ESTADO LOCAL (status + anexos + textos editados) ===================== */
-var STORAGE_KEY = 'neshop_cal_agosto2026_v1';
+/* ===================== ESTADO COMPARTILHADO (Firebase Realtime Database) =====================
+   Todo mundo que abre este arquivo lê e escreve no mesmo banco na nuvem, então status,
+   anexos e textos editados por qualquer pessoa aparecem automaticamente para as outras. */
+var firebaseConfig = {
+  apiKey: "AIzaSyAf3KsWwkAeg71wsmmQtxYd4CDwqQtW38M",
+  authDomain: "calendario-neshop.firebaseapp.com",
+  databaseURL: "https://calendario-neshop-default-rtdb.firebaseio.com",
+  projectId: "calendario-neshop",
+  storageBucket: "calendario-neshop.firebasestorage.app",
+  messagingSenderId: "932823371314",
+  appId: "1:932823371314:web:78f2983004f74011b8762b"
+};
+firebase.initializeApp(firebaseConfig);
+var stateRef = firebase.database().ref('calendarState');
 
-function loadState(){
-  try{
-    var raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return raw || {status:{}, attach:{}, edits:{}};
-  }catch(e){ return {status:{}, attach:{}, edits:{}}; }
+var STATE = {status:{}, attach:{}, edits:{}};
+var stateLoaded = false;
+
+function normalizeState(raw){
+  var s = raw || {};
+  s.status = s.status || {};
+  s.attach = s.attach || {};
+  s.edits = s.edits || {};
+  return s;
 }
+
 function saveState(){
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-  }catch(e){
-    alert('Não foi possível salvar: o armazenamento local do navegador está cheio. Para arquivos grandes, prefira anexar por link em vez de enviar o arquivo.');
-  }
+  stateRef.set(STATE).catch(function(err){
+    alert('Não foi possível salvar na nuvem agora (sem conexão?). Sua mudança pode não ter sido compartilhada. Detalhe: ' + err.message);
+    setSyncIndicator(false);
+  });
 }
-var STATE = loadState();
-STATE.status = STATE.status || {};
-STATE.attach = STATE.attach || {};
-STATE.edits = STATE.edits || {};
+
+function setSyncIndicator(connected, loading){
+  var el = document.getElementById('sync-indicator');
+  if(!el) return;
+  if(loading){ el.textContent = '🔄 Conectando à nuvem…'; el.className = 'sync-indicator'; return; }
+  el.textContent = connected ? '🟢 Sincronizado' : '🔴 Sem conexão com a nuvem';
+  el.className = 'sync-indicator ' + (connected ? 'ok' : 'off');
+}
+
+stateRef.on('value', function(snapshot){
+  STATE = normalizeState(snapshot.val());
+  stateLoaded = true;
+  renderAll();
+}, function(err){
+  console.error('Firebase read failed:', err);
+  setSyncIndicator(false);
+});
+
+firebase.database().ref('.info/connected').on('value', function(snap){
+  if(stateLoaded) setSyncIndicator(snap.val() === true);
+});
+
+// se a nuvem não responder em alguns segundos (rede bloqueada, firewall etc.),
+// mostra o calendário mesmo assim, só sem sincronização, em vez de travar "conectando"
+setTimeout(function(){
+  if(!stateLoaded){
+    stateLoaded = true;
+    renderAll();
+    setSyncIndicator(false);
+  }
+}, 6000);
 
 function allChips(){ return Array.from(document.querySelectorAll('.chip')); }
 function assignChipIds(){
-  allChips().forEach(function(chip, i){ chip.dataset.chipId = 'c' + i; });
+  allChips().forEach(function(chip, i){
+    chip.dataset.chipId = 'c' + i;
+    var badge = chip.querySelector('.st');
+    if(badge) badge.dataset.originalCls = STATUS_CYCLE.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
+  });
 }
 
 /* ===================== STATUS CLICÁVEL ===================== */
@@ -856,12 +908,21 @@ function applyStatusBadge(badge, cls){
   badge.textContent = found.label;
 }
 
+function applyStatusFromState(){
+  allChips().forEach(function(chip){
+    var badge = chip.querySelector('.st');
+    if(!badge) return;
+    var id = chip.dataset.chipId;
+    var target = STATE.status[id] || badge.dataset.originalCls;
+    applyStatusBadge(badge, target);
+  });
+}
+
 function initStatusClicks(){
   allChips().forEach(function(chip){
     var badge = chip.querySelector('.st');
     if(!badge) return;
     var id = chip.dataset.chipId;
-    if(STATE.status[id]) applyStatusBadge(badge, STATE.status[id]);
     badge.title = 'Clique para mudar o status';
     badge.addEventListener('click', function(e){
       e.stopPropagation();
@@ -1214,12 +1275,17 @@ var EDITABLE_SELECTORS = [
 
 function allEditable(){ return Array.from(document.querySelectorAll(EDITABLE_SELECTORS.join(','))); }
 function assignEditIds(){
-  allEditable().forEach(function(el, i){ el.dataset.editId = 'ed' + i; });
+  allEditable().forEach(function(el, i){
+    el.dataset.editId = 'ed' + i;
+    el.dataset.originalHtml = el.innerHTML; // guarda o texto original pra poder voltar (reset, ou quando ninguém editou)
+  });
 }
 function applyEditState(){
   allEditable().forEach(function(el){
+    if(document.activeElement === el) return; // não sobrescrever quem está digitando agora
     var saved = STATE.edits[el.dataset.editId];
-    if(saved !== undefined) el.innerHTML = saved;
+    var target = (saved !== undefined) ? saved : el.dataset.originalHtml;
+    if(el.innerHTML !== target) el.innerHTML = target;
   });
 }
 function saveEditedEl(el){
@@ -1258,23 +1324,35 @@ function initStoriesToggle(){
   });
 }
 
+/* ===================== RENDERIZAÇÃO A PARTIR DO ESTADO (local ou vindo da nuvem) ===================== */
+function applyAttachFromState(){
+  allChips().forEach(function(chip){ renderAttachBadge(chip); });
+}
+
+function renderAll(){
+  applyStatusFromState();
+  applyAttachFromState();
+  applyEditState();
+  refreshFilters();
+  renderDashboard();
+  renderKpiCharts();
+  setSyncIndicator(true);
+}
+
 /* ===================== INIT ===================== */
 assignChipIds();
 assignEditIds();
-applyEditState();
 initStatusClicks();
 initAttachments();
 buildFilterBar('post');
 buildFilterBar('exec');
-renderDashboard();
-renderKpiCharts();
 initEditMode();
 initStoriesToggle();
+setSyncIndicator(false, true);
 
 document.getElementById('reset-local').addEventListener('click', function(){
-  if(confirm('Isso vai apagar status alterados, anexos e textos editados salvos neste navegador para este calendário. Confirmar?')){
-    localStorage.removeItem(STORAGE_KEY);
-    location.reload();
+  if(confirm('Isso vai apagar o status, os anexos e os textos editados para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
+    stateRef.set({status:{}, attach:{}, edits:{}});
   }
 });
 </script>
