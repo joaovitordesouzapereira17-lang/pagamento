@@ -74,6 +74,13 @@
   .chip .t{margin-top:2px;color:var(--p900);font-weight:600;font-size:14px}
   .chip .n{color:#9aa8aa;font-weight:400;margin-right:3px}
 
+  /* checkbox de postado (Postagem) / feito (Execução) */
+  .check-row{display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);font-size:11.5px;font-weight:600;color:#8fa3a5;cursor:pointer;user-select:none}
+  .check-row input{width:14px;height:14px;accent-color:var(--ok);cursor:pointer;flex:none}
+  .check-row.checked{color:var(--ok)}
+  .check-row.checked span{text-decoration:line-through;text-decoration-color:rgba(31,122,77,.45)}
+  .chip:has(.check-row.checked){opacity:.7}
+
   /* a identidade do formato agora é só a borda lateral + o ícone; o texto do rótulo fica neutro */
   .chip.carrossel{border-color:var(--p900);background:#EDF2F2}
   .chip.estatico{border-color:#7FA8AD;background:#F4F8F8}
@@ -287,18 +294,18 @@
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#01</span>Neshop Cultura: Gabriel Carrenho</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu topo">TOPO</span></div><div class="t"><span class="n">#02</span>Downtime é problema estratégico</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
-        <li><b>S1</b><span>Bom começo de semana + gancho do tema</span></li>
+        <li><b>S1</b><span>Dado de abertura: o prazo padrão do mercado pra repor uma peça crítica é de 90 a 120 dias</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor do estoque abrindo a semana</span></li>
-        <li><b>S4</b><span>Enquete leve: "sua operação já parou por falta de peça?"</span></li>
+        <li><b>S3</b><span>O que isso custa na prática: sala fechada, SLA em risco, contrato pressionado</span></li>
+        <li><b>S4</b><span>Enquete: "sua operação já parou por falta de peça?" (resultado amanhã)</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">04</b><span class="dow-tag">ter</span></div>
       <details class="sts"><summary class="sh">Stories (dia sem feed)</summary><ol>
-        <li><b>S1</b><span>Bastidor de operação da manhã (captura do dia)</span></li>
-        <li><b>S2</b><span>Peça sendo separada, pessoa nomeada na tela</span></li>
+        <li><b>S1</b><span>Resultado da enquete de ontem + "é por isso que medimos em minutos, não em dias"</span></li>
+        <li><b>S2</b><span>Como funciona: peça sendo identificada e separada, pessoa nomeada na tela</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma e do livro</span></li>
-        <li><b>S4</b><span>Card: "precisa urgente? Respondemos hoje" + WhatsApp</span></li>
+        <li><b>S4</b><span>"Manda a etiqueta e a gente confirma se está no seu estoque hoje mesmo" + WhatsApp</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">05</b><span class="dow-tag">qua</span></div>
@@ -307,7 +314,7 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor do dia</span></li>
+        <li><b>S3</b><span>Prévia: o dado que abre o vídeo de amanhã</span></li>
         <li><b>S4</b><span>Teaser: "amanhã tem vídeo novo no canal"</span></li>
       </ol></details>
     </div>
@@ -318,7 +325,7 @@
         <li><b>S1</b><span><em class="casa">Template TBT</em> do dia</span></li>
         <li><b>S2</b><span><em>Anúncio do vídeo novo no canal</em> (1 story só)</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
-        <li><b>S4</b><span>Card: "manda a etiqueta que respondemos hoje"</span></li>
+        <li><b>S4</b><span>"Depois do vídeo: sua operação tem as peças certas pro que vem por aí? Manda a etiqueta" + WhatsApp</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">07</b><span class="dow-tag">sex</span></div>
@@ -329,7 +336,7 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">CAFÉ TURBINADO</em>: vídeo do time na mesa</span></li>
         <li><b>S2</b><span>Recap curto da semana + resultado da enquete</span></li>
-        <li><b>S3</b><span>Bastidor: fechando a semana no galpão</span></li>
+        <li><b>S3</b><span>Fechamento do tema: "o problema nunca é a peça, é o tempo parado"</span></li>
         <li><b>S4</b><span><em class="casa">Neshop + frase</em>: bom fim de semana</span></li>
       </ol></details>
     </div>
@@ -348,19 +355,19 @@
       <div class="chip"><div class="k">Reel · Cultura <span class="fu rel">REL.</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#10</span>Neshop Cultura: Guilherme Biazzi</div></div>
       <div class="chip li"><div class="k">LinkedIn <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#11</span>O que exigir de um fornecedor VRF</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
-        <li><b>S1</b><span>Bom começo de semana + gancho "peça certa de primeira"</span></li>
+        <li><b>S1</b><span>Gancho: "comprar a peça errada custa mais do que parece"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor: recebimento de peça original</span></li>
-        <li><b>S4</b><span>Enquete: "você confere procedência antes de comprar?"</span></li>
+        <li><b>S3</b><span>Prova: como garantimos que toda peça é original, do recebimento ao seu estoque</span></li>
+        <li><b>S4</b><span>Enquete: "você confere procedência antes de comprar?" (resultado amanhã)</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">11</b><span class="dow-tag">ter</span></div>
       <div class="chip"><div class="k">Reel <span class="fu topo">TOPO</span> <span class="st edit">EDIÇÃO</span></div><div class="t"><span class="n">#12</span>Essas duas placas parecem idênticas</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
-        <li><b>S1</b><span>Bastidor: conferência de procedência (caixa, código, sistema)</span></li>
+        <li><b>S1</b><span>Resultado da enquete de ontem + conferência de procedência (caixa, código, sistema)</span></li>
         <li><b>S2</b><span>Close na embalagem e nota original</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma</span></li>
-        <li><b>S4</b><span>Card: "urgência de campo se mede em minutos" + WhatsApp</span></li>
+        <li><b>S4</b><span>"Igual ao Reel de hoje: manda a etiqueta ou o modelo e a gente confirma se é original" + WhatsApp</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua">12</b><span class="dow-tag">qua</span></div>
@@ -370,7 +377,7 @@
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
         <li><b>S3</b><span>Tema El Niño: repost do Short #14</span></li>
-        <li><b>S4</b><span>Quiz rápido sobre o verão 2026-27</span></li>
+        <li><b>S4</b><span>Quiz rápido sobre o verão 2026-27 (gabarito sexta)</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui">13</b><span class="dow-tag">qui</span></div>
@@ -378,9 +385,9 @@
       <div class="chip blog"><div class="k">Blog <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#16</span>Estoque buffer de peças críticas</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: novos uniformes</span></li>
-        <li><b>S2</b><span>Bastidor do dia</span></li>
+        <li><b>S2</b><span>Por trás do blog de hoje: o que acontece quando uma peça crítica falta no estoque</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
-        <li><b>S4</b><span>Caixa: "dúvida técnica? Manda que o time responde"</span></li>
+        <li><b>S4</b><span>Caixa: "dúvida sobre o que manter em estoque crítico? Manda que o time responde"</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">14</b><span class="dow-tag">sex</span></div>
@@ -409,14 +416,14 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "o verão que vem não é um verão comum"</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor do estoque com foco nas peças de verão</span></li>
-        <li><b>S4</b><span>Enquete: "sua operação está pronta pro verão?"</span></li>
+        <li><b>S3</b><span>O que o calor extremo faz com compressor, capacitor e sensor</span></li>
+        <li><b>S4</b><span>Enquete: "sua operação está pronta pro verão?" (resultado amanhã)</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">18</b><span class="dow-tag">ter</span></div>
       <div class="chip"><div class="k">Reel · Ref. de Campo <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#20</span>As peças que o Super El Niño mais vai derrubar</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
-        <li><b>S1</b><span>Bastidor da gravação da bancada (Diária C)</span></li>
+        <li><b>S1</b><span>Resultado da enquete de ontem + bastidor da gravação da bancada (Diária C1)</span></li>
         <li><b>S2</b><span>Repost do Reel #20 com sticker "salva"</span></li>
         <li><b>S3</b><span><em class="casa">Cumbuca</em> da tarde: vídeo da turma</span></li>
         <li><b>S4</b><span>Card: "comenta VERÃO no Reel que enviamos o Checklist El Niño em PDF"</span></li>
@@ -437,9 +444,9 @@
       <div class="chip estatico"><div class="k">Estático <span class="fu meio">MEIO</span></div><div class="t"><span class="n">#24</span>Quarto interditado no verão do Super El Niño</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Template TBT</em>: confraternização de julho</span></li>
-        <li><b>S2</b><span>Bastidor do dia</span></li>
+        <li><b>S2</b><span>O que acontece quando um quarto de hotel fica sem climatização no meio do verão</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
-        <li><b>S4</b><span>Card: "gestor de hotel? Manda a etiqueta" + WhatsApp</span></li>
+        <li><b>S4</b><span>"Isso pode ser evitado: manda a etiqueta do equipamento e a gente confirma disponibilidade" + WhatsApp</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">21</b><span class="dow-tag">sex</span></div>
@@ -468,8 +475,8 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Abertura: "Fabricante: 90 dias. Neshop: hoje."</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor: os 3 galpões e o suporte de fábrica</span></li>
-        <li><b>S4</b><span>Card: "manda sua cotação agora" + WhatsApp</span></li>
+        <li><b>S3</b><span>Bastidor: os 3 galpões e o suporte de fábrica que sustentam isso</span></li>
+        <li><b>S4</b><span>"Não espera descobrir os 90 dias na hora que mais precisa. Manda sua cotação agora" + WhatsApp</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter">25</b><span class="dow-tag">ter</span></div>
@@ -486,7 +493,7 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Selfie Caique: oferta dos 30 min sem custo</span></li>
+        <li><b>S3</b><span>Print real: elogio de cliente no direct (dados ocultos)</span></li>
         <li><b>S4</b><span>Caixa: "qual peça você precisa agora?" + WhatsApp</span></li>
       </ol></details>
     </div>
@@ -495,13 +502,13 @@
       <div class="chip yt"><div class="k">YouTube <span class="fu meio">MEIO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#31</span>Original x paralela em VRF (bancada)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span><em>Anúncio do vídeo novo no canal</em> (1 story só)</span></li>
-        <li><b>S2</b><span>Bastidor do dia</span></li>
+        <li><b>S2</b><span>Prévia: a diferença que aparece quando você abre uma peça original ao lado de uma paralela</span></li>
         <li><b>S3</b><span><em class="casa">Feedback de cliente</em> (template)</span></li>
-        <li><b>S4</b><span>Caixa: "dúvida sobre procedência? Manda aqui"</span></li>
+        <li><b>S4</b><span>Caixa: "dúvida sobre o que avaliar num fornecedor além do preço? Manda aqui"</span></li>
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex">28</b><span class="dow-tag">sex</span></div>
-      <div class="chip estatico"><div class="k">Estático <span class="fu fundo">FUNDO</span></div><div class="t"><span class="n">#32</span>09h04 cotação | 13h10 entregue (RPS Global)</div></div>
+      <div class="chip"><div class="k">Reel <span class="fu fundo">FUNDO</span> <span class="st shoot">GRAVAR</span></div><div class="t"><span class="n">#32</span>O dia em que um hotel quase perdeu a alta temporada</div></div>
       <div class="chip aprova"><div class="k">Gaveta</div><div class="t">Story padrão de sexta é produzido e guardado (os aniversariantes ocupam o slot)</div></div>
       <details class="sts"><summary class="sh">Stories · Aniversariantes do mês</summary><ol>
         <li><b>S1</b><span><em class="casa">Café</em> + preparação da comemoração</span></li>
@@ -525,7 +532,7 @@
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span>Bom começo de semana: bastidor da operação abrindo o dia</span></li>
         <li><b>S2</b><span><em class="casa">Neshop + frase</em></span></li>
-        <li><b>S3</b><span>Bastidor: peça do dia sendo separada, pessoa nomeada</span></li>
+        <li><b>S3</b><span>Setembro já está sendo desenhado nos bastidores</span></li>
         <li><b>S4</b><span>Caixa: "o que você quer ver por aqui em setembro?"</span></li>
       </ol></details>
     </div>
@@ -552,7 +559,7 @@
       <li>Blog #16 desliza para setembro (o #08 segura o SEO).</li>
       <li>Carrossel #30 vira estático de imagem única.</li>
     </ol>
-    <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #28 e #29, YouTube #31.</p>
+    <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #28 e #29, YouTube #31. <span class="warn">Pendência:</span> data da reunião mensal · separar um print real da semana para o #32.</p>
   </div>
 </div>
 
@@ -591,7 +598,7 @@
     <div class="day"><div class="dnum"><b data-dow="sex">31/07</b><span class="dow-tag">sex</span><span class="tag">dia cheio</span></div>
       <div class="chip exec"><div class="k">Prioridade 1</div><div class="t">Montar os 3 templates (card de story, carrossel, estático)</div></div>
       <div class="chip exec"><div class="k">Prioridade 2</div><div class="t">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div></div>
-      <div class="chip aprova"><div class="k">Organização + 16h30</div><div class="t">Aprovação do pacote S1 com o Adailson</div></div>
+      <div class="chip aprova"><div class="k">Organização + 16h30</div><div class="t">Agendar as 3 diárias · data da reunião mensal · aprovação do pacote S1 com o Adailson</div></div>
     </div>
   </div>
 
@@ -778,7 +785,7 @@
     <tr><td class="pc">#28 Reel 90 dias vs hoje</td><td>Conversão</td><td>CTA de link na bio rendeu 1,34% de engajamento; CTA de conversa nunca foi medido</td><td>≥ 700 views · baseline: nº de cotações abertas no WhatsApp na semana (validar com Inside Sales)</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
     <tr><td class="pc">#29 Reel etiqueta</td><td>Conversão</td><td>Sem histórico de pedido por etiqueta vindo do perfil</td><td>Baseline: quantas etiquetas chegam na DM e no WhatsApp na semana</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
     <tr><td class="pc">#31 YouTube bancada</td><td>Autoridade técnica</td><td>Comparar com o #06 do mesmo mês</td><td>Views e retenção ≥ as do #06</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
-    <tr><td class="pc">#32 Estático case RPS</td><td>Prova social</td><td>Bastidor real (Trane) foi o melhor engajamento do trimestre: 9,36%</td><td>Engajamento ≥ 6% · ≥ 400 contas alcançadas</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
+    <tr><td class="pc">#32 Reel narrativo (hotel)</td><td>Prova + conversão</td><td>Faixa comum de views próprias: 350 a 666</td><td>≥ 600 views · ≥ 8 salvamentos · ≥ 3 comentários HOTEL</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
 
     <tr class="grp"><td colspan="6">LinkedIn</td></tr>
     <tr><td class="pc">Página (12+ posts por reaproveitamento)</td><td>Frequência</td><td>2 posts · 634 impressões · +4 seguidores · CTR de 13,4%</td><td>≥ 12 posts · ≥ 2.000 impressões · +15 seguidores · CTR acima de 10%</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>
@@ -835,7 +842,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var stateRef = firebase.database().ref('calendarState');
 
-var STATE = {status:{}, attach:{}, edits:{}};
+var STATE = {status:{}, attach:{}, edits:{}, done:{}};
 var stateLoaded = false;
 
 function normalizeState(raw){
@@ -843,6 +850,7 @@ function normalizeState(raw){
   s.status = s.status || {};
   s.attach = s.attach || {};
   s.edits = s.edits || {};
+  s.done = s.done || {};
   return s;
 }
 
@@ -1132,8 +1140,13 @@ function renderDashboard(){
     return '<span class="mini-pill">🔻 <b>' + c.funil[d.key] + '</b> ' + d.label + '</span>';
   }).join('');
 
+  var postChips = Array.from(document.querySelectorAll('#view-post .chip:not(.aprova)'));
+  var postedCount = postChips.filter(function(chip){ return STATE.done[chip.dataset.chipId]; }).length;
+  var publicadoHtml = '<span class="summary-pill ok">✅ ' + postedCount + ' de ' + postChips.length + '<span>postados</span></span>';
+
   box.innerHTML =
     '<div class="dash-row"><span class="dash-row-label">Status</span>' + statusHtml + '</div>' +
+    '<div class="dash-row"><span class="dash-row-label">Publicado</span>' + publicadoHtml + '</div>' +
     '<div class="dash-row"><span class="dash-row-label">Formato</span>' + typeHtml + '</div>' +
     '<div class="dash-row"><span class="dash-row-label">Funil</span>' + funilHtml + '</div>';
 }
@@ -1324,6 +1337,46 @@ function initStoriesToggle(){
   });
 }
 
+/* ===================== CHECK "POSTADO" (Postagem) / "FEITO" (Execução) ===================== */
+function addCheckRow(chip, label){
+  var row = document.createElement('label');
+  row.className = 'check-row';
+  var input = document.createElement('input');
+  input.type = 'checkbox';
+  var span = document.createElement('span');
+  span.textContent = label;
+  row.appendChild(input);
+  row.appendChild(span);
+  chip.appendChild(row);
+  input.addEventListener('change', function(){
+    var id = chip.dataset.chipId;
+    STATE.done[id] = input.checked;
+    row.classList.toggle('checked', input.checked);
+    saveState();
+    renderDashboard();
+  });
+}
+
+function initDoneCheckboxes(){
+  Array.from(document.querySelectorAll('#view-post .chip')).forEach(function(chip){
+    if(chip.classList.contains('aprova')) return; // Gaveta / Fechamento interno não são posts
+    addCheckRow(chip, 'Postado');
+  });
+  Array.from(document.querySelectorAll('#view-exec .chip')).forEach(function(chip){
+    addCheckRow(chip, 'Feito');
+  });
+}
+
+function applyDoneFromState(){
+  Array.from(document.querySelectorAll('.chip .check-row')).forEach(function(row){
+    var chip = row.closest('.chip');
+    var input = row.querySelector('input');
+    var checked = !!STATE.done[chip.dataset.chipId];
+    input.checked = checked;
+    row.classList.toggle('checked', checked);
+  });
+}
+
 /* ===================== RENDERIZAÇÃO A PARTIR DO ESTADO (local ou vindo da nuvem) ===================== */
 function applyAttachFromState(){
   allChips().forEach(function(chip){ renderAttachBadge(chip); });
@@ -1333,6 +1386,7 @@ function renderAll(){
   applyStatusFromState();
   applyAttachFromState();
   applyEditState();
+  applyDoneFromState();
   refreshFilters();
   renderDashboard();
   renderKpiCharts();
@@ -1344,6 +1398,7 @@ assignChipIds();
 assignEditIds();
 initStatusClicks();
 initAttachments();
+initDoneCheckboxes();
 buildFilterBar('post');
 buildFilterBar('exec');
 initEditMode();
@@ -1351,8 +1406,8 @@ initStoriesToggle();
 setSyncIndicator(false, true);
 
 document.getElementById('reset-local').addEventListener('click', function(){
-  if(confirm('Isso vai apagar o status, os anexos e os textos editados para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
-    stateRef.set({status:{}, attach:{}, edits:{}});
+  if(confirm('Isso vai apagar o status, os anexos, os textos editados e os checks de postado/feito para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
+    stateRef.set({status:{}, attach:{}, edits:{}, done:{}});
   }
 });
 </script>
