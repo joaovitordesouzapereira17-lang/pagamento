@@ -145,6 +145,21 @@
   .day{box-shadow:0 1px 3px rgba(6,38,43,.06);transition:box-shadow .15s,transform .15s}
   .day:not(.empty):hover{box-shadow:0 6px 16px rgba(6,38,43,.12);transform:translateY(-2px)}
   .day:has(.tag){border-color:var(--p500);box-shadow:0 0 0 2px rgba(28,110,121,.18)}
+  .day.is-today{border-color:var(--shoot);box-shadow:0 0 0 2px rgba(163,74,42,.25)}
+
+  /* ===== resumo do dia, ao abrir ===== */
+  #today-summary{max-width:1680px;margin:16px auto 0;padding:0 28px}
+  .today-card{background:#fff;border:2px solid var(--shoot);border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(6,38,43,.08)}
+  .today-card h2{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--p900);margin-bottom:10px}
+  .today-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .today-col h5{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;margin-bottom:7px}
+  .today-item{display:flex;align-items:baseline;gap:8px;font-size:13px;padding:5px 0;border-top:1px dashed var(--line)}
+  .today-item:first-of-type{border-top:none}
+  .today-item a{color:var(--p700);font-weight:600;text-decoration:none}
+  .today-item a:hover{text-decoration:underline}
+  .today-item .todo{color:#8fa3a5;font-size:10.5px;text-transform:uppercase;font-weight:700;flex:none}
+  .today-empty{color:#5a6f72;font-size:13px}
+  .today-done{color:var(--ok);font-weight:600;font-size:13.5px}
   .note{box-shadow:0 1px 3px rgba(6,38,43,.06)}
   .kpi table{box-shadow:0 1px 3px rgba(6,38,43,.06)}
   .kpi table tr:not(.grp):hover td{background:#FAFCFC}
@@ -202,7 +217,7 @@
   .st{cursor:pointer;user-select:none}
 
   /* ===== anexos ===== */
-  .attach-badge{margin-left:auto;flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;line-height:1;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;cursor:pointer;color:#8fa3a5;opacity:0;transition:opacity .12s}
+  .attach-badge{margin-left:auto;flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;line-height:1;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;cursor:pointer;color:#8fa3a5;opacity:.55;transition:opacity .12s}
   .chip:hover .attach-badge, .chip:focus-within .attach-badge, .attach-badge.has{opacity:1}
   .attach-badge.has{background:var(--p200);border-color:var(--p500);color:var(--p900)}
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(6,38,43,.55);z-index:200;align-items:center;justify-content:center;padding:20px}
@@ -258,6 +273,8 @@
     </div>
   </div>
 </header>
+
+<div id="today-summary"></div>
 
 <!-- ============ CALENDÁRIO DE POSTAGEM ============ -->
 <div class="view active" id="view-post">
@@ -1355,6 +1372,7 @@ function addCheckRow(chip, label){
     row.classList.toggle('checked', input.checked);
     saveState();
     renderDashboard();
+    renderTodaySummary();
   });
 }
 
@@ -1378,6 +1396,104 @@ function applyDoneFromState(){
   });
 }
 
+/* ===================== RESUMO DE HOJE ===================== */
+var MONTH_NAMES_PT = {janeiro:1,fevereiro:2,março:3,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12};
+var WEEKDAY_NAMES_PT = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+
+function getReferenceMonthYear(){
+  var h1 = document.querySelector('h1');
+  var text = h1 ? h1.textContent.toLowerCase() : '';
+  var yearMatch = text.match(/\b(20\d{2})\b/);
+  var monthKey = Object.keys(MONTH_NAMES_PT).find(function(name){ return text.indexOf(name) !== -1; });
+  var today = new Date();
+  return {
+    month: monthKey ? MONTH_NAMES_PT[monthKey] : (today.getMonth() + 1),
+    year: yearMatch ? parseInt(yearMatch[1], 10) : today.getFullYear()
+  };
+}
+
+function findTodayCells(){
+  var today = new Date();
+  var ref = getReferenceMonthYear();
+  var out = [];
+  Array.from(document.querySelectorAll('.day:not(.empty)')).forEach(function(day){
+    var b = day.querySelector('.dnum b');
+    if(!b) return;
+    var text = b.textContent.trim();
+    var d, m;
+    if(text.indexOf('/') !== -1){
+      var parts = text.split('/');
+      d = parseInt(parts[0], 10); m = parseInt(parts[1], 10);
+    } else {
+      d = parseInt(text, 10); m = ref.month;
+    }
+    if(d === today.getDate() && m === (today.getMonth() + 1) && ref.year === today.getFullYear()) out.push(day);
+  });
+  return out;
+}
+
+function buildTodayList(day, doneLabel){
+  return Array.from(day.querySelectorAll('.chip')).filter(function(chip){
+    return !chip.classList.contains('aprova') || doneLabel === 'Feito';
+  }).map(function(chip){
+    var titleEl = chip.querySelector('.title-text') || chip.querySelector('.t');
+    var title = titleEl ? titleEl.textContent.trim() : chip.querySelector('.k').textContent.trim();
+    var done = !!STATE.done[chip.dataset.chipId];
+    return { id: chip.dataset.chipId, title: title, done: done };
+  });
+}
+
+function renderTodaySummary(){
+  var box = document.getElementById('today-summary');
+  if(!box) return;
+  var cells = findTodayCells();
+  var today = new Date();
+  var weekday = WEEKDAY_NAMES_PT[today.getDay()];
+  var dateLabel = weekday + ', ' + String(today.getDate()).padStart(2, '0') + '/' + String(today.getMonth() + 1).padStart(2, '0');
+
+  document.querySelectorAll('.day.is-today').forEach(function(d){ d.classList.remove('is-today'); });
+
+  if(!cells.length){
+    box.innerHTML = '<div class="today-card"><h2>📅 Hoje é ' + dateLabel + '</h2><p class="today-empty">Nenhum item deste calendário cai em hoje (pode ser fim de semana ou fora do período coberto).</p></div>';
+    return;
+  }
+
+  var postItems = [], execItems = [];
+  cells.forEach(function(day){
+    day.classList.add('is-today');
+    if(day.closest('#view-post')) postItems = postItems.concat(buildTodayList(day, 'Postado'));
+    if(day.closest('#view-exec')) execItems = execItems.concat(buildTodayList(day, 'Feito'));
+  });
+
+  function renderCol(title, items, verb){
+    if(!items.length) return '';
+    var pending = items.filter(function(i){ return !i.done; });
+    var body = pending.length
+      ? pending.map(function(i){ return '<div class="today-item"><span class="todo">' + verb + '</span><a href="#" data-chip-id="' + i.id + '">' + i.title + '</a></div>'; }).join('')
+      : '<div class="today-done">✅ Tudo ' + (verb === 'POSTAR' ? 'postado' : 'feito') + ' por hoje</div>';
+    return '<div class="today-col"><h5>' + title + ' (' + pending.length + ' de ' + items.length + ')</h5>' + body + '</div>';
+  }
+
+  var cols = renderCol('Pra postar hoje', postItems, 'POSTAR') + renderCol('Pra fazer hoje', execItems, 'FAZER');
+
+  box.innerHTML = '<div class="today-card"><h2>📅 Hoje é ' + dateLabel + '</h2><div class="today-cols">' + (cols || '<p class="today-empty">Sem peças de conteúdo ou tarefas cadastradas para hoje.</p>') + '</div></div>';
+
+  box.querySelectorAll('a[data-chip-id]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var id = a.dataset.chipId;
+      var chip = document.querySelector('.chip[data-chip-id="' + id + '"]');
+      if(!chip) return;
+      var view = chip.closest('.view');
+      if(view) showView(view.id.replace('view-', ''));
+      chip.scrollIntoView({behavior:'smooth', block:'center'});
+      chip.style.transition = 'box-shadow .3s';
+      chip.style.boxShadow = '0 0 0 3px var(--shoot)';
+      setTimeout(function(){ chip.style.boxShadow = ''; }, 1500);
+    });
+  });
+}
+
 /* ===================== RENDERIZAÇÃO A PARTIR DO ESTADO (local ou vindo da nuvem) ===================== */
 function applyAttachFromState(){
   allChips().forEach(function(chip){ renderAttachBadge(chip); });
@@ -1391,6 +1507,7 @@ function renderAll(){
   refreshFilters();
   renderDashboard();
   renderKpiCharts();
+  renderTodaySummary();
   setSyncIndicator(true);
 }
 
