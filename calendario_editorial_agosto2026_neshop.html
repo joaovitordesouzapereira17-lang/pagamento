@@ -204,6 +204,15 @@
   .stack-legend span{display:inline-flex;align-items:center;gap:5px}
   .stack-legend .sw{width:9px;height:9px;border-radius:3px;flex:none}
 
+  /* ===== painel recolhível (resumo, legenda, filtros) ===== */
+  .control-panel{margin-top:14px}
+  .control-panel summary{cursor:pointer;list-style:none;max-width:1680px;margin:0 auto;padding:0 28px}
+  .control-panel summary::-webkit-details-marker{display:none}
+  .control-panel .summary-chip{display:inline-flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--p700);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;user-select:none}
+  .control-panel .summary-chip::before{content:'▸';font-size:10px;color:#8fa3a5;transition:transform .12s}
+  .control-panel[open] .summary-chip::before{transform:rotate(90deg)}
+  .control-panel summary:hover .summary-chip{border-color:var(--p500)}
+
   /* ===== filtros ===== */
   .filter-bar{max-width:1680px;margin:6px auto 0;padding:0 28px;display:flex;flex-wrap:wrap;gap:11px;align-items:center}
   .filter-group{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px}
@@ -281,19 +290,23 @@
 
 <div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto (títulos, descrições, stories, tabela de metas) para alterá-lo. As mudanças ficam salvas neste navegador.</div>
 
-<div class="dashboard" id="dashboard"></div>
+<details class="control-panel">
+  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
 
-<div class="legend">
-  <span class="lg"><span class="dot" style="background:var(--p500)"></span>Reel</span>
-  <span class="lg"><span class="dot" style="background:var(--p900)"></span>Carrossel</span>
-  <span class="lg"><span class="dot" style="background:#7FA8AD"></span>Estático</span>
-  <span class="lg"><span class="dot" style="background:var(--data)"></span>Data comemorativa</span>
-  <span class="lg"><span class="dot" style="background:var(--yt)"></span>YouTube / Shorts</span>
-  <span class="lg"><span class="dot" style="background:var(--li)"></span>LinkedIn</span>
-  <span class="lg"><span class="dot" style="background:var(--blog)"></span>Blog</span>
-</div>
+  <div class="dashboard" id="dashboard"></div>
 
-<div class="filter-bar" id="filter-post"></div>
+  <div class="legend">
+    <span class="lg"><span class="dot" style="background:var(--p500)"></span>Reel</span>
+    <span class="lg"><span class="dot" style="background:var(--p900)"></span>Carrossel</span>
+    <span class="lg"><span class="dot" style="background:#7FA8AD"></span>Estático</span>
+    <span class="lg"><span class="dot" style="background:var(--data)"></span>Data comemorativa</span>
+    <span class="lg"><span class="dot" style="background:var(--yt)"></span>YouTube / Shorts</span>
+    <span class="lg"><span class="dot" style="background:var(--li)"></span>LinkedIn</span>
+    <span class="lg"><span class="dot" style="background:var(--blog)"></span>Blog</span>
+  </div>
+
+  <div class="filter-bar" id="filter-post"></div>
+</details>
 
 <div class="cal">
   <div class="dow"><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
@@ -587,14 +600,18 @@
 
 <div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto para alterá-lo. As mudanças ficam salvas neste navegador.</div>
 
-<div class="legend">
-  <span class="lg"><span class="dot" style="background:var(--casa)"></span>Bloco de produção do dia</span>
-  <span class="lg"><span class="dot" style="background:var(--shoot)"></span>Diária de gravação</span>
-  <span class="lg"><span class="dot" style="background:var(--p200)"></span>Aprovação / pacote semanal</span>
-  <span class="lg">Rotina fixa: <b>&nbsp;10h</b>&nbsp;stories 1-2 · <b>12h30</b>&nbsp;feed + checada no direct · <b>17h</b>&nbsp;stories 3-4 · <b>17h15</b>&nbsp;direct</span>
-</div>
+<details class="control-panel">
+  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
 
-<div class="filter-bar" id="filter-exec"></div>
+  <div class="legend">
+    <span class="lg"><span class="dot" style="background:var(--casa)"></span>Bloco de produção do dia</span>
+    <span class="lg"><span class="dot" style="background:var(--shoot)"></span>Diária de gravação</span>
+    <span class="lg"><span class="dot" style="background:var(--p200)"></span>Aprovação / pacote semanal</span>
+    <span class="lg">Rotina fixa: <b>&nbsp;10h</b>&nbsp;stories 1-2 · <b>12h30</b>&nbsp;feed + checada no direct · <b>17h</b>&nbsp;stories 3-4 · <b>17h15</b>&nbsp;direct</span>
+  </div>
+
+  <div class="filter-bar" id="filter-exec"></div>
+</details>
 
 <div class="cal">
   <div class="dow"><div>Segunda</div><div>Terça</div><div>Quarta</div><div>Quinta</div><div>Sexta</div></div>
