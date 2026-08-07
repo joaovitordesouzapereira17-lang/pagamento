@@ -23,9 +23,6 @@
   .brand b{color:#fff}
   h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);margin-top:8px;line-height:1.1}
   h1 span{color:var(--p200)}
-  .head-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-  .meta-pill{border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:500}
-  .meta-pill b{color:#fff;font-weight:600}
 
   .tabs{display:flex;gap:6px;margin-top:22px}
   .tab{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--p200);background:rgba(191,224,226,.1);border:1px solid rgba(191,224,226,.3);border-bottom:none;border-radius:12px 12px 0 0;padding:12px 22px;cursor:pointer;transition:background .15s,color .15s}
@@ -261,13 +258,6 @@
   <div class="head-inner">
     <div class="brand">ne<b>shop</b> · marketing</div>
     <h1>Calendário Editorial <span>· Agosto 2026</span></h1>
-    <div class="head-meta">
-      <span class="meta-pill"><b>28</b> itens de feed/canal</span>
-      <span class="meta-pill"><b>4</b> stories/dia · <b>10h</b> e <b>17h</b> · feed às <b>12h30</b></span>
-      <span class="meta-pill"><b>3</b> diárias de gravação</span>
-      <span class="meta-pill">Produção sempre <b>1 semana à frente</b></span>
-      <span class="meta-pill">Aprovação: <b>Adailson</b>, quartas à tarde (31/07 excepcionalmente sexta 16h30)</span>
-    </div>
     <div class="tabs" role="tablist">
       <button class="tab active" id="tab-post" role="tab" aria-selected="true" onclick="showView('post')">📅 Postagem</button>
       <button class="tab" id="tab-exec" role="tab" aria-selected="false" onclick="showView('exec')">🛠️ Execução e Produção</button>
@@ -882,8 +872,19 @@ var firebaseConfig = {
   messagingSenderId: "932823371314",
   appId: "1:932823371314:web:78f2983004f74011b8762b"
 };
-firebase.initializeApp(firebaseConfig);
-var stateRef = firebase.database().ref('calendarState');
+// se o SDK do Firebase não carregar (bloqueado por firewall/antivírus/rede, ou sem internet),
+// isso NUNCA pode travar o resto da página — o calendário precisa aparecer mesmo assim,
+// só sem sincronização em nuvem.
+var firebaseAvailable = false;
+var stateRef = null;
+try{
+  if(typeof firebase === 'undefined') throw new Error('SDK do Firebase não carregou');
+  firebase.initializeApp(firebaseConfig);
+  stateRef = firebase.database().ref('calendarState');
+  firebaseAvailable = true;
+}catch(e){
+  console.error('Firebase indisponível, o calendário vai funcionar sem sincronização em nuvem:', e);
+}
 
 var STATE = {status:{}, attach:{}, edits:{}, done:{}};
 var stateLoaded = false;
@@ -898,6 +899,10 @@ function normalizeState(raw){
 }
 
 function saveState(){
+  if(!firebaseAvailable || !stateRef){
+    console.warn('Sem conexão com a nuvem — esta alteração fica só nesta sessão e não é compartilhada.');
+    return;
+  }
   stateRef.set(STATE).catch(function(err){
     alert('Não foi possível salvar na nuvem agora (sem conexão?). Sua mudança pode não ter sido compartilhada. Detalhe: ' + err.message);
     setSyncIndicator(false);
@@ -908,32 +913,42 @@ function setSyncIndicator(connected, loading){
   var el = document.getElementById('sync-indicator');
   if(!el) return;
   if(loading){ el.textContent = '🔄 Conectando à nuvem…'; el.className = 'sync-indicator'; return; }
-  el.textContent = connected ? '🟢 Sincronizado' : '🔴 Sem conexão com a nuvem';
+  el.textContent = connected ? '🟢 Sincronizado' : '🔴 Sem conexão com a nuvem (alterações não são compartilhadas)';
   el.className = 'sync-indicator ' + (connected ? 'ok' : 'off');
 }
 
-stateRef.on('value', function(snapshot){
-  STATE = normalizeState(snapshot.val());
-  stateLoaded = true;
-  renderAll();
-}, function(err){
-  console.error('Firebase read failed:', err);
-  setSyncIndicator(false);
-});
+if(firebaseAvailable){
+  stateRef.on('value', function(snapshot){
+    STATE = normalizeState(snapshot.val());
+    stateLoaded = true;
+    renderAll();
+  }, function(err){
+    console.error('Firebase read failed:', err);
+    setSyncIndicator(false);
+  });
 
-firebase.database().ref('.info/connected').on('value', function(snap){
-  if(stateLoaded) setSyncIndicator(snap.val() === true);
-});
+  firebase.database().ref('.info/connected').on('value', function(snap){
+    if(stateLoaded) setSyncIndicator(snap.val() === true);
+  });
 
-// se a nuvem não responder em alguns segundos (rede bloqueada, firewall etc.),
-// mostra o calendário mesmo assim, só sem sincronização, em vez de travar "conectando"
-setTimeout(function(){
-  if(!stateLoaded){
+  // se a nuvem não responder em alguns segundos (rede bloqueada, firewall etc.),
+  // mostra o calendário mesmo assim, só sem sincronização, em vez de travar "conectando"
+  setTimeout(function(){
+    if(!stateLoaded){
+      stateLoaded = true;
+      renderAll();
+      setSyncIndicator(false);
+    }
+  }, 6000);
+} else {
+  // Firebase nem carregou: mostra o calendário assim que o resto da inicialização
+  // (mais abaixo neste script) terminar, em vez de esperar 6s à toa
+  setTimeout(function(){
     stateLoaded = true;
     renderAll();
     setSyncIndicator(false);
-  }
-}, 6000);
+  }, 0);
+}
 
 function allChips(){ return Array.from(document.querySelectorAll('.chip')); }
 function assignChipIds(){
@@ -1310,7 +1325,6 @@ function refreshFilters(){
 var EDITABLE_SELECTORS = [
   '.brand',
   'h1',
-  '.meta-pill',
   '.legend .lg',
   '.wk-bar .wn',
   '.wk-bar .wt',
