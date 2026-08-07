@@ -186,6 +186,15 @@
   .mini-pill{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#3c4d4f;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
   .mini-pill b{color:var(--p900);font-weight:700}
 
+  /* ===== insights automáticos ===== */
+  .insights-panel{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
+  .insights-title{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;margin-bottom:7px}
+  .insights-title span{text-transform:none;font-weight:500;letter-spacing:normal;font-family:'Inter',sans-serif}
+  .insights-list{display:flex;flex-direction:column;gap:6px}
+  .insight-item{font-size:12.5px;line-height:1.5;color:#3c4d4f;background:#fff;border:1px solid var(--line);border-left:3px solid var(--edit);border-radius:0 8px 8px 0;padding:7px 12px}
+  .insight-item b{color:var(--p900)}
+  .insight-item.insight-ok{border-left-color:var(--ok);color:var(--ok);font-weight:600}
+
   /* ===== gráficos simples da aba de metas ===== */
   .kpi-charts{max-width:1680px;margin:14px auto 16px;padding:0 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
   .chart-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(6,38,43,.06)}
@@ -283,6 +292,11 @@
   <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
 
   <div class="dashboard" id="dashboard"></div>
+
+  <div class="insights-panel">
+    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-list" id="insights-list"></div>
+  </div>
 
   <div class="legend">
     <span class="lg"><span class="dot" style="background:var(--p500)"></span>Reel</span>
@@ -1179,6 +1193,103 @@ function countChips(){
   return {status:status, type:type, funil:funil};
 }
 
+/* ===================== INSIGHTS AUTOMÁTICOS (padrões, não é IA) =====================
+   Regras simples sobre os próprios dados do calendário: concentração de funil,
+   formato repetido, temas parecidos entre semanas. Roda 100% no navegador, sem custo. */
+var INSIGHT_STOPWORDS = ['de','da','do','das','dos','e','o','a','os','as','que','com','em','no','na','nos','nas','um','uma','pra','para','por','é','ao','se'];
+function insightKeyWords(text){
+  return text.toLowerCase().replace(/[#."'?!:()]/g, '').split(/\s+/).filter(function(w){
+    return w.length > 3 && INSIGHT_STOPWORDS.indexOf(w) === -1;
+  });
+}
+
+function computeInsights(){
+  var insights = [];
+  var weekBars = Array.from(document.querySelectorAll('#view-post .wk-bar'));
+  var allTitles = [];
+
+  weekBars.forEach(function(bar){
+    var week = bar.nextElementSibling;
+    if(!week || !week.classList.contains('week')) return;
+    var wn = bar.querySelector('.wn');
+    var weekName = wn ? wn.textContent.trim() : 'Uma semana';
+    var chips = Array.from(week.querySelectorAll('.chip:not(.aprova)'));
+    if(!chips.length) return;
+
+    var funilCounts = {};
+    chips.forEach(function(c){ var k = chipFunilKey(c); if(k !== 'none') funilCounts[k] = (funilCounts[k] || 0) + 1; });
+    var funilTotal = Object.keys(funilCounts).reduce(function(sum, k){ return sum + funilCounts[k]; }, 0);
+    if(funilTotal >= 3){
+      Object.keys(funilCounts).forEach(function(k){
+        var pct = funilCounts[k] / funilTotal;
+        if(pct >= 0.7){
+          var label = (FUNIL_DEFS.filter(function(d){ return d.key === k; })[0] || {}).label || k;
+          insights.push('📊 <b>' + weekName + '</b>: ' + Math.round(pct * 100) + '% do conteúdo é funil ' + label + ' — considere balancear com outras etapas.');
+        }
+      });
+    }
+
+    var typeCounts = {};
+    chips.forEach(function(c){ var t = chipType(c); typeCounts[t] = (typeCounts[t] || 0) + 1; });
+    Object.keys(typeCounts).forEach(function(t){
+      if(t === 'reel') return; // reel já é o formato-base esperado quase todo dia
+      var pct = typeCounts[t] / chips.length;
+      if(typeCounts[t] >= 3 && pct >= 0.5){
+        var tlabel = (TYPE_DEFS.filter(function(d){ return d.key === t; })[0] || {}).label || t;
+        insights.push('🎯 <b>' + weekName + '</b>: formato ' + tlabel + ' concentrado (' + typeCounts[t] + ' peças) — vale variar.');
+      }
+    });
+
+    chips.forEach(function(c){
+      var titleEl = c.querySelector('.title-text') || c.querySelector('.t');
+      if(titleEl) allTitles.push({week: weekName, text: titleEl.textContent.trim()});
+    });
+  });
+
+  var days = Array.from(document.querySelectorAll('#view-post .day:not(.empty)'));
+  var streak = 0, lastType = null;
+  days.forEach(function(day){
+    var chips = Array.from(day.querySelectorAll('.chip:not(.aprova)'));
+    var dominant = chips.length ? chipType(chips[0]) : null;
+    if(dominant && dominant === lastType){
+      streak++;
+    } else {
+      if(streak >= 3 && lastType && lastType !== 'reel'){
+        var slabel = (TYPE_DEFS.filter(function(d){ return d.key === lastType; })[0] || {}).label || lastType;
+        insights.push('🔁 ' + streak + ' dias seguidos de ' + slabel + ' — pode cansar o feed.');
+      }
+      streak = 1;
+    }
+    lastType = dominant;
+  });
+  if(streak >= 3 && lastType && lastType !== 'reel'){
+    var slabel2 = (TYPE_DEFS.filter(function(d){ return d.key === lastType; })[0] || {}).label || lastType;
+    insights.push('🔁 ' + streak + ' dias seguidos de ' + slabel2 + ' — pode cansar o feed.');
+  }
+
+  for(var i = 0; i < allTitles.length; i++){
+    for(var j = i + 1; j < allTitles.length; j++){
+      if(allTitles[i].week === allTitles[j].week) continue;
+      var w1 = insightKeyWords(allTitles[i].text), w2 = insightKeyWords(allTitles[j].text);
+      var shared = w1.filter(function(w){ return w2.indexOf(w) !== -1; });
+      if(shared.length >= 3){
+        insights.push('♻️ Temas parecidos: "<b>' + allTitles[i].text + '</b>" (' + allTitles[i].week + ') e "<b>' + allTitles[j].text + '</b>" (' + allTitles[j].week + ') — evite repetir.');
+      }
+    }
+  }
+
+  return insights;
+}
+
+function renderInsights(){
+  var box = document.getElementById('insights-list');
+  if(!box) return;
+  var insights = computeInsights();
+  box.innerHTML = insights.length
+    ? insights.map(function(i){ return '<div class="insight-item">' + i + '</div>'; }).join('')
+    : '<div class="insight-item insight-ok">✅ Nenhum padrão de risco identificado no momento.</div>';
+}
+
 /* ===================== DASHBOARD (status + formato + funil) ===================== */
 function renderDashboard(){
   var box = document.getElementById('dashboard');
@@ -1546,6 +1657,7 @@ function renderAll(){
   applyDoneFromState();
   refreshFilters();
   renderDashboard();
+  renderInsights();
   renderKpiCharts();
   renderTodaySummary();
   setSyncIndicator(true);
