@@ -231,6 +231,22 @@
   .bar-row .bar-count{width:24px;flex:none;text-align:right;font-weight:700;color:var(--p900)}
   .stack-track{display:flex;height:16px;border-radius:8px;overflow:hidden;background:#F1F6F6}
   .stack-seg{height:100%}
+  .goals-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--p900);margin-bottom:12px}
+  .goals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  .goal-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(6,38,43,.06);transition:border-color .2s,background .2s}
+  .goal-card.hit{border-color:var(--ok);background:#F2FAF4}
+  .goal-label{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--p700);display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .goal-num{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;color:var(--p900)}
+  .goal-num .sep{opacity:.45;font-weight:500;margin:0 2px;font-size:16px}
+  body.edit-mode .goal-target{cursor:text}
+  .goal-track{height:8px;background:#F1F6F6;border-radius:5px;overflow:hidden;margin-top:9px}
+  .goal-fill{display:block;height:100%;width:0;background:var(--p500);border-radius:5px;transition:width .35s}
+  .goal-card.hit .goal-fill{background:var(--ok)}
+  .goal-task-card{display:flex;align-items:center}
+  .goal-task-card label{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#3c4d4f;cursor:pointer;width:100%}
+  .goal-task-card input[type=checkbox]{width:18px;height:18px;accent-color:var(--ok);flex:none}
+  .goal-task-card.hit{border-color:var(--ok);background:#F2FAF4}
+  .goal-task-card.hit label{color:var(--p900);text-decoration:line-through;text-decoration-color:var(--ok)}
   .stack-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;color:#43585b}
   .stack-legend span{display:inline-flex;align-items:center;gap:5px}
   .stack-legend .sw{width:9px;height:9px;border-radius:3px;flex:none}
@@ -781,6 +797,20 @@
 <div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer célula da tabela (inclusive Resultado e Aprendizado) para preencher.</div>
 
 <div class="cal" style="margin-top:18px">
+  <h2 class="goals-title">🎯 Metas do mês — Agosto</h2>
+  <div class="goals-grid" id="goals-grid">
+    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">8</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">4</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card goal-task-card" data-goal-task="calSetembro"><label><input type="checkbox" id="goal-task-calSetembro"><span>Criação do calendário editorial de Setembro</span></label></div>
+  </div>
+  <p class="obs" style="margin-top:10px">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
+</div>
+
+<div class="cal" style="margin-top:18px">
   <div class="kpi-charts" id="kpi-charts"></div>
   <p class="obs" style="margin-bottom:6px"><b>Toda meta aqui sai de um número real do perfil.</b> A coluna "Base real" mostra de onde veio. Onde não existe histórico medido (YouTube, material de captura, automação), agosto é mês de baseline: a meta é registrar o número, não bater um alvo inventado.</p>
   <p class="obs" style="margin-bottom:12px"><b>Base do Instagram</b> (20 publicações, 25/abr a 24/jul): maior post do trimestre 1.617 views (repost LG) · melhor post sem apoio externo 880 views e 646 de alcance · faixa comum de 350 a 666 views · engajamento entre 1,34% (pior, CTA de link na bio) e 9,36% (melhor, bastidor Trane) · 4 salvamentos em 90 dias · stories entre 85 e 154 views · direct com 66,7% de resposta. <b>Base do LinkedIn</b> (29/jun a 28/jul): 952 seguidores · 2 posts · 634 impressões · 10 reações · +4 seguidores · CTR de 13,39% e 13,64%.</p>
@@ -936,7 +966,7 @@ try{
   console.error('Firebase indisponível, o calendário vai funcionar sem sincronização em nuvem:', e);
 }
 
-var STATE = {status:{}, attach:{}, edits:{}, done:{}};
+var STATE = {status:{}, attach:{}, edits:{}, done:{}, goalTasks:{}};
 var stateLoaded = false;
 
 function normalizeState(raw){
@@ -945,6 +975,7 @@ function normalizeState(raw){
   s.attach = s.attach || {};
   s.edits = s.edits || {};
   s.done = s.done || {};
+  s.goalTasks = s.goalTasks || {};
   return s;
 }
 
@@ -1069,6 +1100,7 @@ function initStatusClicks(){
       renderDashboard();
       renderKpiCharts();
       renderTodaySummary();
+      renderGoals();
     });
   });
 }
@@ -1419,6 +1451,63 @@ function renderKpiCharts(){
     '<div class="chart-card"><h4>Distribuição por funil</h4>' + funilHtml + '</div>';
 }
 
+/* ===================== METAS DO MÊS (contagem automática por status POSTADO) =====================
+   Cada peça de conteúdo cai numa categoria de meta a partir do mesmo tipo já usado nos filtros
+   (chipType). Vídeo longo = YouTube que não é Short; vídeo curto = Reel + Short juntos. */
+function chipGoalCategory(chip){
+  var type = chipType(chip);
+  if(type === 'blog') return 'blog';
+  if(type === 'li') return 'linkedin';
+  if(type === 'carrossel') return 'carrossel';
+  if(type === 'estatico') return 'estatico';
+  if(type === 'data' && /est[aá]tico/i.test(chip.textContent)) return 'estatico';
+  if(type === 'yt'){
+    var k = chip.querySelector('.k');
+    return (k && /short/i.test(k.textContent)) ? 'curto' : 'longo';
+  }
+  if(type === 'reel') return 'curto';
+  return null;
+}
+
+function renderGoals(){
+  var counts = {};
+  Array.from(document.querySelectorAll('#view-post .chip')).forEach(function(chip){
+    var cat = chipGoalCategory(chip);
+    if(!cat || chipStatusKey(chip) !== 'posted') return;
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  Array.from(document.querySelectorAll('.goal-card[data-goal]')).forEach(function(card){
+    var key = card.dataset.goal;
+    var targetEl = card.querySelector('.goal-target');
+    var target = parseInt(targetEl.textContent, 10) || 0;
+    var count = counts[key] || 0;
+    card.querySelector('.goal-count').textContent = count;
+    card.querySelector('.goal-fill').style.width = (target > 0 ? Math.min(100, count / target * 100) : 0) + '%';
+    card.classList.toggle('hit', target > 0 && count >= target);
+  });
+}
+
+function applyGoalTasksFromState(){
+  Array.from(document.querySelectorAll('.goal-task-card[data-goal-task]')).forEach(function(card){
+    var key = card.dataset.goalTask;
+    var checked = !!STATE.goalTasks[key];
+    card.querySelector('input[type=checkbox]').checked = checked;
+    card.classList.toggle('hit', checked);
+  });
+}
+
+function initGoalTasks(){
+  Array.from(document.querySelectorAll('.goal-task-card[data-goal-task]')).forEach(function(card){
+    var key = card.dataset.goalTask;
+    var box = card.querySelector('input[type=checkbox]');
+    box.addEventListener('change', function(){
+      STATE.goalTasks[key] = box.checked;
+      saveState();
+      card.classList.toggle('hit', box.checked);
+    });
+  });
+}
+
 var filterState = {};
 
 function buildFilterBar(viewId){
@@ -1509,7 +1598,8 @@ var EDITABLE_SELECTORS = [
   '.note li',
   '.obs',
   '.kpi th',
-  '.kpi td'
+  '.kpi td',
+  '.goal-target'
 ];
 
 function allEditable(){ return Array.from(document.querySelectorAll(EDITABLE_SELECTORS.join(','))); }
@@ -1747,10 +1837,12 @@ function renderAll(){
   applyAttachFromState();
   applyEditState();
   applyDoneFromState();
+  applyGoalTasksFromState();
   refreshFilters();
   renderDashboard();
   renderInsights();
   renderKpiCharts();
+  renderGoals();
   renderTodaySummary();
   setSyncIndicator(true);
 }
@@ -1790,11 +1882,12 @@ initWeekBarToggle();
 markStoriesOnlyDays();
 initFunilDots();
 initDrawer();
+initGoalTasks();
 setSyncIndicator(false, true);
 
 document.getElementById('reset-local').addEventListener('click', function(){
-  if(confirm('Isso vai apagar o status, os anexos, os textos editados e os checks de postado/feito para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
-    stateRef.set({status:{}, attach:{}, edits:{}, done:{}});
+  if(confirm('Isso vai apagar o status, os anexos, os textos editados, os checks de postado/feito e as metas para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
+    stateRef.set({status:{}, attach:{}, edits:{}, done:{}, goalTasks:{}});
   }
 });
 </script>
