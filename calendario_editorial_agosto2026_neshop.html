@@ -13,6 +13,7 @@
     --paper:#F7F7F4; --ink:#0B1F22; --line:#D8E2E1;
     --yt:#B03A2E; --li:#0A66C2; --blog:#54707A; --data:#7A5C8A; --casa:#8A5A24;
     --ok:#1F7A4D; --edit:#8A6D1F; --shoot:#A34A2A;
+    --pauta:#6B7A7C; --posted:#5B3FA0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);padding:0 0 64px}
@@ -40,19 +41,24 @@
   .cal{max-width:2320px;margin:14px auto 0;padding:0 28px}
   .dow{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:8px}
   .dow div{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--p700);padding:0 4px}
-  .week{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:10px}
+  .week{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:10px;align-items:start}
 
   /* barra horizontal com o contexto da semana, acima da grade de dias */
   .wk-bar{background:var(--p700);color:#fff;border-radius:12px;padding:12px 20px;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
   .wk-bar .wn{font-family:'Space Grotesk',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--p200);flex:none}
   .wk-bar .wt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;line-height:1.25;flex:none}
   .valor{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,224,226,.18);border:1px solid rgba(191,224,226,.4);color:var(--p200);border-radius:999px;padding:3px 10px;flex:none}
-  .wk-bar .wd{font-size:12.5px;color:var(--p200);line-height:1.5;flex:1 1 320px;min-width:200px}
+  .wk-bar .wd{display:none;font-size:12.5px;color:var(--p200);line-height:1.6;flex-basis:100%;margin-top:2px;padding-top:8px;border-top:1px dashed rgba(191,224,226,.3)}
+  .wk-bar.wd-open .wd{display:block}
+  .wd-toggle{flex:none;margin-left:auto;width:26px;height:26px;border-radius:50%;background:rgba(191,224,226,.15);border:1px solid rgba(191,224,226,.35);color:var(--p200);cursor:pointer;font-size:12px;line-height:1}
+  .wd-toggle:hover{background:rgba(191,224,226,.3)}
   .wk-bar.close{background:var(--p900)}
   .wk-bar.zero{background:#3E5C50}
 
   .day{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:9px}
   .day.empty{background:transparent;border:1px dashed var(--line)}
+  .day.stories-only{border-style:dashed;background:#FAFCFC;padding:10px 14px 12px}
+  .day.stories-only .sts{border-top:none;padding-top:0}
   .dnum{display:flex;align-items:baseline;justify-content:space-between}
   .dnum b{font-family:'Space Grotesk',sans-serif;font-size:20px;color:var(--p900)}
   .dnum .tag{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8fa3a5}
@@ -62,12 +68,13 @@
   .chip{border-left:3px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
   .chip .k{display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#8fa3a5}
   .chip .k .st{margin-left:auto;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:3px 9px;color:#fff;box-shadow:0 1px 2px rgba(6,38,43,.15)}
-  .st.ok{background:var(--ok)} .st.edit{background:var(--edit)} .st.shoot{background:var(--shoot)}
-  .fu{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.03em;background:none;border:none;padding:0}
-  .fu.topo{color:#1C6E79}
-  .fu.meio{color:#0E4650}
-  .fu.fundo{color:#A34A2A}
-  .fu.rel{color:#8A6D9A}
+  .st.pauta{background:var(--pauta)} .st.shoot{background:var(--shoot)} .st.edit{background:var(--edit)} .st.ok{background:var(--ok)} .st.posted{background:var(--posted)}
+  /* funil: ponto colorido discreto (passe o mouse pra ver o nome) */
+  .fu{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;overflow:hidden;white-space:nowrap;text-indent:9px;cursor:default}
+  .fu.topo{background:#1C6E79}
+  .fu.meio{background:#0E4650}
+  .fu.fundo{background:#A34A2A}
+  .fu.rel{background:#8A6D9A}
   .chip .t{margin-top:2px;color:var(--p900);font-weight:600;font-size:14px}
   .chip .n{color:#9aa8aa;font-weight:400;margin-right:3px}
 
@@ -114,6 +121,20 @@
   @media (max-width:900px){.kpi{overflow-x:auto}.kpi table{min-width:720px}}
   .notes{max-width:2320px;margin:26px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px}
+
+  /* ===== barra lateral de diretrizes e regras (drawer) ===== */
+  .drawer-overlay{display:none;position:fixed;inset:0;background:rgba(6,38,43,.45);z-index:190}
+  .drawer-overlay.open{display:block}
+  .drawer{position:fixed;top:0;right:-460px;width:440px;max-width:92vw;height:100vh;background:var(--paper);box-shadow:-8px 0 24px rgba(6,38,43,.25);z-index:195;transition:right .25s ease;display:flex;flex-direction:column}
+  .drawer.open{right:0}
+  .drawer-header{background:var(--p900);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;flex:none}
+  .drawer-header h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+  .drawer-close{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px}
+  .drawer-close:hover{background:rgba(255,255,255,.2)}
+  .drawer-body{padding:20px;overflow-y:auto;flex:1}
+  .drawer-section{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p500);margin:18px 0 10px}
+  .drawer-section:first-child{margin-top:0}
+  .drawer .notes{max-width:none;margin:0;padding:0;grid-template-columns:1fr;gap:12px}
   .note h3{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--p700);margin-bottom:11px}
   .note p,.note li{font-size:13.5px;line-height:1.6;color:#33474a}
   .note ol{padding-left:18px}
@@ -148,13 +169,15 @@
   #today-summary{max-width:2320px;margin:16px auto 0;padding:0 28px}
   .today-card{background:#fff;border:2px solid var(--shoot);border-radius:14px;padding:16px 20px;box-shadow:0 2px 10px rgba(6,38,43,.08)}
   .today-card h2{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--p900);margin-bottom:10px}
-  .today-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .today-col h5{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;margin-bottom:7px}
-  .today-item{display:flex;align-items:baseline;gap:8px;font-size:13px;padding:5px 0;border-top:1px dashed var(--line)}
+  .today-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .today-col + .today-col{border-left:1px dashed var(--line);padding-left:20px}
+  .today-col h5{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;margin-bottom:8px}
+  .today-item{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:8px 0;border-top:1px dashed var(--line)}
   .today-item:first-of-type{border-top:none}
-  .today-item a{color:var(--p700);font-weight:600;text-decoration:none}
+  .today-item a{color:var(--p700);font-weight:600;text-decoration:none;flex:1}
   .today-item a:hover{text-decoration:underline}
-  .today-item .todo{color:#8fa3a5;font-size:10.5px;text-transform:uppercase;font-weight:700;flex:none}
+  .ti-icon{flex:none;font-size:15px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:#F1F6F6;border-radius:8px}
+  .ti-badge{flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--casa);background:#FBF6EF;border:1px solid #E3C9A0;border-radius:6px;padding:3px 7px;white-space:nowrap}
   .today-empty{color:#5a6f72;font-size:13px}
   .today-done{color:var(--ok);font-weight:600;font-size:13.5px}
   .note{box-shadow:0 1px 3px rgba(6,38,43,.06)}
@@ -179,9 +202,11 @@
   .dash-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .dash-row-label{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;min-width:58px;flex:none}
   .summary-pill{display:inline-flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;border-radius:10px;padding:9px 15px;color:#fff}
+  .summary-pill.pauta{background:var(--pauta)}
   .summary-pill.ok{background:var(--ok)}
   .summary-pill.edit{background:var(--edit)}
   .summary-pill.shoot{background:var(--shoot)}
+  .summary-pill.posted{background:var(--posted)}
   .summary-pill span{font-family:'Inter',sans-serif;font-weight:500;opacity:.85;font-size:12px}
   .mini-pill{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#3c4d4f;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
   .mini-pill b{color:var(--p900);font-weight:700}
@@ -275,6 +300,7 @@
     <div class="header-actions">
       <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
       <button type="button" class="hdr-btn" id="toggle-stories" title="Mostrar ou esconder a lista de stories em todos os dias de uma vez">▾ Expandir stories</button>
+      <button type="button" class="hdr-btn" id="drawer-toggle" title="Templates, regras e diretrizes de produção">📋 Diretrizes &amp; Regras</button>
       <button type="button" class="hdr-btn" id="reset-local" title="Apaga o status, os anexos e os textos editados para todo mundo">Limpar tudo (afeta todo mundo)</button>
       <span id="sync-indicator" class="sync-indicator" title="Este calendário é compartilhado — mudanças aparecem para todo mundo que tiver o arquivo aberto">🔄 Conectando à nuvem…</span>
     </div>
@@ -584,32 +610,6 @@
 
 </div>
 
-<div class="notes">
-  <div class="note">
-    <h3>Templates fixos dos stories</h3>
-    <p><b>Neshop + frase</b>: segundas, quartas e sextas — o de sexta sempre deseja bom fim de semana. <b>TBT</b>: quintas. <b>Feedback de cliente</b>: quintas. <b>Cumbuca</b>: terças à tarde e quartas de manhã. <b>Café</b>: sextas (turbinado na primeira). <b>Aniversariantes</b>: última sexta, só stories, com bolo e discurso em vídeo.</p>
-  </div>
-  <div class="note">
-    <h3>Regras do diagnóstico + gaveta</h3>
-    <p>Presença humana em 100% das peças. Vídeo novo no canal = 1 story de anúncio, não mais. Posts de relacionamento sem CTA. Pergunta específica no lugar de "marca um amigo". Prints sempre reais com dados ocultos. Horários calibrados pelos dados reais do perfil: stories interativos às 10h (janela de mais interação), feed às 12h30 (janela de mais alcance, 12h–15h), stories da tarde às 17h; nas terças e quintas o story 4 vai para as 19h AGENDADO pelo Meta Business Suite (expediente encerra às 17h30, ninguém posta manualmente à noite) — por isso esse story é sempre card ou vídeo simples, sem sticker interativo, que o agendamento não suporta. Se o agendamento de story não estiver disponível na conta, o teste cai e tudo fica até as 17h. Revisar na retro de 31/08. <b>Conteúdo gaveta:</b> todo dia especial (reunião mensal, café turbinado, aniversariantes) produz também o story padrão do slot, que vai para a lista Gaveta no ClickUp e cobre furos de captura ou dependência atrasada. Além disso, 1 a 2 Reels atemporais do banco de setembro ficam editados e engatilhados como reserva de feed: se uma gravação cair, aperta o play no reserva.</p>
-  </div>
-  <div class="note">
-    <h3>Válvulas de escape (nesta ordem)</h3>
-    <ol>
-      <li>Estático #21 vira card de stories.</li>
-      <li>Blog #13 desliza para setembro (o #07 segura o SEO).</li>
-      <li>Carrossel #27 vira estático de imagem única.</li>
-    </ol>
-    <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #25 e #26, YouTube #28. <span class="warn">Pendência:</span> separar um print real da semana para o #32.</p>
-  </div>
-  <div class="note">
-    <h3>Checklist de copy antes de publicar</h3>
-    <p><b>As 2 perguntas do feed único</b> (quem não te segue x quem já te segue têm métricas diferentes): 1) quem não me conhece entende do que se trata em 3 segundos? 2) quem já me segue, isso vale a pena salvar ou compartilhar? Toda peça passa pelas duas antes de ir pro pacote de aprovação de quarta.</p>
-    <p style="margin-top:8px"><b>1 palavra-chave por pilar</b> (repetir na legenda, no texto na tela do Reel e nas hashtags — hashtag é busca, não é rede de pesca): Engenharias/VRF → <b>peças VRF</b> · Hotelaria → <b>climatização hotel</b> · El Niño/sazonal → <b>verão climatização</b> · Fornecedor/procedência → <b>peça original ar condicionado</b> · Cultura/TBT/Cumbuca/café → sem palavra-chave, são conteúdo de relacionamento, não de descoberta.</p>
-    <p style="margin-top:8px"><b>Produção (válido desde a Semana 0):</b> carrossel/estático até 1080x1440px · Reels e Stories respeitam a zona segura da interface (topo e base), texto e legenda nunca colados na borda.</p>
-  </div>
-</div>
-
 </div><!-- /view-post -->
 
 <!-- ============ CALENDÁRIO DE EXECUÇÃO E PRODUÇÃO ============ -->
@@ -773,21 +773,6 @@
   </div>
 </div>
 
-<div class="notes">
-  <div class="note">
-    <h3>Rotina fixa diária (~1h30)</h3>
-    <p><b>10h</b> — stories 1 e 2 (interativos aqui: é a janela de mais interação do perfil). <b>12h30</b> — post do feed (janela de mais alcance, 12h–15h) + checada rápida no direct para não estourar o SLA. <b>17h</b> — stories 3 e 4. <b>17h15</b> — direct de conteúdo; pedido de peça vai ao Inside Sales. Nas terças e quintas, o story 4 sai às <b>19h</b> via AGENDAMENTO no Meta Business Suite, deixado pronto no bloco das 17h (card/vídeo simples, sem interativo — o agendamento não suporta sticker). Nada é postado manualmente depois das 17h30. O restante do dia é o bloco de produção (3 a 4h).</p>
-  </div>
-  <div class="note">
-    <h3>Lógica D+7</h3>
-    <p>O pacote da semana N+1 fecha até a QUARTA da semana N e é aprovado na quarta às 16h. Quinta e sexta ficam para refações, agendamentos e as outras demandas — nada garante aprovação de primeira, e o Adailson tem a agenda dele de gerente. <b>Gap de revisão:</b> nada publica com menos de 2 dias úteis entre finalização e postagem. Se uma dependência atrasar, a peça desliza — a esteira não para, e a gaveta cobre o furo. O pacote de cada semana inclui também os 2 reaproveitamentos do LinkedIn (Reel da quarta como vídeo nativo + carrossel/estático da sexta como documento PDF), adaptados em ~1h.</p>
-  </div>
-  <div class="note">
-    <h3>As 3 diárias</h3>
-    <p><b>Diária A</b> (seg 03, tarde): Reel #27 (duas placas, gravado com bastante antecedência) + fotos #06, #08 e #14. <b>Diária B</b> (ter 18, manhã): Reel #18 (peças do El Niño) + Short #19. O Reel #24 (hotelaria) e o bloco de Prova e Conversão (setembro) não exigem diária própria — gravação simples em bloco de produção normal.</p>
-  </div>
-</div>
-
 </div><!-- /view-exec -->
 
 <!-- ============ METAS E RESULTADOS ============ -->
@@ -842,6 +827,57 @@
 </div>
 
 </div><!-- /view-kpi -->
+
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="drawer" id="notes-drawer">
+  <div class="drawer-header">
+    <h2>📋 Diretrizes &amp; Regras</h2>
+    <button type="button" class="drawer-close" id="drawer-close" title="Fechar">✕</button>
+  </div>
+  <div class="drawer-body">
+    <h4 class="drawer-section">Postagem</h4>
+    <div class="notes">
+      <div class="note">
+        <h3>Templates fixos dos stories</h3>
+        <p><b>Neshop + frase</b>: segundas, quartas e sextas — o de sexta sempre deseja bom fim de semana. <b>TBT</b>: quintas. <b>Feedback de cliente</b>: quintas. <b>Cumbuca</b>: terças à tarde e quartas de manhã. <b>Café</b>: sextas (turbinado na primeira). <b>Aniversariantes</b>: última sexta, só stories, com bolo e discurso em vídeo.</p>
+      </div>
+      <div class="note">
+        <h3>Regras do diagnóstico + gaveta</h3>
+        <p>Presença humana em 100% das peças. Vídeo novo no canal = 1 story de anúncio, não mais. Posts de relacionamento sem CTA. Pergunta específica no lugar de "marca um amigo". Prints sempre reais com dados ocultos. Horários calibrados pelos dados reais do perfil: stories interativos às 10h (janela de mais interação), feed às 12h30 (janela de mais alcance, 12h–15h), stories da tarde às 17h; nas terças e quintas o story 4 vai para as 19h AGENDADO pelo Meta Business Suite (expediente encerra às 17h30, ninguém posta manualmente à noite) — por isso esse story é sempre card ou vídeo simples, sem sticker interativo, que o agendamento não suporta. Se o agendamento de story não estiver disponível na conta, o teste cai e tudo fica até as 17h. Revisar na retro de 31/08. <b>Conteúdo gaveta:</b> todo dia especial (reunião mensal, café turbinado, aniversariantes) produz também o story padrão do slot, que vai para a lista Gaveta no ClickUp e cobre furos de captura ou dependência atrasada. Além disso, 1 a 2 Reels atemporais do banco de setembro ficam editados e engatilhados como reserva de feed: se uma gravação cair, aperta o play no reserva.</p>
+      </div>
+      <div class="note">
+        <h3>Válvulas de escape (nesta ordem)</h3>
+        <ol>
+          <li>Estático #21 vira card de stories.</li>
+          <li>Blog #13 desliza para setembro (o #07 segura o SEO).</li>
+          <li>Carrossel #27 vira estático de imagem única.</li>
+        </ol>
+        <p style="margin-top:8px"><b>Nunca cortar:</b> 4 stories/dia, séries fixas com o time, Reels #25 e #26, YouTube #28. <span class="warn">Pendência:</span> separar um print real da semana para o #32.</p>
+      </div>
+      <div class="note">
+        <h3>Checklist de copy antes de publicar</h3>
+        <p><b>As 2 perguntas do feed único</b> (quem não te segue x quem já te segue têm métricas diferentes): 1) quem não me conhece entende do que se trata em 3 segundos? 2) quem já me segue, isso vale a pena salvar ou compartilhar? Toda peça passa pelas duas antes de ir pro pacote de aprovação de quarta.</p>
+        <p style="margin-top:8px"><b>1 palavra-chave por pilar</b> (repetir na legenda, no texto na tela do Reel e nas hashtags — hashtag é busca, não é rede de pesca): Engenharias/VRF → <b>peças VRF</b> · Hotelaria → <b>climatização hotel</b> · El Niño/sazonal → <b>verão climatização</b> · Fornecedor/procedência → <b>peça original ar condicionado</b> · Cultura/TBT/Cumbuca/café → sem palavra-chave, são conteúdo de relacionamento, não de descoberta.</p>
+        <p style="margin-top:8px"><b>Produção (válido desde a Semana 0):</b> carrossel/estático até 1080x1440px · Reels e Stories respeitam a zona segura da interface (topo e base), texto e legenda nunca colados na borda.</p>
+      </div>
+    </div>
+    <h4 class="drawer-section">Execução e Produção</h4>
+    <div class="notes">
+      <div class="note">
+        <h3>Rotina fixa diária (~1h30)</h3>
+        <p><b>10h</b> — stories 1 e 2 (interativos aqui: é a janela de mais interação do perfil). <b>12h30</b> — post do feed (janela de mais alcance, 12h–15h) + checada rápida no direct para não estourar o SLA. <b>17h</b> — stories 3 e 4. <b>17h15</b> — direct de conteúdo; pedido de peça vai ao Inside Sales. Nas terças e quintas, o story 4 sai às <b>19h</b> via AGENDAMENTO no Meta Business Suite, deixado pronto no bloco das 17h (card/vídeo simples, sem interativo — o agendamento não suporta sticker). Nada é postado manualmente depois das 17h30. O restante do dia é o bloco de produção (3 a 4h).</p>
+      </div>
+      <div class="note">
+        <h3>Lógica D+7</h3>
+        <p>O pacote da semana N+1 fecha até a QUARTA da semana N e é aprovado na quarta às 16h. Quinta e sexta ficam para refações, agendamentos e as outras demandas — nada garante aprovação de primeira, e o Adailson tem a agenda dele de gerente. <b>Gap de revisão:</b> nada publica com menos de 2 dias úteis entre finalização e postagem. Se uma dependência atrasar, a peça desliza — a esteira não para, e a gaveta cobre o furo. O pacote de cada semana inclui também os 2 reaproveitamentos do LinkedIn (Reel da quarta como vídeo nativo + carrossel/estático da sexta como documento PDF), adaptados em ~1h.</p>
+      </div>
+      <div class="note">
+        <h3>As 3 diárias</h3>
+        <p><b>Diária A</b> (seg 03, tarde): Reel #27 (duas placas, gravado com bastante antecedência) + fotos #06, #08 e #14. <b>Diária B</b> (ter 18, manhã): Reel #18 (peças do El Niño) + Short #19. O Reel #24 (hotelaria) e o bloco de Prova e Conversão (setembro) não exigem diária própria — gravação simples em bloco de produção normal.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal-overlay" id="attach-modal">
   <div class="modal">
@@ -965,6 +1001,21 @@ if(firebaseAvailable){
 }
 
 function allChips(){ return Array.from(document.querySelectorAll('.chip')); }
+
+// todo item de conteúdo (Postagem, exceto Gaveta/Fechamento) passa a ter status —
+// os que não vieram com selo no HTML (LinkedIn, Blog, Carrossel, Estático, Data)
+// ganham um agora, começando em PAUTA, pra caber no pipeline único.
+function ensureStatusBadges(){
+  Array.from(document.querySelectorAll('#view-post .chip:not(.aprova)')).forEach(function(chip){
+    var kRow = chip.querySelector('.k');
+    if(!kRow || kRow.querySelector('.st')) return;
+    var badge = document.createElement('span');
+    badge.className = 'st pauta';
+    badge.textContent = 'PAUTA';
+    kRow.appendChild(badge);
+  });
+}
+
 function assignChipIds(){
   allChips().forEach(function(chip, i){
     chip.dataset.chipId = 'c' + i;
@@ -973,11 +1024,13 @@ function assignChipIds(){
   });
 }
 
-/* ===================== STATUS CLICÁVEL ===================== */
+/* ===================== STATUS CLICÁVEL (pipeline único) ===================== */
 var STATUS_CYCLE = [
-  {cls:'ok', label:'PRONTO'},
+  {cls:'pauta', label:'PAUTA'},
+  {cls:'shoot', label:'GRAVAR'},
   {cls:'edit', label:'EDIÇÃO'},
-  {cls:'shoot', label:'GRAVAR'}
+  {cls:'ok', label:'PRONTO'},
+  {cls:'posted', label:'POSTADO'}
 ];
 
 function applyStatusBadge(badge, cls){
@@ -1015,6 +1068,7 @@ function initStatusClicks(){
       refreshFilters();
       renderDashboard();
       renderKpiCharts();
+      renderTodaySummary();
     });
   });
 }
@@ -1147,9 +1201,11 @@ var TYPE_DEFS = [
   }}
 ];
 var STATUS_DEFS = [
-  {key:'ok', label:'Pronto'},
-  {key:'edit', label:'Edição'},
+  {key:'pauta', label:'Pauta'},
   {key:'shoot', label:'Gravar'},
+  {key:'edit', label:'Edição'},
+  {key:'ok', label:'Pronto'},
+  {key:'posted', label:'Postado'},
   {key:'none', label:'Sem status'}
 ];
 var FUNIL_DEFS = [
@@ -1182,7 +1238,7 @@ var FUNIL_COLORS = {topo:'#1C6E79', meio:'#0E4650', fundo:'#A34A2A', rel:'#8A6D9
 
 function countChips(){
   var chips = Array.from(document.querySelectorAll('#view-post .chip'));
-  var status = {ok:0, edit:0, shoot:0};
+  var status = {pauta:0, shoot:0, edit:0, ok:0, posted:0};
   var type = {};
   var funil = {};
   chips.forEach(function(c){
@@ -1297,9 +1353,11 @@ function renderDashboard(){
   var c = countChips();
 
   var statusHtml =
-    '<span class="summary-pill ok">✅ ' + c.status.ok + '<span>prontos</span></span>' +
+    '<span class="summary-pill pauta">📋 ' + c.status.pauta + '<span>em pauta</span></span>' +
+    '<span class="summary-pill shoot">🎬 ' + c.status.shoot + '<span>para gravar</span></span>' +
     '<span class="summary-pill edit">🖊️ ' + c.status.edit + '<span>em edição</span></span>' +
-    '<span class="summary-pill shoot">🎬 ' + c.status.shoot + '<span>para gravar</span></span>';
+    '<span class="summary-pill ok">✅ ' + c.status.ok + '<span>prontos</span></span>' +
+    '<span class="summary-pill posted">📤 ' + c.status.posted + '<span>postados</span></span>';
 
   var typeHtml = TYPE_DEFS.filter(function(d){ return c.type[d.key]; }).map(function(d){
     return '<span class="mini-pill">' + (TYPE_ICONS[d.key] || '') + ' <b>' + c.type[d.key] + '</b> ' + d.label + '</span>';
@@ -1309,13 +1367,8 @@ function renderDashboard(){
     return '<span class="mini-pill">🔻 <b>' + c.funil[d.key] + '</b> ' + d.label + '</span>';
   }).join('');
 
-  var postChips = Array.from(document.querySelectorAll('#view-post .chip:not(.aprova)'));
-  var postedCount = postChips.filter(function(chip){ return STATE.done[chip.dataset.chipId]; }).length;
-  var publicadoHtml = '<span class="summary-pill ok">✅ ' + postedCount + ' de ' + postChips.length + '<span>postados</span></span>';
-
   box.innerHTML =
     '<div class="dash-row"><span class="dash-row-label">Status</span>' + statusHtml + '</div>' +
-    '<div class="dash-row"><span class="dash-row-label">Publicado</span>' + publicadoHtml + '</div>' +
     '<div class="dash-row"><span class="dash-row-label">Formato</span>' + typeHtml + '</div>' +
     '<div class="dash-row"><span class="dash-row-label">Funil</span>' + funilHtml + '</div>';
 }
@@ -1325,18 +1378,22 @@ function renderKpiCharts(){
   var box = document.getElementById('kpi-charts');
   if(!box) return;
   var c = countChips();
-  var totalStatus = (c.status.ok + c.status.edit + c.status.shoot) || 1;
+  var totalStatus = (c.status.pauta + c.status.shoot + c.status.edit + c.status.ok + c.status.posted) || 1;
 
   var stackHtml =
     '<div class="stack-track">' +
-      '<span class="stack-seg" style="width:' + (c.status.ok / totalStatus * 100) + '%;background:var(--ok)"></span>' +
-      '<span class="stack-seg" style="width:' + (c.status.edit / totalStatus * 100) + '%;background:var(--edit)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.pauta / totalStatus * 100) + '%;background:var(--pauta)"></span>' +
       '<span class="stack-seg" style="width:' + (c.status.shoot / totalStatus * 100) + '%;background:var(--shoot)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.edit / totalStatus * 100) + '%;background:var(--edit)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.ok / totalStatus * 100) + '%;background:var(--ok)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.posted / totalStatus * 100) + '%;background:var(--posted)"></span>' +
     '</div>' +
     '<div class="stack-legend">' +
-      '<span><span class="sw" style="background:var(--ok)"></span>Pronto · ' + c.status.ok + '</span>' +
-      '<span><span class="sw" style="background:var(--edit)"></span>Edição · ' + c.status.edit + '</span>' +
+      '<span><span class="sw" style="background:var(--pauta)"></span>Pauta · ' + c.status.pauta + '</span>' +
       '<span><span class="sw" style="background:var(--shoot)"></span>Gravar · ' + c.status.shoot + '</span>' +
+      '<span><span class="sw" style="background:var(--edit)"></span>Edição · ' + c.status.edit + '</span>' +
+      '<span><span class="sw" style="background:var(--ok)"></span>Pronto · ' + c.status.ok + '</span>' +
+      '<span><span class="sw" style="background:var(--posted)"></span>Postado · ' + c.status.posted + '</span>' +
     '</div>';
 
   var maxType = Math.max.apply(null, TYPE_DEFS.map(function(d){ return c.type[d.key] || 0; }).concat([1]));
@@ -1496,6 +1553,9 @@ function initEditMode(){
       el.contentEditable = editModeOn ? 'true' : 'false';
       if(!editModeOn) saveEditedEl(el);
     });
+    // a descrição da semana fica escondida atrás do ícone ℹ️; no modo de edição,
+    // abre todas pra dar pra editar sem precisar caçar o botão de cada uma
+    if(editModeOn) Array.from(document.querySelectorAll('.wk-bar')).forEach(function(b){ b.classList.add('wd-open'); });
     btn.textContent = editModeOn ? '💾 Concluir edição' : '✏️ Editar textos';
     btn.classList.toggle('on', editModeOn);
   });
@@ -1509,6 +1569,28 @@ function initStoriesToggle(){
     storiesExpanded = !storiesExpanded;
     Array.from(document.querySelectorAll('.sts')).forEach(function(d){ d.open = storiesExpanded; });
     btn.textContent = storiesExpanded ? '▴ Recolher stories' : '▾ Expandir stories';
+  });
+}
+
+/* ===================== BARRA DE SEMANA ENXUTA (descrição vira ícone clicável) ===================== */
+function initWeekBarToggle(){
+  Array.from(document.querySelectorAll('.wk-bar')).forEach(function(bar){
+    var wd = bar.querySelector('.wd');
+    if(!wd) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'wd-toggle';
+    btn.title = 'Ver diretrizes desta semana';
+    btn.textContent = 'ℹ️';
+    btn.addEventListener('click', function(){ bar.classList.toggle('wd-open'); });
+    bar.insertBefore(btn, wd);
+  });
+}
+
+/* ===================== DIAS SÓ-COM-STORIES: marcados como compactos ===================== */
+function markStoriesOnlyDays(){
+  Array.from(document.querySelectorAll('.day:not(.empty)')).forEach(function(day){
+    day.classList.toggle('stories-only', !day.querySelector('.chip'));
   });
 }
 
@@ -1534,10 +1616,7 @@ function addCheckRow(chip, label){
 }
 
 function initDoneCheckboxes(){
-  Array.from(document.querySelectorAll('#view-post .chip')).forEach(function(chip){
-    if(chip.classList.contains('aprova')) return; // Gaveta / Fechamento interno não são posts
-    addCheckRow(chip, 'Postado');
-  });
+  // Postagem não usa mais checkbox: "postado" agora é o último estágio do status único.
   Array.from(document.querySelectorAll('#view-exec .chip')).forEach(function(chip){
     addCheckRow(chip, 'Feito');
   });
@@ -1595,8 +1674,10 @@ function buildTodayList(day, doneLabel){
   }).map(function(chip){
     var titleEl = chip.querySelector('.title-text') || chip.querySelector('.t');
     var title = titleEl ? titleEl.textContent.trim() : chip.querySelector('.k').textContent.trim();
-    var done = !!STATE.done[chip.dataset.chipId];
-    return { id: chip.dataset.chipId, title: title, done: done };
+    var done = doneLabel === 'Feito' ? !!STATE.done[chip.dataset.chipId] : (STATE.status[chip.dataset.chipId] || chip.querySelector('.st') && chip.querySelector('.st').dataset.originalCls) === 'posted';
+    var type = doneLabel === 'Feito' ? null : chipType(chip);
+    var kLabel = doneLabel === 'Feito' ? (chip.querySelector('.k') || {}).textContent.trim().replace(/\s+/g, ' ') : null;
+    return { id: chip.dataset.chipId, title: title, done: done, type: type, kLabel: kLabel };
   });
 }
 
@@ -1626,7 +1707,12 @@ function renderTodaySummary(){
     if(!items.length) return '';
     var pending = items.filter(function(i){ return !i.done; });
     var body = pending.length
-      ? pending.map(function(i){ return '<div class="today-item"><span class="todo">' + verb + '</span><a href="#" data-chip-id="' + i.id + '">' + i.title + '</a></div>'; }).join('')
+      ? pending.map(function(i){
+          var marker = verb === 'POSTAR'
+            ? '<span class="ti-icon">' + (TYPE_ICONS[i.type] || '🎬') + '</span>'
+            : '<span class="ti-badge">' + (i.kLabel || 'TAREFA') + '</span>';
+          return '<div class="today-item today-item-' + (verb === 'POSTAR' ? 'post' : 'exec') + '">' + marker + '<a href="#" data-chip-id="' + i.id + '">' + i.title + '</a></div>';
+        }).join('')
       : '<div class="today-done">✅ Tudo ' + (verb === 'POSTAR' ? 'postado' : 'feito') + ' por hoje</div>';
     return '<div class="today-col"><h5>' + title + ' (' + pending.length + ' de ' + items.length + ')</h5>' + body + '</div>';
   }
@@ -1669,7 +1755,28 @@ function renderAll(){
   setSyncIndicator(true);
 }
 
+/* ===================== TOOLTIP DO PONTO DE FUNIL ===================== */
+function initFunilDots(){
+  var LABELS = {topo:'Funil: Topo', meio:'Funil: Meio', fundo:'Funil: Fundo', rel:'Relacionamento'};
+  Array.from(document.querySelectorAll('.fu')).forEach(function(el){
+    var key = Object.keys(LABELS).filter(function(k){ return el.classList.contains(k); })[0];
+    if(key) el.title = LABELS[key];
+  });
+}
+
+/* ===================== BARRA LATERAL DE DIRETRIZES (drawer) ===================== */
+function initDrawer(){
+  var drawer = document.getElementById('notes-drawer');
+  var overlay = document.getElementById('drawer-overlay');
+  function open(){ drawer.classList.add('open'); overlay.classList.add('open'); }
+  function close(){ drawer.classList.remove('open'); overlay.classList.remove('open'); }
+  document.getElementById('drawer-toggle').addEventListener('click', open);
+  document.getElementById('drawer-close').addEventListener('click', close);
+  overlay.addEventListener('click', close);
+}
+
 /* ===================== INIT ===================== */
+ensureStatusBadges();
 assignChipIds();
 assignEditIds();
 initStatusClicks();
@@ -1679,6 +1786,10 @@ buildFilterBar('post');
 buildFilterBar('exec');
 initEditMode();
 initStoriesToggle();
+initWeekBarToggle();
+markStoriesOnlyDays();
+initFunilDots();
+initDrawer();
 setSyncIndicator(false, true);
 
 document.getElementById('reset-local').addEventListener('click', function(){
