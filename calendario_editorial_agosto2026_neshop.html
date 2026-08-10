@@ -317,6 +317,7 @@
       <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
       <button type="button" class="hdr-btn" id="toggle-stories" title="Mostrar ou esconder a lista de stories em todos os dias de uma vez">▾ Expandir stories</button>
       <button type="button" class="hdr-btn" id="drawer-toggle" title="Templates, regras e diretrizes de produção">📋 Diretrizes &amp; Regras</button>
+      <button type="button" class="hdr-btn" id="new-month-btn" title="Baixa um arquivo novo com o esqueleto vazio (datas certas, sem conteúdo) de outro mês">🗓️ Novo mês</button>
       <button type="button" class="hdr-btn" id="reset-local" title="Apaga o status, os anexos e os textos editados para todo mundo">Limpar tudo (afeta todo mundo)</button>
       <span id="sync-indicator" class="sync-indicator" title="Este calendário é compartilhado — mudanças aparecem para todo mundo que tiver o arquivo aberto">🔄 Conectando à nuvem…</span>
     </div>
@@ -960,7 +961,11 @@ var stateRef = null;
 try{
   if(typeof firebase === 'undefined') throw new Error('SDK do Firebase não carregou');
   firebase.initializeApp(firebaseConfig);
-  stateRef = firebase.database().ref('calendarState');
+  // cada arquivo de mês tem o próprio "endereço" na nuvem (data-month-key no <body>), pra não
+  // misturar dado de um mês com o de outro; o arquivo original (sem o atributo) mantém a chave
+  // antiga de sempre, então isso não muda nada pra quem já está usando este calendário.
+  var monthKey = document.body.dataset.monthKey;
+  stateRef = firebase.database().ref(monthKey ? ('calendarState_' + monthKey) : 'calendarState');
   firebaseAvailable = true;
 }catch(e){
   console.error('Firebase indisponível, o calendário vai funcionar sem sincronização em nuvem:', e);
@@ -1856,6 +1861,160 @@ function initFunilDots(){
   });
 }
 
+/* ===================== NOVO MÊS: gera e baixa um arquivo com o esqueleto vazio =====================
+   Só a estrutura mecânica (semanas/dias com as datas certas do mês escolhido, endereço próprio
+   na nuvem) — sem nenhum conteúdo, porque o que postar em cada dia muda todo mês e precisa ser
+   pensado, não copiado. O arquivo atual não é alterado; isso baixa um arquivo novo. */
+var MONTH_NAMES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var DOW_KEYS = ['seg','ter','qua','qui','sex'];
+
+function pad2(n){ return String(n).padStart(2, '0'); }
+
+function computeMonthWeeks(year, monthIndex){
+  var lastDay = new Date(year, monthIndex + 1, 0);
+  var firstDay = new Date(year, monthIndex, 1);
+  var dow = firstDay.getDay(); // 0 = domingo ... 6 = sábado
+  var mondayOffset = (dow === 0) ? -6 : (1 - dow);
+  var cursor = new Date(year, monthIndex, 1 + mondayOffset);
+  var weeks = [];
+  do{
+    var days = [];
+    for(var i = 0; i < 5; i++){
+      days.push({ date: new Date(cursor), inMonth: cursor.getMonth() === monthIndex && cursor.getFullYear() === year });
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    cursor.setDate(cursor.getDate() + 2); // pula sábado e domingo
+    weeks.push(days);
+  } while(cursor <= lastDay);
+  return weeks;
+}
+
+function buildDayHtml(dayInfo){
+  if(!dayInfo.inMonth) return '<div class="day empty"></div>';
+  var dowKey = DOW_KEYS[dayInfo.date.getDay() - 1];
+  return '<div class="day"><div class="dnum"><b data-dow="' + dowKey + '">' + pad2(dayInfo.date.getDate()) + '</b></div></div>';
+}
+
+function buildWeekHtml(days, idx){
+  var inMonthDays = days.filter(function(d){ return d.inMonth; });
+  var rangeDays = inMonthDays.length ? inMonthDays : days;
+  var label = 'Semana ' + (idx + 1) + ' · ' + pad2(rangeDays[0].date.getDate()) + '–' + pad2(rangeDays[rangeDays.length - 1].date.getDate());
+  var wkBar = '<div class="wk-bar">' +
+    '<div class="wn">' + label + '</div>' +
+    '<div class="wt">preencher</div>' +
+    '<span class="valor">Valor: preencher</span>' +
+    '<span class="valor">Funil: preencher</span>' +
+    '<div class="wd">preencher</div>' +
+  '</div>';
+  var week = '<div class="week">' + days.map(buildDayHtml).join('') + '</div>';
+  return wkBar + week;
+}
+
+function replaceCalWeeks(calEl, weeksHtml){
+  Array.from(calEl.querySelectorAll('.wk-bar, .week')).forEach(function(el){ el.remove(); });
+  calEl.insertAdjacentHTML('beforeend', weeksHtml);
+}
+
+function buildSkeletonDoc(monthIndex, year){
+  var clone = document.documentElement.cloneNode(true);
+  var monthLabelCap = MONTH_NAMES[monthIndex].charAt(0).toUpperCase() + MONTH_NAMES[monthIndex].slice(1) + ' ' + year;
+
+  var h1Span = clone.querySelector('h1 span');
+  if(h1Span) h1Span.textContent = '· ' + monthLabelCap;
+  var titleTag = clone.querySelector('title');
+  if(titleTag) titleTag.textContent = 'Neshop · Calendário Editorial · ' + monthLabelCap;
+  var goalsTitle = clone.querySelector('.goals-title');
+  if(goalsTitle) goalsTitle.textContent = '🎯 Metas do mês — ' + MONTH_NAMES[monthIndex].charAt(0).toUpperCase() + MONTH_NAMES[monthIndex].slice(1);
+
+  // chave própria na nuvem, isolada da chave antiga (não mexe no arquivo atual)
+  clone.querySelector('body').dataset.monthKey = MONTH_NAMES[monthIndex] + year;
+
+  // esses painéis são preenchidos via JS (innerHTML) a partir do conteúdo do mês atual;
+  // sem isso, o arquivo baixado nasceria com o resumo de hoje/dashboard/insights do mês
+  // antigo "grudados" na página até o próprio script dele rodar de novo e recalcular
+  ['#dashboard', '#insights-list', '#kpi-charts', '#today-summary'].forEach(function(sel){
+    var el = clone.querySelector(sel);
+    if(el) el.innerHTML = '';
+  });
+
+  var weeks = computeMonthWeeks(year, monthIndex);
+  var weeksHtml = weeks.map(buildWeekHtml).join('');
+  var calPost = clone.querySelector('#view-post .cal');
+  var calExec = clone.querySelector('#view-exec .cal');
+  if(calPost) replaceCalWeeks(calPost, weeksHtml);
+  if(calExec) replaceCalWeeks(calExec, weeksHtml);
+
+  // metas zeradas (mesmas categorias, alvo em branco pra ser definido de novo)
+  Array.from(clone.querySelectorAll('.goal-card[data-goal] .goal-target')).forEach(function(el){ el.textContent = '0'; });
+  Array.from(clone.querySelectorAll('.goal-card[data-goal] .goal-count')).forEach(function(el){ el.textContent = '0'; });
+  Array.from(clone.querySelectorAll('.goal-card[data-goal] .goal-fill')).forEach(function(el){ el.style.width = '0%'; });
+  Array.from(clone.querySelectorAll('.goal-card[data-goal]')).forEach(function(el){ el.classList.remove('hit'); });
+  var taskCard = clone.querySelector('.goal-task-card[data-goal-task]');
+  if(taskCard){
+    var taskLabel = taskCard.querySelector('label span');
+    if(taskLabel) taskLabel.textContent = 'Tarefa única do mês (preencher)';
+    var taskBox = taskCard.querySelector('input[type=checkbox]');
+    if(taskBox) taskBox.removeAttribute('checked');
+    taskCard.classList.remove('hit');
+  }
+
+  // tabela de metas/resultados: mantém só o cabeçalho, o resto é específico de cada mês
+  var kpiTable = clone.querySelector('.kpi table');
+  if(kpiTable){
+    var tbody = kpiTable.querySelector('tbody') || kpiTable;
+    Array.from(tbody.querySelectorAll('tr')).forEach(function(tr, i){ if(i > 0) tr.remove(); });
+    tbody.insertAdjacentHTML('beforeend',
+      '<tr class="grp"><td colspan="6">Consolidado do mês</td></tr>' +
+      '<tr><td class="pc">preencher</td><td>preencher</td><td>preencher</td><td>preencher</td><td class="fill">preencher</td><td class="fill">preencher</td></tr>'
+    );
+  }
+
+  // os dois parágrafos de baseline (número real do perfil em agosto) são específicos do mês
+  var kpiChartsCal = clone.querySelector('#kpi-charts');
+  kpiChartsCal = kpiChartsCal ? kpiChartsCal.closest('.cal') : null;
+  if(kpiChartsCal){
+    Array.from(kpiChartsCal.querySelectorAll('.obs')).forEach(function(el, i){
+      el.innerHTML = i === 0 ? '<b>Toda meta aqui sai de um número real do perfil.</b> preencher' : 'preencher';
+    });
+  }
+
+  // começa com tudo fechado (painel de filtros, semana, gaveta)
+  Array.from(clone.querySelectorAll('.control-panel')).forEach(function(el){ el.removeAttribute('open'); });
+  Array.from(clone.querySelectorAll('.wk-bar')).forEach(function(el){ el.classList.remove('wd-open'); });
+  var drawer = clone.querySelector('#notes-drawer');
+  if(drawer) drawer.classList.remove('open');
+  var overlay = clone.querySelector('#drawer-overlay');
+  if(overlay) overlay.classList.remove('open');
+
+  return '<!doctype html>\n' + clone.outerHTML;
+}
+
+function downloadSkeleton(){
+  var input = prompt('Esqueleto de qual mês? Digite mês e ano no formato MM/AAAA (ex: 09/2026 para Setembro de 2026):', '');
+  if(!input) return;
+  var m = input.trim().match(/^(\d{1,2})\/(\d{4})$/);
+  if(!m){
+    alert('Formato inválido. Use MM/AAAA — por exemplo, 09/2026.');
+    return;
+  }
+  var monthIndex = parseInt(m[1], 10) - 1;
+  var year = parseInt(m[2], 10);
+  if(monthIndex < 0 || monthIndex > 11){
+    alert('Mês inválido. Use um número de 01 a 12.');
+    return;
+  }
+  var html = buildSkeletonDoc(monthIndex, year);
+  var blob = new Blob([html], {type: 'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'calendario_editorial_' + MONTH_NAMES[monthIndex] + year + '_neshop.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 /* ===================== BARRA LATERAL DE DIRETRIZES (drawer) ===================== */
 function initDrawer(){
   var drawer = document.getElementById('notes-drawer');
@@ -1884,6 +2043,7 @@ initFunilDots();
 initDrawer();
 initGoalTasks();
 setSyncIndicator(false, true);
+document.getElementById('new-month-btn').addEventListener('click', downloadSkeleton);
 
 document.getElementById('reset-local').addEventListener('click', function(){
   if(confirm('Isso vai apagar o status, os anexos, os textos editados, os checks de postado/feito e as metas para TODO MUNDO que usa este calendário (é um dado compartilhado na nuvem, não só deste navegador). Essa ação não pode ser desfeita. Confirmar?')){
