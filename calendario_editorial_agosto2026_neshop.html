@@ -1153,7 +1153,18 @@ function renderAttachList(){
     var row = document.createElement('div');
     row.className = 'attach-row';
     var link = document.createElement('a');
-    link.href = a.data; link.target = '_blank'; link.rel = 'noopener';
+    link.href = a.data;
+    if(a.type === 'file'){
+      // imagem e PDF abrem numa aba nova normalmente; qualquer outro tipo (HTML, docx etc.)
+      // vira download direto — abrir esses como aba nova (data: URL) só mostra tela em branco
+      var mimeMatch = /^data:([^;]+);/.exec(a.data);
+      var mime = mimeMatch ? mimeMatch[1] : '';
+      var viewableInline = mime.indexOf('image/') === 0 || mime === 'application/pdf';
+      if(viewableInline){ link.target = '_blank'; link.rel = 'noopener'; }
+      else { link.download = a.name; }
+    } else {
+      link.target = '_blank'; link.rel = 'noopener';
+    }
     link.textContent = (a.type === 'link' ? '🔗 ' : '📄 ') + a.name;
     var rm = document.createElement('button');
     rm.type = 'button'; rm.className = 'attach-rm'; rm.textContent = 'Remover';
