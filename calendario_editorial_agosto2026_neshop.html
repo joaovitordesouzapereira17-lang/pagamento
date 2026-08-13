@@ -1197,11 +1197,27 @@ function initAttachments(){
     renderAttachBadge(chip);
   });
 
+  // anexo de arquivo vira texto (base64) dentro do estado compartilhado, e esse estado
+  // inteiro é reenviado pra nuvem a cada mudança (de qualquer pessoa, em qualquer item) —
+  // um vídeo ali dentro trava o navegador na hora de processar e volta a travar tudo de
+  // novo a cada sincronização futura. Por isso: nada de vídeo aqui, e um teto de tamanho
+  // pros outros tipos. Arquivo grande (vídeo, roteiro pesado etc.) deve ir por link (Drive,
+  // ClickUp, YouTube) usando o campo "cole um link" logo abaixo.
+  var MAX_ATTACH_SIZE = 4 * 1024 * 1024; // 4MB
   document.getElementById('attach-file').addEventListener('change', function(e){
     var files = Array.from(e.target.files || []);
     if(!files.length) return;
     var id = document.getElementById('attach-modal').dataset.chipId;
+    var rejected = [];
     files.forEach(function(file){
+      if(file.type.indexOf('video/') === 0){
+        rejected.push(file.name + ' (vídeo — use um link do Drive/ClickUp/YouTube)');
+        return;
+      }
+      if(file.size > MAX_ATTACH_SIZE){
+        rejected.push(file.name + ' (' + Math.round(file.size / 1024 / 1024) + 'MB — acima do limite de 4MB)');
+        return;
+      }
       var reader = new FileReader();
       reader.onload = function(){
         STATE.attach[id] = STATE.attach[id] || [];
@@ -1213,6 +1229,9 @@ function initAttachments(){
       };
       reader.readAsDataURL(file);
     });
+    if(rejected.length){
+      alert('Não foi possível anexar:\n\n' + rejected.join('\n') + '\n\nArquivos grandes (principalmente vídeo) travam o calendário pra todo mundo, porque ficam sincronizados na nuvem junto do resto. Suba o arquivo no Drive/ClickUp e cole o link aqui embaixo em vez de anexar direto.');
+    }
     e.target.value = '';
   });
 
