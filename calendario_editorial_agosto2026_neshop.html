@@ -919,7 +919,7 @@
     <div class="attach-list" id="attach-list"></div>
     <div class="attach-form">
       <label>Anexar arquivo (arte, PDF do roteiro...)
-        <input type="file" id="attach-file">
+        <input type="file" id="attach-file" multiple>
       </label>
       <div class="attach-link-row">
         <input type="url" id="attach-link" placeholder="ou cole um link (Drive, ClickUp...)">
@@ -1198,20 +1198,22 @@ function initAttachments(){
   });
 
   document.getElementById('attach-file').addEventListener('change', function(e){
-    var file = e.target.files[0];
-    if(!file) return;
+    var files = Array.from(e.target.files || []);
+    if(!files.length) return;
     var id = document.getElementById('attach-modal').dataset.chipId;
-    var reader = new FileReader();
-    reader.onload = function(){
-      STATE.attach[id] = STATE.attach[id] || [];
-      STATE.attach[id].push({type:'file', name:file.name, data:reader.result});
-      saveState();
-      renderAttachList();
-      var chip = document.querySelector('.chip[data-chip-id="' + id + '"]');
-      if(chip) renderAttachBadge(chip);
-      e.target.value = '';
-    };
-    reader.readAsDataURL(file);
+    files.forEach(function(file){
+      var reader = new FileReader();
+      reader.onload = function(){
+        STATE.attach[id] = STATE.attach[id] || [];
+        STATE.attach[id].push({type:'file', name:file.name, data:reader.result});
+        saveState();
+        renderAttachList();
+        var chip = document.querySelector('.chip[data-chip-id="' + id + '"]');
+        if(chip) renderAttachBadge(chip);
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = '';
   });
 
   document.getElementById('attach-link-add').addEventListener('click', function(){
