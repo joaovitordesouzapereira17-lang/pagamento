@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/calendario_conteudo_2s2026_neshop.html" }
+  ]
+}
