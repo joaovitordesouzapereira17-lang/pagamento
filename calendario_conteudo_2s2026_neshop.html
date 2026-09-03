@@ -14,6 +14,7 @@
     --yt:#B03A2E; --li:#0A66C2; --blog:#54707A; --data:#7A5C8A; --casa:#8A5A24;
     --ok:#1F7A4D; --edit:#8A6D1F; --shoot:#A34A2A;
     --pauta:#6B7A7C; --posted:#5B3FA0;
+    --gold:#B8933D; --gold-deep:#8C6D24; --gold-soft:#F0DFB0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);padding:0 0 64px}
@@ -271,6 +272,41 @@
   .stack-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;color:#43585b}
   .stack-legend span{display:inline-flex;align-items:center;gap:5px}
   .stack-legend .sw{width:9px;height:9px;border-radius:3px;flex:none}
+
+  /* painel geral de metas (topo da aba Metas e Resultados) */
+  .kpi-hero{max-width:2320px;margin:20px auto 0;padding:0 28px;display:grid;grid-template-columns:1.6fr 1fr;gap:16px;align-items:stretch}
+  @media(max-width:900px){.kpi-hero{grid-template-columns:1fr}}
+  .hero-chart-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 4px 18px rgba(6,38,43,.09);display:flex;flex-direction:column}
+  .hero-chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .hero-chart-head h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--p900)}
+  .hero-sub{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8fa3a5;margin-top:3px}
+  .trend-badge{font-size:12px;font-weight:700;color:var(--ok);background:#EAF6EE;border-radius:999px;padding:5px 11px;white-space:nowrap;flex:none}
+  .trend-badge.down{color:#A3416E;background:#FBEAF1}
+  .trend-badge.neutral{color:#7c8f91;background:#F1F6F6}
+  .hero-chart-body{margin-top:10px;flex:1}
+  .hero-svg{width:100%;height:auto;display:block}
+
+  .hero-side{display:flex;flex-direction:column;gap:16px}
+  .primary-goal-card{background:var(--p900);border-radius:18px;padding:20px 22px;color:#fff;box-shadow:0 4px 18px rgba(6,38,43,.18);text-align:center}
+  .pg-label{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);opacity:.9}
+  .pg-heading{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;margin-top:8px;color:#fff}
+  .pg-pct{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:var(--gold-soft);margin-top:6px}
+  .pg-track{margin-top:10px;height:8px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden}
+  .pg-fill{display:block;height:100%;background:var(--gold);border-radius:5px;transition:width .35s}
+  .pg-sub{font-size:11.5px;color:rgba(255,255,255,.65);margin-top:8px}
+
+  .highlight-card{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 1px 3px rgba(6,38,43,.06);flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+  .hc-icon{font-size:20px}
+  .hc-title{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;font-weight:700}
+  .hc-body{font-size:13.5px;color:#3c4d4f;line-height:1.45}
+  .hc-body b{color:var(--p900)}
+
+  .kpi-mini-row{max-width:2320px;margin:16px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .kpi-mini-card{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 1px 3px rgba(6,38,43,.06)}
+  .mini-label{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:#8fa3a5;font-weight:700}
+  .mini-value{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--p900);margin-top:6px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .mini-badge{font-size:11px;font-weight:700;color:var(--ok);background:#EAF6EE;border-radius:999px;padding:3px 8px}
+  .mini-badge.down{color:#A3416E;background:#FBEAF1}
 
   /* ===== painel recolhível (resumo, legenda, filtros) ===== */
   .control-panel{margin-top:14px}
@@ -1056,9 +1092,37 @@
 
 <div class="edit-banner">✏️ Modo de edição ativo — clique no alvo de qualquer meta pra mudar o número.</div>
 
+<div class="kpi-hero">
+  <div class="hero-chart-card">
+    <div class="hero-chart-head">
+      <div>
+        <h3>Panorama do semestre</h3>
+        <p class="hero-sub">% da meta batida por mês · agosto a dezembro</p>
+      </div>
+      <span class="trend-badge neutral" id="hero-trend">—</span>
+    </div>
+    <div class="hero-chart-body" id="hero-chart-body"></div>
+  </div>
+  <div class="hero-side">
+    <div class="primary-goal-card">
+      <div class="pg-label">Meta do mês ativo</div>
+      <div class="pg-heading" id="pg-heading">—</div>
+      <div class="pg-pct" id="pg-pct">0%</div>
+      <div class="pg-track"><span class="pg-fill" id="pg-fill" style="width:0%"></span></div>
+      <div class="pg-sub" id="pg-sub">Alvo: —</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-icon">🎯</div>
+      <div class="hc-title">Destaque do mês</div>
+      <div class="hc-body" id="hc-body">—</div>
+    </div>
+  </div>
+</div>
+<div class="kpi-mini-row" id="kpi-mini-row"></div>
+
 <div class="month-page active" data-month="agosto2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">🎯 Metas do mês — Agosto</h2>
+  <h2 class="goals-title">📋 Metas por formato — Agosto</h2>
   <div class="goals-grid">
     <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed252" data-original-html="2">2</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
     <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed253" data-original-html="8">8</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
@@ -1077,7 +1141,7 @@
 
 <div class="month-page" data-month="setembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">🎯 Metas do mês — Setembro</h2>
+  <h2 class="goals-title">📋 Metas por formato — Setembro</h2>
   <div class="goals-grid">
     <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">8</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
@@ -1096,7 +1160,7 @@
 
 <div class="month-page" data-month="outubro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">🎯 Metas do mês — Outubro</h2>
+  <h2 class="goals-title">📋 Metas por formato — Outubro</h2>
   <div class="goals-grid">
     <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
@@ -1115,7 +1179,7 @@
 
 <div class="month-page" data-month="novembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">🎯 Metas do mês — Novembro</h2>
+  <h2 class="goals-title">📋 Metas por formato — Novembro</h2>
   <div class="goals-grid">
     <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
@@ -1134,7 +1198,7 @@
 
 <div class="month-page" data-month="dezembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">🎯 Metas do mês — Dezembro</h2>
+  <h2 class="goals-title">📋 Metas por formato — Dezembro</h2>
   <div class="goals-grid">
     <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
@@ -1847,6 +1911,124 @@ function renderGoals(postPage, kpiPage){
   });
 }
 
+/* ===================== PAINEL GERAL DE METAS (topo da aba Metas e Resultados) =====================
+   Tudo aqui vem de dados reais já existentes (metas por formato + status das peças) — nada de
+   número inventado. O gráfico do topo compara os 5 meses; os cartões do meio mostram o mês ativo. */
+var MONTH_LABELS = {agosto2026:'Ago', setembro2026:'Set', outubro2026:'Out', novembro2026:'Nov', dezembro2026:'Dez'};
+
+function computeMonthGoalStats(monthKey){
+  var postPage = monthPage('post', monthKey);
+  var kpiPage = monthPage('kpi', monthKey);
+  if(!postPage || !kpiPage) return null;
+  var cats = Array.from(kpiPage.querySelectorAll('.goal-card[data-goal]')).map(function(card){
+    return {
+      key: card.dataset.goal,
+      label: card.querySelector('.goal-label').textContent.trim(),
+      count: parseInt(card.querySelector('.goal-count').textContent, 10) || 0,
+      target: parseInt(card.querySelector('.goal-target').textContent, 10) || 0
+    };
+  });
+  var totalCount = cats.reduce(function(s, c){ return s + c.count; }, 0);
+  var totalTarget = cats.reduce(function(s, c){ return s + c.target; }, 0);
+  var hitCount = cats.filter(function(c){ return c.target > 0 && c.count >= c.target; }).length;
+  var c = countChips(postPage);
+  var inProgress = c.status.shoot + c.status.edit + c.status.ok;
+  var totalPieces = c.status.pauta + c.status.shoot + c.status.edit + c.status.ok + c.status.posted;
+  return {
+    cats: cats, totalCount: totalCount, totalTarget: totalTarget,
+    pct: totalTarget > 0 ? (totalCount / totalTarget * 100) : 0,
+    hitCount: hitCount, catTotal: cats.length,
+    inProgress: inProgress, totalPieces: totalPieces
+  };
+}
+
+function kpiMiniCard(label, value, pct){
+  var badge = pct === null ? '' : '<span class="mini-badge' + (pct >= 50 ? '' : ' down') + '">' + (pct >= 50 ? '▲ ' : '▼ ') + pct + '%</span>';
+  return '<div class="kpi-mini-card"><div class="mini-label">' + label + '</div><div class="mini-value">' + value + badge + '</div></div>';
+}
+
+function renderKpiHero(){
+  var chartBody = document.getElementById('hero-chart-body');
+  if(!chartBody) return;
+
+  var pts = MONTHS.map(function(mk){
+    var s = computeMonthGoalStats(mk);
+    return { monthKey: mk, label: MONTH_LABELS[mk] || mk, pct: s ? s.pct : 0 };
+  });
+  var w = 560, h = 150, pad = 8;
+  var stepX = pts.length > 1 ? (w - pad * 2) / (pts.length - 1) : 0;
+  var maxPct = Math.max.apply(null, pts.map(function(p){ return p.pct; }).concat([10]));
+  var scaleY = function(pct){ return h - pad - (pct / Math.max(maxPct, 100)) * (h - pad * 2); };
+  var linePts = pts.map(function(p, i){ return (pad + i * stepX).toFixed(1) + ',' + scaleY(p.pct).toFixed(1); });
+  var areaPts = 'M' + pad + ',' + (h - pad) + ' L' + linePts.join(' L') + ' L' + (pad + (pts.length - 1) * stepX).toFixed(1) + ',' + (h - pad) + ' Z';
+  var lineD = 'M' + linePts.join(' L');
+  var gridLines = [0, 25, 50, 75, 100].map(function(g){
+    var y = scaleY(g).toFixed(1);
+    return '<line x1="' + pad + '" y1="' + y + '" x2="' + (w - pad) + '" y2="' + y + '" stroke="rgba(6,38,43,.08)" stroke-width="1"/>';
+  }).join('');
+  var dots = pts.map(function(p, i){ return '<circle cx="' + (pad + i * stepX).toFixed(1) + '" cy="' + scaleY(p.pct).toFixed(1) + '" r="3.5" fill="var(--ok)"/>'; }).join('');
+  var labels = pts.map(function(p, i){ return '<text x="' + (pad + i * stepX).toFixed(1) + '" y="' + (h + 16) + '" font-size="10" fill="#7c8f91" text-anchor="middle">' + p.label + '</text>'; }).join('');
+
+  chartBody.innerHTML =
+    '<svg viewBox="0 0 ' + w + ' ' + (h + 22) + '" preserveAspectRatio="none" class="hero-svg">' +
+      '<defs><linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="var(--gold)" stop-opacity=".5"/>' +
+        '<stop offset="100%" stop-color="var(--ok)" stop-opacity="0"/>' +
+      '</linearGradient></defs>' +
+      gridLines +
+      '<path d="' + areaPts + '" fill="url(#heroGrad)"/>' +
+      '<path d="' + lineD + '" fill="none" stroke="var(--gold-deep)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>' +
+      dots + labels +
+    '</svg>';
+
+  var trendEl = document.getElementById('hero-trend');
+  var last = pts[pts.length - 1], prevWithData = null;
+  for(var i = pts.length - 2; i >= 0; i--){ if(pts[i].pct > 0){ prevWithData = pts[i]; break; } }
+  if(prevWithData){
+    var diff = last.pct - prevWithData.pct;
+    trendEl.className = 'trend-badge' + (diff < 0 ? ' down' : '');
+    trendEl.textContent = (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff).toFixed(1) + ' pts';
+  } else {
+    trendEl.className = 'trend-badge neutral';
+    trendEl.textContent = 'início do semestre';
+  }
+
+  var activeTab = document.querySelector('.month-tab.active');
+  var monthKey = activeTab ? activeTab.dataset.month : MONTHS[0];
+  var s = computeMonthGoalStats(monthKey);
+  if(!s) return;
+
+  document.getElementById('pg-heading').textContent = 'Peças de conteúdo (alvo: ' + s.totalTarget + ')';
+  document.getElementById('pg-pct').textContent = Math.round(s.pct) + '%';
+  document.getElementById('pg-fill').style.width = Math.min(100, s.pct) + '%';
+  document.getElementById('pg-sub').textContent = 'Alvo: ' + s.totalTarget + ' peças';
+
+  var worst = null;
+  s.cats.forEach(function(c){
+    if(c.target <= 0) return;
+    var ratio = c.count / c.target;
+    if(!worst || ratio < worst.ratio) worst = {label: c.label.replace(/^[^\w]*\s*/, ''), count: c.count, target: c.target, ratio: ratio};
+  });
+  var hcBody = document.getElementById('hc-body');
+  if(s.catTotal > 0 && s.hitCount >= s.catTotal){
+    hcBody.innerHTML = 'Todas as <b>' + s.catTotal + ' metas</b> de formato já bateram o alvo este mês. 🎉';
+  } else if(worst){
+    hcBody.innerHTML = '<b>' + worst.label + '</b> é a meta mais atrasada: ' + worst.count + ' de ' + worst.target + ' já no ar.';
+  } else {
+    hcBody.innerHTML = 'Sem metas cadastradas pra este mês ainda.';
+  }
+
+  var miniRow = document.getElementById('kpi-mini-row');
+  var pctPosted = s.totalTarget > 0 ? Math.round(s.totalCount / s.totalTarget * 100) : 0;
+  var pctProgress = s.totalPieces > 0 ? Math.round(s.inProgress / s.totalPieces * 100) : 0;
+  var pctHit = s.catTotal > 0 ? Math.round(s.hitCount / s.catTotal * 100) : 0;
+  miniRow.innerHTML =
+    kpiMiniCard('Peças planejadas', s.totalTarget, null) +
+    kpiMiniCard('Já no ar', s.totalCount, pctPosted) +
+    kpiMiniCard('Em produção', s.inProgress, pctProgress) +
+    kpiMiniCard('Metas batidas', s.hitCount + '/' + s.catTotal, pctHit);
+}
+
 function applyGoalTasksFromState(){
   Array.from(document.querySelectorAll('.goal-task-card[data-goal-task]')).forEach(function(card){
     var key = card.dataset.goalTask;
@@ -2233,6 +2415,7 @@ function renderAllMonths(){
       renderGoals(postPage, kpiPage);
     }
   });
+  renderKpiHero();
 }
 
 // meses sem bloco de Execução e Produção (só Postagem e Metas fazem sentido pra eles)
@@ -2253,6 +2436,7 @@ function showMonth(monthKey){
   execTab.style.display = hideExec ? 'none' : '';
   if(hideExec && execTab.classList.contains('active')) showView('post');
 
+  renderKpiHero();
   window.scrollTo({top: 0});
 }
 
