@@ -321,6 +321,34 @@
   body.edit-mode [contenteditable="true"]:focus{outline:2px solid var(--p900);background:#fff}
   .edit-banner{display:none;max-width:2320px;margin:10px auto 0;padding:11px 28px;font-size:13px;color:var(--p700);background:#EAF4F5;border:1px solid #9CCBD0;border-radius:10px}
   body.edit-mode .edit-banner{display:block}
+
+  /* menu flutuante de atalhos (canto inferior, morfa de pílula pra painel) */
+  .fab-menu{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:90}
+  .fab-panel{position:relative;overflow:hidden;width:150px;height:48px;border-radius:72px;background:var(--p200);box-shadow:0 8px 22px rgba(6,38,43,.28);cursor:pointer;
+    transition:width .5s cubic-bezier(.22,1,.36,1),height .5s cubic-bezier(.22,1,.36,1),border-radius .5s cubic-bezier(.22,1,.36,1),background-color .4s ease,transform .2s ease}
+  .fab-panel:hover{transform:translateY(-1px) scale(1.04)}
+  .fab-panel.open{width:224px;height:270px;border-radius:26px;background:var(--p900);cursor:default}
+  .fab-panel.open:hover{transform:none}
+  .fab-items{display:flex;flex-direction:column;gap:2px;padding:16px 12px 0}
+  .fab-item{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.03em;color:#fff;background:none;border:none;text-align:left;padding:9px 10px;border-radius:10px;cursor:pointer;opacity:0;transform:translateY(6px);transition:background .15s}
+  .fab-panel.open .fab-item{opacity:1;transform:translateY(0);transition:opacity .35s ease var(--d,0s),transform .35s ease var(--d,0s),background .15s}
+  .fab-panel.open .fab-item:nth-child(1){--d:.16s}
+  .fab-panel.open .fab-item:nth-child(2){--d:.21s}
+  .fab-panel.open .fab-item:nth-child(3){--d:.26s}
+  .fab-panel.open .fab-item:nth-child(4){--d:.31s}
+  .fab-panel.open .fab-item:nth-child(5){--d:.36s}
+  .fab-item:hover{background:rgba(191,224,226,.16)}
+  .fab-bar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 20px}
+  .fab-label{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.03em;color:var(--p900);transition:color .3s}
+  .fab-panel.open .fab-label{color:#fff}
+  .fab-burger{position:relative;width:18px;height:14px;flex:none}
+  .fab-burger i{position:absolute;left:0;right:0;height:2px;border-radius:2px;background:var(--p900);transition:transform .35s,background .3s,top .35s}
+  .fab-burger i:nth-child(1){top:1px}
+  .fab-burger i:nth-child(2){top:11px}
+  .fab-panel.open .fab-burger i{background:#fff}
+  .fab-panel.open .fab-burger i:nth-child(1){top:6px;transform:rotate(45deg)}
+  .fab-panel.open .fab-burger i:nth-child(2){top:6px;transform:rotate(-45deg)}
+  @media(max-width:640px){.fab-menu{bottom:16px}.fab-panel.open{width:calc(100vw - 32px);max-width:224px}}
 </style>
 </head>
 <body>
@@ -1190,6 +1218,22 @@
       </div>
     </div>
     <button type="button" class="modal-close" id="attach-close">Fechar</button>
+  </div>
+</div>
+
+<div class="fab-menu" id="fab-menu">
+  <div class="fab-panel" id="fab-panel">
+    <div class="fab-items" id="fab-items">
+      <button type="button" class="fab-item" data-action="today">📅 Hoje</button>
+      <button type="button" class="fab-item" data-action="search">🔎 Buscar</button>
+      <button type="button" class="fab-item" data-action="post">📅 Postagem</button>
+      <button type="button" class="fab-item" data-action="exec">🛠️ Execução</button>
+      <button type="button" class="fab-item" data-action="kpi">📊 Metas</button>
+    </div>
+    <div class="fab-bar" id="fab-bar">
+      <span class="fab-label">Menu</span>
+      <span class="fab-burger"><i></i><i></i></span>
+    </div>
   </div>
 </div>
 
@@ -2320,6 +2364,44 @@ function initDrawer(){
   overlay.addEventListener('click', close);
 }
 
+function initFabMenu(){
+  var panel = document.getElementById('fab-panel');
+  var bar = document.getElementById('fab-bar');
+  if(!panel || !bar) return;
+  function close(){ panel.classList.remove('open'); }
+  bar.addEventListener('click', function(e){
+    e.stopPropagation();
+    panel.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e){
+    if(panel.classList.contains('open') && !panel.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') close();
+  });
+  panel.querySelectorAll('.fab-item').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var action = btn.dataset.action;
+      if(action === 'today'){
+        var today = new Date();
+        var todayMonthKey = MONTH_KEY_BY_INDEX[today.getMonth()] + today.getFullYear();
+        if(MONTHS.indexOf(todayMonthKey) !== -1) showMonth(todayMonthKey);
+        var box = document.getElementById('today-summary');
+        if(box) box.scrollIntoView({behavior:'smooth', block:'start'});
+      } else if(action === 'search'){
+        showView('post');
+        window.scrollTo({top:0, behavior:'smooth'});
+        var input = document.getElementById('global-search');
+        if(input) setTimeout(function(){ input.focus(); }, 300);
+      } else {
+        showView(action);
+      }
+      close();
+    });
+  });
+}
+
 /* ===================== INIT ===================== */
 ensureStatusBadges();
 assignChipIds();
@@ -2335,6 +2417,7 @@ MONTHS.forEach(function(monthKey){
 });
 initMonthNav();
 initSearch();
+initFabMenu();
 initEditMode();
 initStoriesToggle();
 initWeekBarToggle();
