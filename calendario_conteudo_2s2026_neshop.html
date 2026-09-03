@@ -36,6 +36,19 @@
   .month-tab:hover{background:rgba(191,224,226,.18)}
   .month-tab.active{background:var(--p200);color:var(--p900);border-color:var(--p200)}
 
+  .search-wrap{position:relative;max-width:420px;margin-top:12px}
+  .search-wrap input{width:100%;font-family:'Inter',sans-serif;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:#fff;border-radius:8px;padding:9px 12px;outline:none}
+  .search-wrap input::placeholder{color:var(--p200)}
+  .search-wrap input:focus{background:rgba(255,255,255,.14);border-color:var(--p200)}
+  .search-results{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(6,38,43,.18);max-height:340px;overflow-y:auto;z-index:40}
+  .search-results.open{display:block}
+  .search-result{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--line);padding:10px 14px;font-family:'Inter',sans-serif;font-size:13px;color:#22383b;cursor:pointer}
+  .search-result:last-child{border-bottom:none}
+  .search-result:hover{background:#F1F6F6}
+  .search-result b{color:var(--p700);font-weight:700;margin-right:4px}
+  .search-result span{display:block;font-size:11px;color:#8fa3a5;margin-top:2px}
+  .search-empty{padding:12px 14px;font-size:12.5px;color:#8fa3a5}
+
   .month-page{display:none}
   .month-page.active{display:block}
 
@@ -322,6 +335,10 @@
       <button type="button" class="month-tab" data-month="outubro2026">Outubro</button>
       <button type="button" class="month-tab" data-month="novembro2026">Novembro</button>
       <button type="button" class="month-tab" data-month="dezembro2026">Dezembro</button>
+    </div>
+    <div class="search-wrap">
+      <input type="text" id="global-search" placeholder="🔎 Buscar por título ou número (ex: #14, InfraFM)..." autocomplete="off">
+      <div class="search-results" id="search-results"></div>
     </div>
     <div class="tabs" role="tablist">
       <button class="tab active" id="tab-post" role="tab" aria-selected="true" onclick="showView('post')">📅 Postagem</button>
@@ -2283,6 +2300,76 @@ function initMonthNav(){
   });
 }
 
+/* ===================== BUSCA GLOBAL (título ou número, em qualquer mês) ===================== */
+function initSearch(){
+  var input = document.getElementById('global-search');
+  var box = document.getElementById('search-results');
+  if(!input || !box) return;
+
+  function highlight(chip){
+    chip.scrollIntoView({behavior:'smooth', block:'center'});
+    chip.style.transition = 'box-shadow .3s';
+    chip.style.boxShadow = '0 0 0 3px var(--shoot)';
+    setTimeout(function(){ chip.style.boxShadow = ''; }, 1500);
+  }
+
+  function goTo(match){
+    if(match.monthKey) showMonth(match.monthKey);
+    showView(match.viewId);
+    setTimeout(function(){ highlight(match.chip); }, 100);
+    box.classList.remove('open');
+    box.innerHTML = '';
+    input.value = '';
+  }
+
+  input.addEventListener('input', function(){
+    var q = input.value.trim().toLowerCase();
+    if(!q){ box.classList.remove('open'); box.innerHTML = ''; return; }
+
+    var matches = [];
+    Array.from(document.querySelectorAll('#view-post .chip, #view-exec .chip')).forEach(function(chip){
+      var titleEl = chip.querySelector('.title-text') || chip.querySelector('.t');
+      var title = titleEl ? titleEl.textContent.trim() : '';
+      var numEl = chip.querySelector('.n');
+      var num = numEl ? numEl.textContent.trim() : '';
+      var haystack = (num + ' ' + title).toLowerCase();
+      if(haystack.indexOf(q) === -1) return;
+      var page = chip.closest('.month-page');
+      var view = chip.closest('.view');
+      var monthKey = page ? page.dataset.month : null;
+      var monthBtn = monthKey ? document.querySelector('.month-tab[data-month="' + monthKey + '"]') : null;
+      matches.push({
+        chip: chip, num: num, title: title || chip.querySelector('.k').textContent.trim(),
+        monthKey: monthKey, monthLabel: monthBtn ? monthBtn.textContent : '',
+        viewId: view ? view.id.replace('view-', '') : 'post'
+      });
+    });
+    matches = matches.slice(0, 8);
+
+    if(!matches.length){
+      box.innerHTML = '<div class="search-empty">Nenhum resultado pra "' + input.value.trim() + '"</div>';
+    } else {
+      box.innerHTML = matches.map(function(m, i){
+        var viewLabel = m.viewId === 'exec' ? 'Execução' : 'Postagem';
+        return '<button type="button" class="search-result" data-idx="' + i + '">' +
+          (m.num ? '<b>' + m.num + '</b>' : '') + m.title +
+          '<span>' + m.monthLabel + ' · ' + viewLabel + '</span></button>';
+      }).join('');
+      Array.from(box.querySelectorAll('.search-result')).forEach(function(btn, i){
+        btn.addEventListener('click', function(){ goTo(matches[i]); });
+      });
+    }
+    box.classList.add('open');
+  });
+
+  document.addEventListener('click', function(e){
+    if(e.target !== input && !box.contains(e.target)) box.classList.remove('open');
+  });
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ box.classList.remove('open'); input.blur(); }
+  });
+}
+
 function renderAll(){
   applyStatusFromState();
   applyAttachFromState();
@@ -2329,6 +2416,7 @@ MONTHS.forEach(function(monthKey){
   if(execPage) buildFilterBar('exec', monthKey, execPage.querySelector('.filter-bar'), execPage);
 });
 initMonthNav();
+initSearch();
 initEditMode();
 initStoriesToggle();
 initWeekBarToggle();
