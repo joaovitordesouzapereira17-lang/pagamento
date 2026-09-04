@@ -10,7 +10,7 @@
 <style>
   :root{
     --p900:#10192E; --p700:#1E3A72; --p500:#2E5AAE; --p200:#BFD2F2;
-    --paper:#F4EFE4; --ink:#14181F; --line:#DCD3BE;
+    --paper:#F7F6F2; --ink:#14181F; --line:#E1E1DC;
     --yt:#B03A2E; --li:#0A66C2; --blog:#54707A; --data:#7A5C8A; --casa:#8A5A24;
     --ok:#1F7A4D; --edit:#8A6D1F; --shoot:#A34A2A;
     --pauta:#6B7A7C; --posted:#5B3FA0;
@@ -27,18 +27,18 @@
   h1 span{color:var(--p200)}
 
   .tabs{display:flex;gap:6px;margin-top:22px}
-  .tab{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--p200);background:rgba(191,224,226,.1);border:1px solid rgba(191,224,226,.3);border-bottom:none;border-radius:12px 12px 0 0;padding:12px 22px;cursor:pointer;transition:background .15s,color .15s}
-  .tab:hover{background:rgba(191,224,226,.2)}
+  .tab{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--p200);background:rgba(191,210,242,.1);border:1px solid rgba(191,210,242,.3);border-bottom:none;border-radius:12px 12px 0 0;padding:12px 22px;cursor:pointer;transition:background .15s,color .15s}
+  .tab:hover{background:rgba(191,210,242,.2)}
   .tab:focus-visible{outline:2px solid var(--p200);outline-offset:-4px}
   .tab.active{background:var(--paper);color:var(--p900)}
 
   .month-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-  .month-tab{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.04em;color:var(--p200);background:rgba(191,224,226,.08);border:1px solid rgba(191,224,226,.28);border-radius:999px;padding:6px 16px;cursor:pointer;transition:background .15s,color .15s}
-  .month-tab:hover{background:rgba(191,224,226,.18)}
+  .month-tab{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.04em;color:var(--p200);background:rgba(191,210,242,.08);border:1px solid rgba(191,210,242,.28);border-radius:999px;padding:6px 16px;cursor:pointer;transition:background .15s,color .15s}
+  .month-tab:hover{background:rgba(191,210,242,.18)}
   .month-tab.active{background:var(--p200);color:var(--p900);border-color:var(--p200)}
 
   .search-wrap{position:relative;max-width:420px;margin-top:12px}
-  .search-wrap input{width:100%;font-family:'Inter',sans-serif;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:#fff;border-radius:8px;padding:9px 12px;outline:none}
+  .search-wrap input{width:100%;font-family:'Inter',sans-serif;font-size:13px;background:rgba(255,255,255,.08);border:1px solid rgba(191,210,242,.35);color:#fff;border-radius:8px;padding:9px 12px;outline:none}
   .search-wrap input::placeholder{color:var(--p200)}
   .search-wrap input:focus{background:rgba(255,255,255,.14);border-color:var(--p200)}
   .search-results{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(6,38,43,.18);max-height:340px;overflow-y:auto;z-index:40}
@@ -69,11 +69,11 @@
   .wk-bar{background:var(--p700);color:#fff;border-radius:12px;padding:12px 20px;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
   .wk-bar .wn{font-family:'Space Grotesk',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--p200);flex:none}
   .wk-bar .wt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;line-height:1.25;flex:none}
-  .valor{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,224,226,.18);border:1px solid rgba(191,224,226,.4);color:var(--p200);border-radius:999px;padding:3px 10px;flex:none}
-  .wk-bar .wd{display:none;font-size:12.5px;color:var(--p200);line-height:1.6;flex-basis:100%;margin-top:2px;padding-top:8px;border-top:1px dashed rgba(191,224,226,.3)}
+  .valor{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,210,242,.18);border:1px solid rgba(191,210,242,.4);color:var(--p200);border-radius:999px;padding:3px 10px;flex:none}
+  .wk-bar .wd{display:none;font-size:12.5px;color:var(--p200);line-height:1.6;flex-basis:100%;margin-top:2px;padding-top:8px;border-top:1px dashed rgba(191,210,242,.3)}
   .wk-bar.wd-open .wd{display:block}
-  .wd-toggle{flex:none;margin-left:auto;width:26px;height:26px;border-radius:50%;background:rgba(191,224,226,.15);border:1px solid rgba(191,224,226,.35);color:var(--p200);cursor:pointer;font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:13px;line-height:1}
-  .wd-toggle:hover{background:rgba(191,224,226,.3)}
+  .wd-toggle{flex:none;margin-left:auto;width:26px;height:26px;border-radius:50%;background:rgba(191,210,242,.15);border:1px solid rgba(191,210,242,.35);color:var(--p200);cursor:pointer;font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:13px;line-height:1}
+  .wd-toggle:hover{background:rgba(191,210,242,.3)}
   .wk-bar.close{background:var(--p900)}
   .wk-bar.zero{background:#3E5C50}
 
@@ -93,8 +93,8 @@
   .st.pauta{background:var(--pauta)} .st.shoot{background:var(--shoot)} .st.edit{background:var(--edit)} .st.ok{background:var(--ok)} .st.posted{background:var(--posted)}
   /* funil: ponto colorido discreto (passe o mouse pra ver o nome) */
   .fu{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;overflow:hidden;white-space:nowrap;text-indent:9px;cursor:default}
-  .fu.topo{background:#1C6E79}
-  .fu.meio{background:#0E4650}
+  .fu.topo{background:var(--p500)}
+  .fu.meio{background:var(--p700)}
   .fu.fundo{background:#A34A2A}
   .fu.rel{background:#8A6D9A}
   .chip .t{margin-top:2px;color:var(--p900);font-weight:600;font-size:14px}
@@ -175,7 +175,7 @@
   /* ===== cabeçalho fixo + ações ===== */
   header{padding-left:28px;padding-right:28px}
   .header-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-  .hdr-btn{font-family:'Inter',sans-serif;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+  .hdr-btn{font-family:'Inter',sans-serif;background:rgba(255,255,255,.08);border:1px solid rgba(191,210,242,.35);color:var(--p200);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
   .hdr-btn:hover{background:rgba(255,255,255,.18)}
   .hdr-btn.on{background:var(--p200);border-color:var(--p200);color:var(--p900)}
   .sync-indicator{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--p200);display:inline-flex;align-items:center;gap:7px;padding:7px 4px}
@@ -187,7 +187,7 @@
   /* ===== toques visuais ===== */
   .day{box-shadow:0 1px 3px rgba(6,38,43,.06);transition:box-shadow .15s,transform .15s}
   .day:not(.empty):hover{box-shadow:0 6px 16px rgba(6,38,43,.12);transform:translateY(-2px)}
-  .day:has(.tag){border-color:var(--p500);box-shadow:0 0 0 2px rgba(28,110,121,.18)}
+  .day:has(.tag){border-color:var(--p500);box-shadow:0 0 0 2px rgba(46,90,174,.18)}
   .day.is-today{border-color:var(--shoot);box-shadow:0 0 0 2px rgba(163,74,42,.25)}
 
   /* ===== resumo do dia, ao abrir ===== */
@@ -366,7 +366,7 @@
   .fab-panel.open .fab-item:nth-child(3){--d:.26s}
   .fab-panel.open .fab-item:nth-child(4){--d:.31s}
   .fab-panel.open .fab-item:nth-child(5){--d:.36s}
-  .fab-item:hover{background:rgba(191,224,226,.16)}
+  .fab-item:hover{background:rgba(191,210,242,.16)}
   .fab-bar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 20px}
   .fab-label{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:.03em;color:var(--p900);transition:color .3s}
   .fab-panel.open .fab-label{color:#fff}
@@ -1684,7 +1684,7 @@ function chipFunilKey(chip){
 }
 
 var TYPE_COLORS = {reel:'var(--p500)', carrossel:'var(--p900)', estatico:'#7FA8AD', yt:'var(--yt)', li:'var(--li)', blog:'var(--blog)', data:'var(--data)', aprova:'var(--p200)', exec:'var(--casa)', diaria:'var(--shoot)'};
-var FUNIL_COLORS = {topo:'#1C6E79', meio:'#0E4650', fundo:'#A34A2A', rel:'#8A6D9A'};
+var FUNIL_COLORS = {topo:'var(--p500)', meio:'var(--p700)', fundo:'#A34A2A', rel:'#8A6D9A'};
 
 function countChips(scope){
   var chips = Array.from(scope.querySelectorAll('.chip'));
