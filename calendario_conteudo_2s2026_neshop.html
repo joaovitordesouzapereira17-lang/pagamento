@@ -1350,9 +1350,33 @@ function normalizeState(raw){
   return s;
 }
 
+// backup local (sem os anexos, que podem ser grandes) — só entra em uso se a nuvem
+// estiver totalmente fora do ar; enquanto a nuvem funciona, ela é sempre a fonte da verdade.
+function localBackupKey(){
+  var monthKey = document.body.dataset.monthKey;
+  return 'calendarLocalBackup_' + (monthKey || 'default');
+}
+function saveLocalBackup(){
+  try{
+    var backup = {status: STATE.status, edits: STATE.edits, done: STATE.done, goalTasks: STATE.goalTasks};
+    localStorage.setItem(localBackupKey(), JSON.stringify(backup));
+  }catch(e){
+    // modo privado, cota cheia etc. — não pode travar o resto do app
+  }
+}
+function loadLocalBackup(){
+  try{
+    var raw = localStorage.getItem(localBackupKey());
+    return raw ? normalizeState(JSON.parse(raw)) : null;
+  }catch(e){
+    return null;
+  }
+}
+
 function saveState(){
+  saveLocalBackup();
   if(!firebaseAvailable || !stateRef){
-    console.warn('Sem conexão com a nuvem — esta alteração fica só nesta sessão e não é compartilhada.');
+    console.warn('Sem conexão com a nuvem — esta alteração fica salva só neste navegador (não é compartilhada com o resto do time).');
     return;
   }
   stateRef.set(STATE).catch(function(err){
@@ -1376,6 +1400,12 @@ if(firebaseAvailable){
     renderAll();
   }, function(err){
     console.error('Firebase read failed:', err);
+    if(!stateLoaded){
+      var backup = loadLocalBackup();
+      if(backup) STATE = backup;
+      stateLoaded = true;
+      renderAll();
+    }
     setSyncIndicator(false);
   });
 
@@ -1384,17 +1414,23 @@ if(firebaseAvailable){
   });
 
   // se a nuvem não responder em alguns segundos (rede bloqueada, firewall etc.),
-  // mostra o calendário mesmo assim, só sem sincronização, em vez de travar "conectando"
+  // mostra o calendário mesmo assim (com o que tiver salvo neste navegador, se houver),
+  // em vez de travar "conectando"
   setTimeout(function(){
     if(!stateLoaded){
+      var backup = loadLocalBackup();
+      if(backup) STATE = backup;
       stateLoaded = true;
       renderAll();
       setSyncIndicator(false);
     }
   }, 6000);
 } else {
-  // Firebase nem carregou: mostra o calendário assim que o resto da inicialização
-  // (mais abaixo neste script) terminar, em vez de esperar 6s à toa
+  // Firebase nem carregou: usa o que tiver salvo neste navegador (se houver) e mostra
+  // o calendário assim que o resto da inicialização (mais abaixo neste script) terminar,
+  // em vez de esperar 6s à toa
+  var localBackup = loadLocalBackup();
+  if(localBackup) STATE = localBackup;
   setTimeout(function(){
     stateLoaded = true;
     renderAll();
@@ -2211,13 +2247,16 @@ function initWeekBarToggle(){
   Array.from(document.querySelectorAll('.wk-bar')).forEach(function(bar){
     var wd = bar.querySelector('.wd');
     if(!wd) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'wd-toggle';
-    btn.title = 'Ver diretrizes desta semana';
-    btn.textContent = 'i';
+    var btn = bar.querySelector('.wd-toggle');
+    if(!btn){
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'wd-toggle';
+      btn.title = 'Ver diretrizes desta semana';
+      btn.textContent = 'i';
+      bar.insertBefore(btn, wd);
+    }
     btn.addEventListener('click', function(){ bar.classList.toggle('wd-open'); });
-    bar.insertBefore(btn, wd);
   });
 }
 
