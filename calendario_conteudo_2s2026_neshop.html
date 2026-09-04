@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --p900:#06262B; --p700:#0E4650; --p500:#1C6E79; --p200:#BFE0E2;
-    --paper:#F7F7F4; --ink:#0B1F22; --line:#D8E2E1;
+    --p900:#10192E; --p700:#1E3A72; --p500:#2E5AAE; --p200:#BFD2F2;
+    --paper:#F4EFE4; --ink:#14181F; --line:#DCD3BE;
     --yt:#B03A2E; --li:#0A66C2; --blog:#54707A; --data:#7A5C8A; --casa:#8A5A24;
     --ok:#1F7A4D; --edit:#8A6D1F; --shoot:#A34A2A;
     --pauta:#6B7A7C; --posted:#5B3FA0;
@@ -72,7 +72,7 @@
   .valor{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(191,224,226,.18);border:1px solid rgba(191,224,226,.4);color:var(--p200);border-radius:999px;padding:3px 10px;flex:none}
   .wk-bar .wd{display:none;font-size:12.5px;color:var(--p200);line-height:1.6;flex-basis:100%;margin-top:2px;padding-top:8px;border-top:1px dashed rgba(191,224,226,.3)}
   .wk-bar.wd-open .wd{display:block}
-  .wd-toggle{flex:none;margin-left:auto;width:26px;height:26px;border-radius:50%;background:rgba(191,224,226,.15);border:1px solid rgba(191,224,226,.35);color:var(--p200);cursor:pointer;font-size:12px;line-height:1}
+  .wd-toggle{flex:none;margin-left:auto;width:26px;height:26px;border-radius:50%;background:rgba(191,224,226,.15);border:1px solid rgba(191,224,226,.35);color:var(--p200);cursor:pointer;font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:13px;line-height:1}
   .wd-toggle:hover{background:rgba(191,224,226,.3)}
   .wk-bar.close{background:var(--p900)}
   .wk-bar.zero{background:#3E5C50}
@@ -87,7 +87,7 @@
   .dow-tag{display:none}
 
   /* card: título em destaque, metadados discretos, status em evidência */
-  .chip{border-left:3px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
+  .chip{border-left:4px solid var(--p500);background:#F1F6F6;border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
   .chip .k{display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#8fa3a5}
   .chip .k .st{margin-left:auto;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:3px 9px;color:#fff;box-shadow:0 1px 2px rgba(6,38,43,.15)}
   .st.pauta{background:var(--pauta)} .st.shoot{background:var(--shoot)} .st.edit{background:var(--edit)} .st.ok{background:var(--ok)} .st.posted{background:var(--posted)}
@@ -178,7 +178,10 @@
   .hdr-btn{font-family:'Inter',sans-serif;background:rgba(255,255,255,.08);border:1px solid rgba(191,224,226,.35);color:var(--p200);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
   .hdr-btn:hover{background:rgba(255,255,255,.18)}
   .hdr-btn.on{background:var(--p200);border-color:var(--p200);color:var(--p900)}
-  .sync-indicator{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--p200);display:inline-flex;align-items:center;padding:7px 4px}
+  .sync-indicator{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--p200);display:inline-flex;align-items:center;gap:7px;padding:7px 4px}
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--p200);flex:none}
+  .sync-indicator.ok .sync-dot{background:#3DAE6E}
+  .sync-indicator.off .sync-dot{background:#e08080}
   .sync-indicator.off{color:#e08080}
 
   /* ===== toques visuais ===== */
@@ -198,7 +201,8 @@
   .today-item:first-of-type{border-top:none}
   .today-item a{color:var(--p700);font-weight:600;text-decoration:none;flex:1}
   .today-item a:hover{text-decoration:underline}
-  .ti-icon{flex:none;font-size:15px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:#F1F6F6;border-radius:8px}
+  .ti-icon{flex:none;width:5px;align-self:stretch;border-radius:3px}
+  .type-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
   .ti-badge{flex:none;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--casa);background:#FBF6EF;border:1px solid #E3C9A0;border-radius:6px;padding:3px 7px;white-space:nowrap}
   .today-empty{color:#5a6f72;font-size:13px}
   .today-done{color:var(--ok);font-weight:600;font-size:13.5px}
@@ -207,17 +211,7 @@
   .kpi table tr:not(.grp):hover td{background:#FAFCFC}
 
   /* ícones por tipo de conteúdo, pra reconhecer de relance */
-  .chip .k::before{flex:none}
-  .chip:not(.carrossel):not(.estatico):not(.yt):not(.li):not(.blog):not(.data):not(.aprova):not(.exec):not(.diaria) .k::before{content:'🎬'}
-  .chip.carrossel .k::before{content:'🖼️'}
-  .chip.estatico .k::before{content:'🧩'}
-  .chip.yt .k::before{content:'▶️'}
-  .chip.li .k::before{content:'💼'}
-  .chip.blog .k::before{content:'✍️'}
-  .chip.data .k::before{content:'📅'}
-  .chip.aprova .k::before{content:'🗂️'}
-  .chip.exec .k::before{content:'🛠️'}
-  .chip.diaria .k::before{content:'🎥'}
+
 
   /* ===== dashboard (status, formato, funil) ===== */
   .dashboard{max-width:2320px;margin:12px auto 0;padding:0 28px;display:flex;flex-direction:column;gap:7px}
@@ -296,7 +290,6 @@
   .pg-sub{font-size:11.5px;color:rgba(255,255,255,.65);margin-top:8px}
 
   .highlight-card{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 1px 3px rgba(6,38,43,.06);flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
-  .hc-icon{font-size:20px}
   .hc-title{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8fa3a5;font-weight:700}
   .hc-body{font-size:13.5px;color:#3c4d4f;line-height:1.45}
   .hc-body b{color:var(--p900)}
@@ -401,20 +394,20 @@
       <button type="button" class="month-tab" data-month="dezembro2026">Dezembro</button>
     </div>
     <div class="search-wrap">
-      <input type="text" id="global-search" placeholder="🔎 Buscar por título ou número (ex: #14, InfraFM)..." autocomplete="off">
+      <input type="text" id="global-search" placeholder="Buscar por título ou número (ex: #14, InfraFM)..." autocomplete="off">
       <div class="search-results" id="search-results"></div>
     </div>
     <div class="tabs" role="tablist">
-      <button class="tab active" id="tab-post" role="tab" aria-selected="true" onclick="showView('post')">📅 Postagem</button>
-      <button class="tab" id="tab-exec" role="tab" aria-selected="false" onclick="showView('exec')">🛠️ Execução e Produção</button>
-      <button class="tab" id="tab-kpi" role="tab" aria-selected="false" onclick="showView('kpi')">📊 Metas e Resultados</button>
+      <button class="tab active" id="tab-post" role="tab" aria-selected="true" onclick="showView('post')">Postagem</button>
+      <button class="tab" id="tab-exec" role="tab" aria-selected="false" onclick="showView('exec')">Execução e Produção</button>
+      <button class="tab" id="tab-kpi" role="tab" aria-selected="false" onclick="showView('kpi')">Metas e Resultados</button>
     </div>
     <div class="header-actions">
-      <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">✏️ Editar textos</button>
+      <button type="button" class="hdr-btn" id="edit-toggle" title="Ative para poder editar diretamente qualquer texto do calendário">Editar textos</button>
       <button type="button" class="hdr-btn" id="toggle-stories" title="Mostrar ou esconder a lista de stories em todos os dias de uma vez">▾ Expandir stories</button>
-      <button type="button" class="hdr-btn" id="drawer-toggle" title="Templates, regras e diretrizes de produção">📋 Diretrizes &amp; Regras</button>
+      <button type="button" class="hdr-btn" id="drawer-toggle" title="Templates, regras e diretrizes de produção">Diretrizes &amp; Regras</button>
       <button type="button" class="hdr-btn" id="reset-local" title="Apaga o status, os anexos e os textos editados para todo mundo">Limpar tudo (afeta todo mundo)</button>
-      <span id="sync-indicator" class="sync-indicator" title="Este calendário é compartilhado — mudanças aparecem para todo mundo que tiver o arquivo aberto">🔄 Conectando à nuvem…</span>
+      <span id="sync-indicator" class="sync-indicator" title="Este calendário é compartilhado — mudanças aparecem para todo mundo que tiver o arquivo aberto"><span class="sync-dot"></span>Conectando à nuvem…</span>
     </div>
   </div>
 </header>
@@ -424,17 +417,17 @@
 <!-- ============ CALENDÁRIO DE POSTAGEM ============ -->
 <div class="view active" id="view-post">
 
-<div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto (títulos, descrições, stories, tabela de metas) para alterá-lo. As mudanças ficam salvas neste navegador.</div>
+<div class="edit-banner">Modo de edição ativo — clique em qualquer texto (títulos, descrições, stories, tabela de metas) para alterá-lo. As mudanças ficam salvas neste navegador.</div>
 
 <div class="month-page active" data-month="agosto2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Resumo, legenda e filtros</span></summary>
 
-  <div class="dashboard"><div class="dash-row"><span class="dash-row-label">Status</span><span class="summary-pill pauta">📋 1<span>em pauta</span></span><span class="summary-pill shoot">🎬 7<span>para gravar</span></span><span class="summary-pill edit">🖊️ 12<span>em edição</span></span><span class="summary-pill ok">✅ 10<span>prontos</span></span><span class="summary-pill posted">📤 0<span>postados</span></span></div><div class="dash-row"><span class="dash-row-label">Formato</span><span class="mini-pill">🖼️ <b>3</b> Carrossel</span><span class="mini-pill">🧩 <b>1</b> Estático</span><span class="mini-pill">▶️ <b>4</b> YouTube/Shorts</span><span class="mini-pill">💼 <b>3</b> LinkedIn</span><span class="mini-pill">✍️ <b>3</b> Blog</span><span class="mini-pill">📅 <b>2</b> Data comemorativa</span><span class="mini-pill">🗂️ <b>2</b> Aprovação/Gaveta</span><span class="mini-pill">🎬 <b>14</b> Reel</span></div><div class="dash-row"><span class="dash-row-label">Funil</span><span class="mini-pill">🔻 <b>9</b> Topo</span><span class="mini-pill">🔻 <b>7</b> Meio</span><span class="mini-pill">🔻 <b>14</b> Relacionamento</span></div></div>
+  <div class="dashboard"></div>
 
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
-    <div class="insights-list"><div class="insight-item">♻️ Temas parecidos: "<b>As peças críticas da sua operação já estão garantidas? (500 mil peças)</b>" (Semana · 17–21) e "<b>Estoque buffer de peças críticas</b>" (Semana · 24–28) — evite repetir.</div></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-list"></div>
   </div>
 
   <div class="legend">
@@ -458,12 +451,12 @@
       <div class="wt" data-edit-id="ed10" data-original-html="O preço da parada">O preço da parada</div>
       <span class="valor" data-edit-id="ed11" data-original-html="Valor: Sucesso do cliente">Valor: Sucesso do cliente</span>
       <span class="valor" data-edit-id="ed12" data-original-html="Funil: topo">Funil: topo</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed13" data-original-html="Reunião mensal quinta 06/08, 16h, cobertura em tempo real: é o bloco da TARDE (17h) que vira bastidor dela — discurso, destaque do mês e vendedor destaque.">Reunião mensal quinta 06/08, 16h, cobertura em tempo real: é o bloco da TARDE (17h) que vira bastidor dela — discurso, destaque do mês e vendedor destaque.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed13" data-original-html="Reunião mensal quinta 06/08, 16h, cobertura em tempo real: é o bloco da TARDE (17h) que vira bastidor dela — discurso, destaque do mês e vendedor destaque.">Reunião mensal quinta 06/08, 16h, cobertura em tempo real: é o bloco da TARDE (17h) que vira bastidor dela — discurso, destaque do mês e vendedor destaque.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed14" data-original-html="03">03</b></div>
-      <div class="chip" data-chip-id="c0"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#01</span><span class="title-text" data-edit-id="ed15" data-original-html="Neshop Cultura: Gabriel Carrenho">Neshop Cultura: Gabriel Carrenho</span></div></div>
-      <div class="chip li" data-chip-id="c1"><div class="k">LinkedIn <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#02</span><span class="title-text" data-edit-id="ed16" data-original-html="Downtime é problema estratégico">Downtime é problema estratégico</span></div></div>
+      <div class="chip" data-chip-id="c0"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#01</span><span class="title-text" data-edit-id="ed15" data-original-html="Neshop Cultura: Gabriel Carrenho">Neshop Cultura: Gabriel Carrenho</span></div></div>
+      <div class="chip li" data-chip-id="c1"><div class="k">LinkedIn <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#02</span><span class="title-text" data-edit-id="ed16" data-original-html="Downtime é problema estratégico">Downtime é problema estratégico</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed17" data-original-html="Arte &quot;Bom dia, segunda&quot;: mês novo, decisões melhores + dado dos 90-120 dias">Arte "Bom dia, segunda": mês novo, decisões melhores + dado dos 90-120 dias</span></li>
         <li><b>S2</b><span data-edit-id="ed18" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -480,7 +473,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed26" data-original-html="05">05</b></div>
-      <div class="chip data" data-chip-id="c2"><div class="k">Data · Estático <span class="fu rel" title="Relacionamento">REL.</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#03</span><span class="title-text" data-edit-id="ed27" data-original-html="Dia Nacional da Saúde">Dia Nacional da Saúde</span></div></div>
+      <div class="chip data" data-chip-id="c2"><div class="k">Data · Estático <span class="fu rel" title="Relacionamento">REL.</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#03</span><span class="title-text" data-edit-id="ed27" data-original-html="Dia Nacional da Saúde">Dia Nacional da Saúde</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed28" data-original-html="&lt;em class=&quot;casa&quot;&gt;Cumbuca&lt;/em&gt; da manhã: vídeo da turma"><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span data-edit-id="ed29" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -489,7 +482,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed32" data-original-html="06">06</b></div>
-      <div class="chip" data-chip-id="c3"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#04</span><span class="title-text" data-edit-id="ed33" data-original-html="Confraternização de junho">Confraternização de junho</span></div></div>
+      <div class="chip" data-chip-id="c3"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#04</span><span class="title-text" data-edit-id="ed33" data-original-html="Confraternização de junho">Confraternização de junho</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed34" data-original-html="&lt;em class=&quot;casa&quot;&gt;Template TBT&lt;/em&gt; do dia"><em class="casa">Template TBT</em> do dia</span></li>
         <li><b>S2</b><span data-edit-id="ed35" data-original-html="Bastidor do dia">Bastidor do dia</span></li>
@@ -498,9 +491,9 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed38" data-original-html="07">07</b></div>
-      <div class="chip blog" data-chip-id="c4"><div class="k">Blog <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#05</span><span class="title-text" data-edit-id="ed39" data-original-html="O custo invisível da peça errada">O custo invisível da peça errada</span></div></div>
-      <div class="chip data" data-chip-id="c5"><div class="k">Agendar p/ domingo <span class="fu rel" title="Relacionamento">REL.</span><span class="st pauta" data-original-cls="pauta" title="Clique para mudar o status">PAUTA</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#06</span><span class="title-text" data-edit-id="ed40" data-original-html="Estático Dia dos Pais (dom 09/08)">Estático Dia dos Pais (dom 09/08)</span></div></div>
-      <div class="chip aprova" data-chip-id="c6"><div class="k">Gaveta<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed41" data-original-html="Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)">Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)</div></div>
+      <div class="chip blog" data-chip-id="c4"><div class="k">Blog <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#05</span><span class="title-text" data-edit-id="ed39" data-original-html="O custo invisível da peça errada">O custo invisível da peça errada</span></div></div>
+      <div class="chip data" data-chip-id="c5"><div class="k">Agendar p/ domingo <span class="fu rel" title="Relacionamento">REL.</span><span class="st pauta" data-original-cls="pauta" title="Clique para mudar o status">PAUTA</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#06</span><span class="title-text" data-edit-id="ed40" data-original-html="Estático Dia dos Pais (dom 09/08)">Estático Dia dos Pais (dom 09/08)</span></div></div>
+      <div class="chip aprova" data-chip-id="c6"><div class="k">Gaveta<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed41" data-original-html="Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)">Story padrão de sexta é produzido e guardado (o café turbinado ocupa o slot)</div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed42" data-original-html="&lt;em class=&quot;casa&quot;&gt;CAFÉ TURBINADO&lt;/em&gt;: vídeo do time na mesa"><em class="casa">CAFÉ TURBINADO</em>: vídeo do time na mesa</span></li>
         <li><b>S2</b><span data-edit-id="ed43" data-original-html="Recap curto da semana + resultado da enquete">Recap curto da semana + resultado da enquete</span></li>
@@ -516,7 +509,7 @@
       <div class="wt" data-edit-id="ed47" data-original-html="Semana livre">Semana livre</div>
       <span class="valor" data-edit-id="ed48" data-original-html="Sem tema fixo">Sem tema fixo</span>
       <span class="valor" data-edit-id="ed49" data-original-html="Colchão de produção">Colchão de produção</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed50" data-original-html="Semana sem campanha própria, criada para dar fôlego real entre produzir e postar. &lt;b&gt;Bloqueado sem PC:&lt;/b&gt; Cultura do Biazzi (foi pra sexta 14), Rafael (foi pra sexta 21) e Marcos+Daniel (foi pra segunda 17) — todos editados, faltando só refinamento que depende de arquivos que estão no PC do João, parado no TI.">Semana sem campanha própria, criada para dar fôlego real entre produzir e postar. <b>Bloqueado sem PC:</b> Cultura do Biazzi (foi pra sexta 14), Rafael (foi pra sexta 21) e Marcos+Daniel (foi pra segunda 17) — todos editados, faltando só refinamento que depende de arquivos que estão no PC do João, parado no TI.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed50" data-original-html="Semana sem campanha própria, criada para dar fôlego real entre produzir e postar. &lt;b&gt;Bloqueado sem PC:&lt;/b&gt; Cultura do Biazzi (foi pra sexta 14), Rafael (foi pra sexta 21) e Marcos+Daniel (foi pra segunda 17) — todos editados, faltando só refinamento que depende de arquivos que estão no PC do João, parado no TI.">Semana sem campanha própria, criada para dar fôlego real entre produzir e postar. <b>Bloqueado sem PC:</b> Cultura do Biazzi (foi pra sexta 14), Rafael (foi pra sexta 21) e Marcos+Daniel (foi pra segunda 17) — todos editados, faltando só refinamento que depende de arquivos que estão no PC do João, parado no TI.</div>
     </div>
   <div class="week">
     <div class="day stories-only"><div class="dnum"><b data-dow="seg" data-edit-id="ed51" data-original-html="10">10</b></div>
@@ -536,8 +529,8 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed61" data-original-html="12">12</b></div>
-      <div class="chip" data-chip-id="c7"><div class="k">Reel · InfraFM <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#07</span><span class="title-text" data-edit-id="ed62" data-original-html="InfraFM: Alex">InfraFM: Alex</span></div></div>
-      <div class="chip yt" data-chip-id="c8"><div class="k">YouTube <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#08</span><span class="title-text" data-edit-id="ed63" data-original-html="Vídeo sobre Inteligência Artificial (já gravado/editado)">Vídeo sobre Inteligência Artificial (já gravado/editado)</span></div></div>
+      <div class="chip" data-chip-id="c7"><div class="k">Reel · InfraFM <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#07</span><span class="title-text" data-edit-id="ed62" data-original-html="InfraFM: Alex">InfraFM: Alex</span></div></div>
+      <div class="chip yt" data-chip-id="c8"><div class="k">YouTube <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#08</span><span class="title-text" data-edit-id="ed63" data-original-html="Vídeo sobre Inteligência Artificial (já gravado/editado)">Vídeo sobre Inteligência Artificial (já gravado/editado)</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed64" data-original-html="&lt;em class=&quot;casa&quot;&gt;Cumbuca&lt;/em&gt; da manhã: vídeo da turma"><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span data-edit-id="ed65" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -546,7 +539,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed68" data-original-html="13">13</b></div>
-      <div class="chip" data-chip-id="c9"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#09</span><span class="title-text" data-edit-id="ed69" data-original-html="Novos uniformes">Novos uniformes</span></div></div>
+      <div class="chip" data-chip-id="c9"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#09</span><span class="title-text" data-edit-id="ed69" data-original-html="Novos uniformes">Novos uniformes</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed70" data-original-html="&lt;em class=&quot;casa&quot;&gt;Template TBT&lt;/em&gt;: novos uniformes"><em class="casa">Template TBT</em>: novos uniformes</span></li>
         <li><b>S2</b><span data-edit-id="ed71" data-original-html="Bastidor da gravação do Reel Comprador Júnior (hoje)">Bastidor da gravação do Reel Comprador Júnior (hoje)</span></li>
@@ -555,8 +548,8 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed74" data-original-html="14">14</b></div>
-      <div class="chip" data-chip-id="c10"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#10</span><span class="title-text" data-edit-id="ed75" data-original-html="Neshop Cultura: Guilherme Biazzi">Neshop Cultura: Guilherme Biazzi</span></div></div>
-      <div class="chip carrossel" data-chip-id="c11"><div class="k">Carrossel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#11</span><span class="title-text" data-edit-id="ed76" data-original-html="5 riscos do prazo do fabricante">5 riscos do prazo do fabricante</span></div></div>
+      <div class="chip" data-chip-id="c10"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#10</span><span class="title-text" data-edit-id="ed75" data-original-html="Neshop Cultura: Guilherme Biazzi">Neshop Cultura: Guilherme Biazzi</span></div></div>
+      <div class="chip carrossel" data-chip-id="c11"><div class="k">Carrossel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#11</span><span class="title-text" data-edit-id="ed76" data-original-html="5 riscos do prazo do fabricante">5 riscos do prazo do fabricante</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed77" data-original-html="&lt;em class=&quot;casa&quot;&gt;Café&lt;/em&gt; da sexta"><em class="casa">Café</em> da sexta</span></li>
         <li><b>S2</b><span data-edit-id="ed78" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -571,13 +564,13 @@
       <div class="wn" data-edit-id="ed81" data-original-html="Semana · 17–21">Semana · 17–21</div>
       <div class="wt" data-edit-id="ed82" data-original-html="Verão El Niño">Verão El Niño</div>
       <span class="valor" data-edit-id="ed83" data-original-html="Valor: Mentalidade eco">Valor: Mentalidade eco</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed84" data-original-html="Semana temática inteira: o vídeo principal do mês sai aqui, com o LinkedIn e a série de Reels reforçando o mesmo tema. Vídeo represado desde cedo — a pessoa que gravou não está mais na empresa, não dá pra segurar mais.">Semana temática inteira: o vídeo principal do mês sai aqui, com o LinkedIn e a série de Reels reforçando o mesmo tema. Vídeo represado desde cedo — a pessoa que gravou não está mais na empresa, não dá pra segurar mais.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed84" data-original-html="Semana temática inteira: o vídeo principal do mês sai aqui, com o LinkedIn e a série de Reels reforçando o mesmo tema. Vídeo represado desde cedo — a pessoa que gravou não está mais na empresa, não dá pra segurar mais.">Semana temática inteira: o vídeo principal do mês sai aqui, com o LinkedIn e a série de Reels reforçando o mesmo tema. Vídeo represado desde cedo — a pessoa que gravou não está mais na empresa, não dá pra segurar mais.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed85" data-original-html="17">17</b></div>
-      <div class="chip" data-chip-id="c12"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#12</span><span class="title-text" data-edit-id="ed86" data-original-html="Neshop Cultura: Marcos e Daniel">Neshop Cultura: Marcos e Daniel</span></div></div>
-      <div class="chip li" data-chip-id="c13"><div class="k">LinkedIn <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#13</span><span class="title-text" data-edit-id="ed87" data-original-html="Super El Niño como risco operacional">Super El Niño como risco operacional</span></div></div>
-      <div class="chip yt" data-chip-id="c14"><div class="k">YouTube <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#14</span><span class="title-text" data-edit-id="ed88" data-original-html="Super El Niño (institucional)">Super El Niño (institucional)</span></div></div>
+      <div class="chip" data-chip-id="c12"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#12</span><span class="title-text" data-edit-id="ed86" data-original-html="Neshop Cultura: Marcos e Daniel">Neshop Cultura: Marcos e Daniel</span></div></div>
+      <div class="chip li" data-chip-id="c13"><div class="k">LinkedIn <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#13</span><span class="title-text" data-edit-id="ed87" data-original-html="Super El Niño como risco operacional">Super El Niño como risco operacional</span></div></div>
+      <div class="chip yt" data-chip-id="c14"><div class="k">YouTube <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#14</span><span class="title-text" data-edit-id="ed88" data-original-html="Super El Niño (institucional)">Super El Niño (institucional)</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed89" data-original-html="&lt;em&gt;Anúncio do vídeo&lt;/em&gt; (1 story só): &quot;o verão que vem não é um verão comum&quot;"><em>Anúncio do vídeo</em> (1 story só): "o verão que vem não é um verão comum"</span></li>
         <li><b>S2</b><span data-edit-id="ed90" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -586,8 +579,8 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed93" data-original-html="18">18</b></div>
-      <div class="chip" data-chip-id="c15"><div class="k">Reel · Ref. de Campo <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#15</span><span class="title-text" data-edit-id="ed94" data-original-html="Comprador Sênior B2B: qual é o prazo real de entrega?">Comprador Sênior B2B: qual é o prazo real de entrega?</span></div></div>
-      <div class="chip yt" data-chip-id="c16"><div class="k">Short <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#16</span><span class="title-text" data-edit-id="ed95" data-original-html="Corte 1 do vídeo El Niño">Corte 1 do vídeo El Niño</span></div></div>
+      <div class="chip" data-chip-id="c15"><div class="k">Reel · Ref. de Campo <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#15</span><span class="title-text" data-edit-id="ed94" data-original-html="Comprador Sênior B2B: qual é o prazo real de entrega?">Comprador Sênior B2B: qual é o prazo real de entrega?</span></div></div>
+      <div class="chip yt" data-chip-id="c16"><div class="k">Short <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#16</span><span class="title-text" data-edit-id="ed95" data-original-html="Corte 1 do vídeo El Niño">Corte 1 do vídeo El Niño</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed96" data-original-html="Resultado da enquete de ontem + bastidor da diária de gravação de hoje">Resultado da enquete de ontem + bastidor da diária de gravação de hoje</span></li>
         <li><b>S2</b><span data-edit-id="ed97" data-original-html="Repost do Reel #15 e do Short #16, ambos com sticker &quot;salva&quot;">Repost do Reel #15 e do Short #16, ambos com sticker "salva"</span></li>
@@ -596,9 +589,9 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed100" data-original-html="19">19</b></div>
-      <div class="chip" data-chip-id="c17"><div class="k">Reel · InfraFM <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#17</span><span class="title-text" data-edit-id="ed101" data-original-html="InfraFM: Marcos">InfraFM: Marcos</span></div></div>
-      <div class="chip yt" data-chip-id="c18"><div class="k">Short <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#18</span><span class="title-text" data-edit-id="ed102" data-original-html="Corte 2 do vídeo El Niño">Corte 2 do vídeo El Niño</span></div></div>
-      <div class="chip carrossel" data-chip-id="c19"><div class="k">Carrossel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#19</span><span class="title-text" data-edit-id="ed103" data-original-html="Portfólio de marcas: além da LG">Portfólio de marcas: além da LG</span></div></div>
+      <div class="chip" data-chip-id="c17"><div class="k">Reel · InfraFM <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#17</span><span class="title-text" data-edit-id="ed101" data-original-html="InfraFM: Marcos">InfraFM: Marcos</span></div></div>
+      <div class="chip yt" data-chip-id="c18"><div class="k">Short <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#18</span><span class="title-text" data-edit-id="ed102" data-original-html="Corte 2 do vídeo El Niño">Corte 2 do vídeo El Niño</span></div></div>
+      <div class="chip carrossel" data-chip-id="c19"><div class="k">Carrossel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#19</span><span class="title-text" data-edit-id="ed103" data-original-html="Portfólio de marcas: além da LG">Portfólio de marcas: além da LG</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed104" data-original-html="&lt;em class=&quot;casa&quot;&gt;Cumbuca&lt;/em&gt; da manhã: vídeo da turma"><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span data-edit-id="ed105" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -607,8 +600,8 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed108" data-original-html="20">20</b></div>
-      <div class="chip" data-chip-id="c20"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#20</span><span class="title-text" data-edit-id="ed109" data-original-html="Confraternização de julho">Confraternização de julho</span></div></div>
-      <div class="chip estatico" data-chip-id="c21"><div class="k">Estático <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#21</span><span class="title-text" data-edit-id="ed110" data-original-html="As peças críticas da sua operação já estão garantidas? (500 mil peças)">As peças críticas da sua operação já estão garantidas? (500 mil peças)</span></div></div>
+      <div class="chip" data-chip-id="c20"><div class="k">Reel · TBT <span class="fu rel" title="Relacionamento">REL.</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#20</span><span class="title-text" data-edit-id="ed109" data-original-html="Confraternização de julho">Confraternização de julho</span></div></div>
+      <div class="chip estatico" data-chip-id="c21"><div class="k">Estático <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#21</span><span class="title-text" data-edit-id="ed110" data-original-html="As peças críticas da sua operação já estão garantidas? (500 mil peças)">As peças críticas da sua operação já estão garantidas? (500 mil peças)</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed111" data-original-html="&lt;em class=&quot;casa&quot;&gt;Template TBT&lt;/em&gt;: confraternização de julho"><em class="casa">Template TBT</em>: confraternização de julho</span></li>
         <li><b>S2</b><span data-edit-id="ed112" data-original-html="Repost do Estático #21 com sticker &quot;salva&quot;">Repost do Estático #21 com sticker "salva"</span></li>
@@ -617,8 +610,8 @@
       </ol></details>
     </div>
     <div class="day is-today"><div class="dnum"><b data-dow="sex" data-edit-id="ed115" data-original-html="21">21</b></div>
-      <div class="chip" data-chip-id="c22"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#22</span><span class="title-text" data-edit-id="ed116" data-original-html="Neshop Cultura: Rafael">Neshop Cultura: Rafael</span></div></div>
-      <div class="chip blog" data-chip-id="c23"><div class="k">Blog <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#23</span><span class="title-text" data-edit-id="ed117" data-original-html="Checklist: preparar os equipamentos para o Super El Niño">Checklist: preparar os equipamentos para o Super El Niño</span></div></div>
+      <div class="chip" data-chip-id="c22"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#22</span><span class="title-text" data-edit-id="ed116" data-original-html="Neshop Cultura: Rafael">Neshop Cultura: Rafael</span></div></div>
+      <div class="chip blog" data-chip-id="c23"><div class="k">Blog <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#23</span><span class="title-text" data-edit-id="ed117" data-original-html="Checklist: preparar os equipamentos para o Super El Niño">Checklist: preparar os equipamentos para o Super El Niño</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed118" data-original-html="&lt;em class=&quot;casa&quot;&gt;Café&lt;/em&gt; da sexta"><em class="casa">Café</em> da sexta</span></li>
         <li><b>S2</b><span data-edit-id="ed119" data-original-html="Recap da semana El Niño + link do Blog #23">Recap da semana El Niño + link do Blog #23</span></li>
@@ -633,12 +626,12 @@
       <div class="wn" data-edit-id="ed122" data-original-html="Semana · 24–28">Semana · 24–28</div>
       <div class="wt" data-edit-id="ed123" data-original-html="Comprar certo">Comprar certo</div>
       <span class="valor" data-edit-id="ed124" data-original-html="Valor: Melhoria contínua">Valor: Melhoria contínua</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed125" data-original-html="Conteúdo que era da semana cancelada (10-14), realocado aqui — a semana que era de Prova e Conversão foi pra setembro e abriu espaço. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.">Conteúdo que era da semana cancelada (10-14), realocado aqui — a semana que era de Prova e Conversão foi pra setembro e abriu espaço. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed125" data-original-html="Conteúdo que era da semana cancelada (10-14), realocado aqui — a semana que era de Prova e Conversão foi pra setembro e abriu espaço. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.">Conteúdo que era da semana cancelada (10-14), realocado aqui — a semana que era de Prova e Conversão foi pra setembro e abriu espaço. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed126" data-original-html="24">24</b></div>
-      <div class="chip" data-chip-id="c24"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#24</span><span class="title-text" data-edit-id="ed127" data-original-html="Neshop Cultura: Isaac">Neshop Cultura: Isaac</span></div></div>
-      <div class="chip li" data-chip-id="c25"><div class="k">LinkedIn <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#25</span><span class="title-text" data-edit-id="ed128" data-original-html="Comprador Júnior: e se a peça errada for minha culpa?">Comprador Júnior: e se a peça errada for minha culpa?</span></div></div>
+      <div class="chip" data-chip-id="c24"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#24</span><span class="title-text" data-edit-id="ed127" data-original-html="Neshop Cultura: Isaac">Neshop Cultura: Isaac</span></div></div>
+      <div class="chip li" data-chip-id="c25"><div class="k">LinkedIn <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#25</span><span class="title-text" data-edit-id="ed128" data-original-html="Comprador Júnior: e se a peça errada for minha culpa?">Comprador Júnior: e se a peça errada for minha culpa?</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed129" data-original-html="Gancho: &quot;comprar a peça errada custa mais do que parece&quot;">Gancho: "comprar a peça errada custa mais do que parece"</span></li>
         <li><b>S2</b><span data-edit-id="ed130" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -647,7 +640,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed133" data-original-html="25">25</b></div>
-      <div class="chip" data-chip-id="c26"><div class="k">Reel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#26</span><span class="title-text" data-edit-id="ed134" data-original-html="Comprador Júnior: e se a peça errada for minha culpa?">Comprador Júnior: e se a peça errada for minha culpa?</span></div></div>
+      <div class="chip" data-chip-id="c26"><div class="k">Reel <span class="fu topo" title="Funil: Topo">TOPO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#26</span><span class="title-text" data-edit-id="ed134" data-original-html="Comprador Júnior: e se a peça errada for minha culpa?">Comprador Júnior: e se a peça errada for minha culpa?</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed135" data-original-html="Resultado da enquete de ontem + bastidor da gravação (feita dia 13)">Resultado da enquete de ontem + bastidor da gravação (feita dia 13)</span></li>
         <li><b>S2</b><span data-edit-id="ed136" data-original-html="Repost do Reel #26 com sticker &quot;salva&quot;">Repost do Reel #26 com sticker "salva"</span></li>
@@ -656,7 +649,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed139" data-original-html="26">26</b></div>
-      <div class="chip" data-chip-id="c27"><div class="k">Reel · InfraFM <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#27</span><span class="title-text" data-edit-id="ed140" data-original-html="InfraFM: Caique (fim da série)">InfraFM: Caique (fim da série)</span></div></div>
+      <div class="chip" data-chip-id="c27"><div class="k">Reel · InfraFM <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#27</span><span class="title-text" data-edit-id="ed140" data-original-html="InfraFM: Caique (fim da série)">InfraFM: Caique (fim da série)</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed141" data-original-html="&lt;em class=&quot;casa&quot;&gt;Cumbuca&lt;/em&gt; da manhã: vídeo da turma"><em class="casa">Cumbuca</em> da manhã: vídeo da turma</span></li>
         <li><b>S2</b><span data-edit-id="ed142" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -665,7 +658,7 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed145" data-original-html="27">27</b></div>
-      <div class="chip carrossel" data-chip-id="c28"><div class="k">Carrossel <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#28</span><span class="title-text" data-edit-id="ed146" data-original-html="Checklist: 7 critérios de fornecedor">Checklist: 7 critérios de fornecedor</span></div></div>
+      <div class="chip carrossel" data-chip-id="c28"><div class="k">Carrossel <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st shoot" data-original-cls="shoot" title="Clique para mudar o status">GRAVAR</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#28</span><span class="title-text" data-edit-id="ed146" data-original-html="Checklist: 7 critérios de fornecedor">Checklist: 7 critérios de fornecedor</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed147" data-original-html="Bastidor do dia">Bastidor do dia</span></li>
         <li><b>S2</b><span data-edit-id="ed148" data-original-html="Repost do carrossel #28: &quot;salva pra próxima cotação&quot;">Repost do carrossel #28: "salva pra próxima cotação"</span></li>
@@ -674,8 +667,8 @@
       </ol></details>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed151" data-original-html="28">28</b></div>
-      <div class="chip" data-chip-id="c29"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#29</span><span class="title-text" data-edit-id="ed152" data-original-html="Neshop Cultura: Alexandre">Neshop Cultura: Alexandre</span></div></div>
-      <div class="chip blog" data-chip-id="c30"><div class="k">Blog <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#30</span><span class="title-text" data-edit-id="ed153" data-original-html="Estoque buffer de peças críticas">Estoque buffer de peças críticas</span></div></div>
+      <div class="chip" data-chip-id="c29"><div class="k">Reel · Cultura <span class="fu rel" title="Relacionamento">REL.</span> <span class="st edit" data-original-cls="edit" title="Clique para mudar o status">EDIÇÃO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#29</span><span class="title-text" data-edit-id="ed152" data-original-html="Neshop Cultura: Alexandre">Neshop Cultura: Alexandre</span></div></div>
+      <div class="chip blog" data-chip-id="c30"><div class="k">Blog <span class="fu meio" title="Funil: Meio">MEIO</span> <span class="st ok" data-original-cls="ok" title="Clique para mudar o status">PRONTO</span><button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#30</span><span class="title-text" data-edit-id="ed153" data-original-html="Estoque buffer de peças críticas">Estoque buffer de peças críticas</span></div></div>
       <details class="sts"><summary class="sh">Stories · Aniversariantes do mês</summary><ol>
         <li><b>S1</b><span data-edit-id="ed154" data-original-html="&lt;em class=&quot;casa&quot;&gt;Café&lt;/em&gt; + preparação da comemoração"><em class="casa">Café</em> + preparação da comemoração</span></li>
         <li><b>S2</b><span data-edit-id="ed155" data-original-html="Vídeo: parabéns e o primeiro pedaço do bolo">Vídeo: parabéns e o primeiro pedaço do bolo</span></li>
@@ -690,11 +683,11 @@
       <div class="wn" data-edit-id="ed158" data-original-html="Seg 31/08">Seg 31/08</div>
       <div class="wt" data-edit-id="ed159" data-original-html="Última segunda">Última segunda</div>
       <span class="valor" data-edit-id="ed160" data-original-html="Valor: Trabalho em equipe">Valor: Trabalho em equipe</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed161" data-original-html="Segunda normal da casa, com a ponte para setembro no último story.">Segunda normal da casa, com a ponte para setembro no último story.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed161" data-original-html="Segunda normal da casa, com a ponte para setembro no último story.">Segunda normal da casa, com a ponte para setembro no último story.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed162" data-original-html="31">31</b></div>
-      <div class="chip aprova" data-chip-id="c31"><div class="k">Fechamento interno<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t"><span class="n">#31</span><span class="title-text" data-edit-id="ed163" data-original-html="Retro de produção do mês (não é post)">Retro de produção do mês (não é post)</span></div></div>
+      <div class="chip aprova" data-chip-id="c31"><div class="k">Fechamento interno<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t"><span class="n">#31</span><span class="title-text" data-edit-id="ed163" data-original-html="Retro de produção do mês (não é post)">Retro de produção do mês (não é post)</span></div></div>
       <details class="sts"><summary class="sh">Stories</summary><ol>
         <li><b>S1</b><span data-edit-id="ed164" data-original-html="Bom começo de semana: bastidor da operação abrindo o dia">Bom começo de semana: bastidor da operação abrindo o dia</span></li>
         <li><b>S2</b><span data-edit-id="ed165" data-original-html="&lt;em class=&quot;casa&quot;&gt;Neshop + frase&lt;/em&gt;"><em class="casa">Neshop + frase</em></span></li>
@@ -713,7 +706,7 @@
       <div class="wn" data-edit-id="ed168" data-original-html="Início de setembro">Início de setembro</div>
       <div class="wt" data-edit-id="ed169" data-original-html="Prova e Conversão">Prova e Conversão</div>
       <span class="valor" data-edit-id="ed170" data-original-html="Valor: Senso de dono">Valor: Senso de dono</span>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed171" data-original-html="Bloco inteiro de Prova e Conversão, que era a Semana 4 original de agosto, entra como abertura de setembro: Reel &quot;90 dias vs hoje&quot;, Reel &quot;etiqueta&quot;, Carrossel de fornecedor institucional, Reel case do hotel. Datas exatas a fechar quando o calendário de setembro for montado.">Bloco inteiro de Prova e Conversão, que era a Semana 4 original de agosto, entra como abertura de setembro: Reel "90 dias vs hoje", Reel "etiqueta", Carrossel de fornecedor institucional, Reel case do hotel. Datas exatas a fechar quando o calendário de setembro for montado.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed171" data-original-html="Bloco inteiro de Prova e Conversão, que era a Semana 4 original de agosto, entra como abertura de setembro: Reel &quot;90 dias vs hoje&quot;, Reel &quot;etiqueta&quot;, Carrossel de fornecedor institucional, Reel case do hotel. Datas exatas a fechar quando o calendário de setembro for montado.">Bloco inteiro de Prova e Conversão, que era a Semana 4 original de agosto, entra como abertura de setembro: Reel "90 dias vs hoje", Reel "etiqueta", Carrossel de fornecedor institucional, Reel case do hotel. Datas exatas a fechar quando o calendário de setembro for montado.</div>
     </div>
   <div class="week">
     <div class="day empty"></div>
@@ -728,10 +721,10 @@
 
 <div class="month-page" data-month="setembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Resumo, legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -759,10 +752,10 @@
 
 <div class="month-page" data-month="outubro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Resumo, legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -784,10 +777,10 @@
 
 <div class="month-page" data-month="novembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Resumo, legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -809,10 +802,10 @@
 
 <div class="month-page" data-month="dezembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Resumo, legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Resumo, legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -837,11 +830,11 @@
 <!-- ============ CALENDÁRIO DE EXECUÇÃO E PRODUÇÃO ============ -->
 <div class="view" id="view-exec">
 
-<div class="edit-banner">✏️ Modo de edição ativo — clique em qualquer texto para alterá-lo. As mudanças ficam salvas neste navegador.</div>
+<div class="edit-banner">Modo de edição ativo — clique em qualquer texto para alterá-lo. As mudanças ficam salvas neste navegador.</div>
 
 <div class="month-page active" data-month="agosto2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Legenda e filtros</span></summary>
 
   <div class="legend">
     <span class="lg" data-edit-id="ed172" data-original-html="&lt;span class=&quot;dot&quot; style=&quot;background:var(--casa)&quot;&gt;&lt;/span&gt;Bloco de produção do dia"><span class="dot" style="background:var(--casa)"></span>Bloco de produção do dia</span>
@@ -859,19 +852,19 @@
   <div class="wk-bar zero">
       <div class="wn" data-edit-id="ed176" data-original-html="Semana 0 · 30–31/07">Semana 0 · 30–31/07</div>
       <div class="wt" data-edit-id="ed177" data-original-html="Pré-produção">Pré-produção</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed178" data-original-html="Pré-produção concentrada na sexta. Se não couber tudo, o InfraFM #03 desliza para a manhã de segunda.">Pré-produção concentrada na sexta. Se não couber tudo, o InfraFM #03 desliza para a manhã de segunda.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed178" data-original-html="Pré-produção concentrada na sexta. Se não couber tudo, o InfraFM #03 desliza para a manhã de segunda.">Pré-produção concentrada na sexta. Se não couber tudo, o InfraFM #03 desliza para a manhã de segunda.</div>
     </div>
   <div class="week">
     <div class="day empty"></div>
     <div class="day empty"></div>
     <div class="day empty"></div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed179" data-original-html="30/07">30/07</b><span class="tag" data-edit-id="ed180" data-original-html="hoje · sem produção">hoje · sem produção</span></div>
-      <div class="chip aprova" data-chip-id="c32"><div class="k">Dia de alinhamento<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed181" data-original-html="Reuniões do dia · montar o conteúdo do LinkedIn #02">Reuniões do dia · montar o conteúdo do LinkedIn #02</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c32"><div class="k">Dia de alinhamento<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed181" data-original-html="Reuniões do dia · montar o conteúdo do LinkedIn #02">Reuniões do dia · montar o conteúdo do LinkedIn #02</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed182" data-original-html="31/07">31/07</b><span class="tag" data-edit-id="ed183" data-original-html="dia cheio">dia cheio</span></div>
-      <div class="chip exec" data-chip-id="c33"><div class="k">Prioridade 1<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed184" data-original-html="Montar os 3 templates (card de story, carrossel, estático)">Montar os 3 templates (card de story, carrossel, estático)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip exec" data-chip-id="c34"><div class="k">Prioridade 2<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed185" data-original-html="Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip aprova" data-chip-id="c35"><div class="k">Organização + 16h30<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed186" data-original-html="Agendar as 3 diárias · data da reunião mensal · aprovação do pacote S1 com o Adailson">Agendar as 3 diárias · data da reunião mensal · aprovação do pacote S1 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c33"><div class="k">Prioridade 1<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed184" data-original-html="Montar os 3 templates (card de story, carrossel, estático)">Montar os 3 templates (card de story, carrossel, estático)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c34"><div class="k">Prioridade 2<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed185" data-original-html="Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)">Editar Cultura #01 e InfraFM #03 · cards de stories seg a qua · arte do Estático #04 (foto do acervo)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c35"><div class="k">Organização + 16h30<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed186" data-original-html="Agendar as 3 diárias · data da reunião mensal · aprovação do pacote S1 com o Adailson">Agendar as 3 diárias · data da reunião mensal · aprovação do pacote S1 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
   </div>
 
@@ -879,27 +872,27 @@
   <div class="wk-bar">
       <div class="wn" data-edit-id="ed187" data-original-html="Semana 1 · 03–07">Semana 1 · 03–07</div>
       <div class="wt" data-edit-id="ed188" data-original-html="Publica S1 · Produz S2">Publica S1 · Produz S2</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed189" data-original-html="O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.">O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed189" data-original-html="O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.">O que sai esta semana já está pronto. O bloco do dia prepara a semana 2.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed190" data-original-html="03">03</b></div>
-      <div class="chip exec" data-chip-id="c36"><div class="k">Manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed191" data-original-html="Ajustes do que sobrou da sexta · editar Cultura #08 (pacote S2)">Ajustes do que sobrou da sexta · editar Cultura #08 (pacote S2)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip diaria" data-chip-id="c37"><div class="k">Diária A · tarde (14h–17h)<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed192" data-original-html="Fotos das artes #06, #07 e #14 (o conteúdo das duas placas virou story, não Reel)">Fotos das artes #06, #07 e #14 (o conteúdo das duas placas virou story, não Reel)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c36"><div class="k">Manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed191" data-original-html="Ajustes do que sobrou da sexta · editar Cultura #08 (pacote S2)">Ajustes do que sobrou da sexta · editar Cultura #08 (pacote S2)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip diaria" data-chip-id="c37"><div class="k">Diária A · tarde (14h–17h)<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed192" data-original-html="Fotos das artes #06, #07 e #14 (o conteúdo das duas placas virou story, não Reel)">Fotos das artes #06, #07 e #14 (o conteúdo das duas placas virou story, não Reel)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed193" data-original-html="04">04</b></div>
-      <div class="chip exec" data-chip-id="c38"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed194" data-original-html="Fechar o YouTube #06 e enviar para revisão · editar Reels #10 e #09">Fechar o YouTube #06 e enviar para revisão · editar Reels #10 e #09</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip exec" data-chip-id="c39"><div class="k">Captura<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed195" data-original-html="Bastidor de terça no celular (20–30 min) + Cumbuca à tarde">Bastidor de terça no celular (20–30 min) + Cumbuca à tarde</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c38"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed194" data-original-html="Fechar o YouTube #06 e enviar para revisão · editar Reels #10 e #09">Fechar o YouTube #06 e enviar para revisão · editar Reels #10 e #09</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c39"><div class="k">Captura<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed195" data-original-html="Bastidor de terça no celular (20–30 min) + Cumbuca à tarde">Bastidor de terça no celular (20–30 min) + Cumbuca à tarde</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed196" data-original-html="05">05</b></div>
-      <div class="chip exec" data-chip-id="c40"><div class="k">Manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed197" data-original-html="Ajustes do YouTube #06 pós-revisão · Blog #07 final (transcrição da Diária A) · arte do Carrossel #06">Ajustes do YouTube #06 pós-revisão · Blog #07 final (transcrição da Diária A) · arte do Carrossel #06</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip aprova" data-chip-id="c41"><div class="k">Tarde · 16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed198" data-original-html="APROVAÇÃO do pacote S2 com o Adailson (inclui #06 e #07 desta semana)">APROVAÇÃO do pacote S2 com o Adailson (inclui #06 e #07 desta semana)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip exec" data-chip-id="c42"><div class="k">Captura<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed199" data-original-html="Cumbuca da manhã">Cumbuca da manhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c40"><div class="k">Manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed197" data-original-html="Ajustes do YouTube #06 pós-revisão · Blog #07 final (transcrição da Diária A) · arte do Carrossel #06">Ajustes do YouTube #06 pós-revisão · Blog #07 final (transcrição da Diária A) · arte do Carrossel #06</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c41"><div class="k">Tarde · 16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed198" data-original-html="APROVAÇÃO do pacote S2 com o Adailson (inclui #06 e #07 desta semana)">APROVAÇÃO do pacote S2 com o Adailson (inclui #06 e #07 desta semana)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c42"><div class="k">Captura<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed199" data-original-html="Cumbuca da manhã">Cumbuca da manhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed200" data-original-html="06">06</b></div>
-      <div class="chip exec" data-chip-id="c43"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed201" data-original-html="TBT #05 já pronto, só publicar · adiantar produção da semana livre (10-14) e da Semana 3 (El Niño, 17-21)">TBT #05 já pronto, só publicar · adiantar produção da semana livre (10-14) e da Semana 3 (El Niño, 17-21)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c43"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed201" data-original-html="TBT #05 já pronto, só publicar · adiantar produção da semana livre (10-14) e da Semana 3 (El Niño, 17-21)">TBT #05 já pronto, só publicar · adiantar produção da semana livre (10-14) e da Semana 3 (El Niño, 17-21)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed202" data-original-html="07">07</b></div>
-      <div class="chip exec" data-chip-id="c44"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed203" data-original-html="Agendamentos da S2 · agendar #07 para domingo · rascunho do Blog #13 · story de gaveta do café">Agendamentos da S2 · agendar #07 para domingo · rascunho do Blog #13 · story de gaveta do café</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c44"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed203" data-original-html="Agendamentos da S2 · agendar #07 para domingo · rascunho do Blog #13 · story de gaveta do café">Agendamentos da S2 · agendar #07 para domingo · rascunho do Blog #13 · story de gaveta do café</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
   </div>
 
@@ -907,25 +900,25 @@
   <div class="wk-bar">
       <div class="wn" data-edit-id="ed204" data-original-html="Semana · 10–14">Semana · 10–14</div>
       <div class="wt" data-edit-id="ed205" data-original-html="Semana livre — produz S3 com folga">Semana livre — produz S3 com folga</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed206" data-original-html="Sem campanha própria. Cultura do Biazzi, Rafael e Marcos+Daniel bloqueados sem PC — retomam assim que ele voltar.">Sem campanha própria. Cultura do Biazzi, Rafael e Marcos+Daniel bloqueados sem PC — retomam assim que ele voltar.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed206" data-original-html="Sem campanha própria. Cultura do Biazzi, Rafael e Marcos+Daniel bloqueados sem PC — retomam assim que ele voltar.">Sem campanha própria. Cultura do Biazzi, Rafael e Marcos+Daniel bloqueados sem PC — retomam assim que ele voltar.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed207" data-original-html="10">10</b></div>
-      <div class="chip exec" data-chip-id="c45"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed208" data-original-html="Sem PC, sem Cultura hoje · adiantar roteiro/arte da Semana 3 no que der">Sem PC, sem Cultura hoje · adiantar roteiro/arte da Semana 3 no que der</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c45"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed208" data-original-html="Sem PC, sem Cultura hoje · adiantar roteiro/arte da Semana 3 no que der">Sem PC, sem Cultura hoje · adiantar roteiro/arte da Semana 3 no que der</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed209" data-original-html="11">11</b></div>
-      <div class="chip exec" data-chip-id="c46"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed210" data-original-html="Dia leve, sem PC · adiantar o que não depender dele">Dia leve, sem PC · adiantar o que não depender dele</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c46"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed210" data-original-html="Dia leve, sem PC · adiantar o que não depender dele">Dia leve, sem PC · adiantar o que não depender dele</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed211" data-original-html="12">12</b></div>
-      <div class="chip exec" data-chip-id="c47"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed212" data-original-html="Editar InfraFM #07 (Alex, já gravado) · preparar capa/thumbnail do vídeo de IA #08 (já pronto, só falta agendar)">Editar InfraFM #07 (Alex, já gravado) · preparar capa/thumbnail do vídeo de IA #08 (já pronto, só falta agendar)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c47"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed212" data-original-html="Editar InfraFM #07 (Alex, já gravado) · preparar capa/thumbnail do vídeo de IA #08 (já pronto, só falta agendar)">Editar InfraFM #07 (Alex, já gravado) · preparar capa/thumbnail do vídeo de IA #08 (já pronto, só falta agendar)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed213" data-original-html="13">13</b></div>
-      <div class="chip exec" data-chip-id="c48"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed214" data-original-html="TBT #09 já pronto, só publicar">TBT #09 já pronto, só publicar</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip diaria" data-chip-id="c49"><div class="k">Gravação · manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed215" data-original-html="Reel #26 (Comprador Júnior), roteiro pronto">Reel #26 (Comprador Júnior), roteiro pronto</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c48"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed214" data-original-html="TBT #09 já pronto, só publicar">TBT #09 já pronto, só publicar</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip diaria" data-chip-id="c49"><div class="k">Gravação · manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed215" data-original-html="Reel #26 (Comprador Júnior), roteiro pronto">Reel #26 (Comprador Júnior), roteiro pronto</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed216" data-original-html="14">14</b></div>
-      <div class="chip exec" data-chip-id="c50"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed217" data-original-html="Publicar Cultura #10 (Biazzi, se o PC já tiver voltado) · fechar pacote da Semana 3 · cards de stories · agendamentos">Publicar Cultura #10 (Biazzi, se o PC já tiver voltado) · fechar pacote da Semana 3 · cards de stories · agendamentos</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip aprova" data-chip-id="c51"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed218" data-original-html="Aprovação do pacote da Semana 3 com o Adailson">Aprovação do pacote da Semana 3 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c50"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed217" data-original-html="Publicar Cultura #10 (Biazzi, se o PC já tiver voltado) · fechar pacote da Semana 3 · cards de stories · agendamentos">Publicar Cultura #10 (Biazzi, se o PC já tiver voltado) · fechar pacote da Semana 3 · cards de stories · agendamentos</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c51"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed218" data-original-html="Aprovação do pacote da Semana 3 com o Adailson">Aprovação do pacote da Semana 3 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
   </div>
 
@@ -933,24 +926,24 @@
   <div class="wk-bar">
       <div class="wn" data-edit-id="ed219" data-original-html="Semana · 17–21">Semana · 17–21</div>
       <div class="wt" data-edit-id="ed220" data-original-html="Semana temática cheia — publica com folga já produzida">Semana temática cheia — publica com folga já produzida</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed221" data-original-html="Vídeo, LinkedIn e Reels do tema todos nessa semana. Cultura do Rafael entra na sexta, no lugar do Reel de hotelaria (removido, redundante com o Estático de quarta).">Vídeo, LinkedIn e Reels do tema todos nessa semana. Cultura do Rafael entra na sexta, no lugar do Reel de hotelaria (removido, redundante com o Estático de quarta).</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed221" data-original-html="Vídeo, LinkedIn e Reels do tema todos nessa semana. Cultura do Rafael entra na sexta, no lugar do Reel de hotelaria (removido, redundante com o Estático de quarta).">Vídeo, LinkedIn e Reels do tema todos nessa semana. Cultura do Rafael entra na sexta, no lugar do Reel de hotelaria (removido, redundante com o Estático de quarta).</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed222" data-original-html="17">17</b></div>
-      <div class="chip exec" data-chip-id="c52"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed223" data-original-html="Publicar YouTube #14 (já editado com antecedência) · Cultura #12 (Marcos e Daniel) e LinkedIn #13 já prontos">Publicar YouTube #14 (já editado com antecedência) · Cultura #12 (Marcos e Daniel) e LinkedIn #13 já prontos</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c52"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed223" data-original-html="Publicar YouTube #14 (já editado com antecedência) · Cultura #12 (Marcos e Daniel) e LinkedIn #13 já prontos">Publicar YouTube #14 (já editado com antecedência) · Cultura #12 (Marcos e Daniel) e LinkedIn #13 já prontos</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed224" data-original-html="18">18</b></div>
-      <div class="chip diaria" data-chip-id="c53"><div class="k">Diária · manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed225" data-original-html="Gravar Reel #15 (Comprador Sênior) + Short #16">Gravar Reel #15 (Comprador Sênior) + Short #16</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip diaria" data-chip-id="c53"><div class="k">Diária · manhã<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed225" data-original-html="Gravar Reel #15 (Comprador Sênior) + Short #16">Gravar Reel #15 (Comprador Sênior) + Short #16</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed226" data-original-html="19">19</b></div>
-      <div class="chip exec" data-chip-id="c54"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed227" data-original-html="Editar Reel #15 (Comprador Sênior) e Short #16 · InfraFM #17 (Marcos) já pronto">Editar Reel #15 (Comprador Sênior) e Short #16 · InfraFM #17 (Marcos) já pronto</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c54"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed227" data-original-html="Editar Reel #15 (Comprador Sênior) e Short #16 · InfraFM #17 (Marcos) já pronto">Editar Reel #15 (Comprador Sênior) e Short #16 · InfraFM #17 (Marcos) já pronto</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed228" data-original-html="20">20</b></div>
-      <div class="chip exec" data-chip-id="c55"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed229" data-original-html="TBT #20 já pronto · Estático #21 pronto (500 mil peças, só ajustar texto de inverno→verão e CTA antes de agendar)">TBT #20 já pronto · Estático #21 pronto (500 mil peças, só ajustar texto de inverno→verão e CTA antes de agendar)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c55"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed229" data-original-html="TBT #20 já pronto · Estático #21 pronto (500 mil peças, só ajustar texto de inverno→verão e CTA antes de agendar)">TBT #20 já pronto · Estático #21 pronto (500 mil peças, só ajustar texto de inverno→verão e CTA antes de agendar)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day is-today"><div class="dnum"><b data-dow="sex" data-edit-id="ed230" data-original-html="21">21</b></div>
-      <div class="chip exec" data-chip-id="c56"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed231" data-original-html="Publicar Cultura #22 (Rafael, se o PC já tiver voltado) · publicar Blog #23 (El Niño, já escrito) · fechar pacote da Semana 4">Publicar Cultura #22 (Rafael, se o PC já tiver voltado) · publicar Blog #23 (El Niño, já escrito) · fechar pacote da Semana 4</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip aprova" data-chip-id="c57"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed232" data-original-html="Aprovação do pacote da Semana 4 com o Adailson">Aprovação do pacote da Semana 4 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c56"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed231" data-original-html="Publicar Cultura #22 (Rafael, se o PC já tiver voltado) · publicar Blog #23 (El Niño, já escrito) · fechar pacote da Semana 4">Publicar Cultura #22 (Rafael, se o PC já tiver voltado) · publicar Blog #23 (El Niño, já escrito) · fechar pacote da Semana 4</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c57"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed232" data-original-html="Aprovação do pacote da Semana 4 com o Adailson">Aprovação do pacote da Semana 4 com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
   </div>
 
@@ -958,24 +951,24 @@
   <div class="wk-bar">
       <div class="wn" data-edit-id="ed233" data-original-html="Semana · 24–28">Semana · 24–28</div>
       <div class="wt" data-edit-id="ed234" data-original-html="Comprar certo — conteúdo realocado da semana livre">Comprar certo — conteúdo realocado da semana livre</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed235" data-original-html="Reel #26 (Comprador Júnior) já gravado dia 13/08, só falta editar. Blog #27 já está escrito. InfraFM #27 (Caique) fecha a série. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.">Reel #26 (Comprador Júnior) já gravado dia 13/08, só falta editar. Blog #27 já está escrito. InfraFM #27 (Caique) fecha a série. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed235" data-original-html="Reel #26 (Comprador Júnior) já gravado dia 13/08, só falta editar. Blog #27 já está escrito. InfraFM #27 (Caique) fecha a série. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.">Reel #26 (Comprador Júnior) já gravado dia 13/08, só falta editar. Blog #27 já está escrito. InfraFM #27 (Caique) fecha a série. Sexta é dos aniversariantes, com Cultura do Alexandre somando no feed.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed236" data-original-html="24">24</b></div>
-      <div class="chip exec" data-chip-id="c58"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed237" data-original-html="Cultura #24 (Isaac) e LinkedIn #25 já prontos · editar Reel #26 (Comprador Júnior, gravado dia 13/08)">Cultura #24 (Isaac) e LinkedIn #25 já prontos · editar Reel #26 (Comprador Júnior, gravado dia 13/08)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c58"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed237" data-original-html="Cultura #24 (Isaac) e LinkedIn #25 já prontos · editar Reel #26 (Comprador Júnior, gravado dia 13/08)">Cultura #24 (Isaac) e LinkedIn #25 já prontos · editar Reel #26 (Comprador Júnior, gravado dia 13/08)</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="ter" data-edit-id="ed238" data-original-html="25">25</b></div>
-      <div class="chip exec" data-chip-id="c59"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed239" data-original-html="Publicar Reel #26 · revisar Blog #27 (já escrito) antes de publicar amanhã">Publicar Reel #26 · revisar Blog #27 (já escrito) antes de publicar amanhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c59"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed239" data-original-html="Publicar Reel #26 · revisar Blog #27 (já escrito) antes de publicar amanhã">Publicar Reel #26 · revisar Blog #27 (já escrito) antes de publicar amanhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qua" data-edit-id="ed240" data-original-html="26">26</b></div>
-      <div class="chip exec" data-chip-id="c60"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed241" data-original-html="Publicar Blog #27 · InfraFM #27 (Caique) já pronto, só publicar · gravar/montar arte do Carrossel #28">Publicar Blog #27 · InfraFM #27 (Caique) já pronto, só publicar · gravar/montar arte do Carrossel #28</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c60"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed241" data-original-html="Publicar Blog #27 · InfraFM #27 (Caique) já pronto, só publicar · gravar/montar arte do Carrossel #28">Publicar Blog #27 · InfraFM #27 (Caique) já pronto, só publicar · gravar/montar arte do Carrossel #28</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="qui" data-edit-id="ed242" data-original-html="27">27</b></div>
-      <div class="chip exec" data-chip-id="c61"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed243" data-original-html="Publicar Carrossel #28 · preparar a comemoração de amanhã">Publicar Carrossel #28 · preparar a comemoração de amanhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c61"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed243" data-original-html="Publicar Carrossel #28 · preparar a comemoração de amanhã">Publicar Carrossel #28 · preparar a comemoração de amanhã</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day"><div class="dnum"><b data-dow="sex" data-edit-id="ed244" data-original-html="28">28</b></div>
-      <div class="chip exec" data-chip-id="c62"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed245" data-original-html="Publicar Cultura #29 (Alexandre) · cobrir a comemoração dos aniversariantes · compilar números do mês">Publicar Cultura #29 (Alexandre) · cobrir a comemoração dos aniversariantes · compilar números do mês</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
-      <div class="chip aprova" data-chip-id="c63"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed246" data-original-html="Aprovação do fechamento com o Adailson">Aprovação do fechamento com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c62"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed245" data-original-html="Publicar Cultura #29 (Alexandre) · cobrir a comemoração dos aniversariantes · compilar números do mês">Publicar Cultura #29 (Alexandre) · cobrir a comemoração dos aniversariantes · compilar números do mês</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip aprova" data-chip-id="c63"><div class="k">16h<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed246" data-original-html="Aprovação do fechamento com o Adailson">Aprovação do fechamento com o Adailson</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
   </div>
 
@@ -983,11 +976,11 @@
   <div class="wk-bar close">
       <div class="wn" data-edit-id="ed247" data-original-html="Seg 31/08">Seg 31/08</div>
       <div class="wt" data-edit-id="ed248" data-original-html="Retro">Retro</div>
-      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">ℹ️</button><div class="wd" data-edit-id="ed249" data-original-html="Insumo para calibrar setembro, que já abre com o bloco de Prova e Conversão pronto.">Insumo para calibrar setembro, que já abre com o bloco de Prova e Conversão pronto.</div>
+      <button type="button" class="wd-toggle" title="Ver diretrizes desta semana">i</button><div class="wd" data-edit-id="ed249" data-original-html="Insumo para calibrar setembro, que já abre com o bloco de Prova e Conversão pronto.">Insumo para calibrar setembro, que já abre com o bloco de Prova e Conversão pronto.</div>
     </div>
   <div class="week">
     <div class="day"><div class="dnum"><b data-dow="seg" data-edit-id="ed250" data-original-html="31">31</b></div>
-      <div class="chip exec" data-chip-id="c64"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">📎</button></div><div class="t" data-edit-id="ed251" data-original-html="Retro de produção: horas reais por frente, o que apertou, o que sobrou · confirmar datas de setembro para o bloco de Prova e Conversão">Retro de produção: horas reais por frente, o que apertou, o que sobrou · confirmar datas de setembro para o bloco de Prova e Conversão</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
+      <div class="chip exec" data-chip-id="c64"><div class="k">Bloco<button type="button" class="attach-badge" title="Anexar arte, PDF ou roteiro">+</button></div><div class="t" data-edit-id="ed251" data-original-html="Retro de produção: horas reais por frente, o que apertou, o que sobrou · confirmar datas de setembro para o bloco de Prova e Conversão">Retro de produção: horas reais por frente, o que apertou, o que sobrou · confirmar datas de setembro para o bloco de Prova e Conversão</div><label class="check-row"><input type="checkbox"><span>Feito</span></label></div>
     </div>
     <div class="day empty"></div>
     <div class="day empty"></div>
@@ -999,10 +992,10 @@
 
 <div class="month-page" data-month="setembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -1021,10 +1014,10 @@
 
 <div class="month-page" data-month="outubro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -1043,10 +1036,10 @@
 
 <div class="month-page" data-month="novembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -1065,10 +1058,10 @@
 
 <div class="month-page" data-month="dezembro2026">
 <details class="control-panel">
-  <summary><span class="summary-chip">📊 Legenda e filtros</span></summary>
+  <summary><span class="summary-chip">Legenda e filtros</span></summary>
   <div class="dashboard"></div>
   <div class="insights-panel">
-    <div class="insights-title">💡 Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
+    <div class="insights-title">Insights automáticos <span>(padrões detectados nos dados — não é IA)</span></div>
     <div class="insights-list"></div>
   </div>
   <div class="legend">
@@ -1090,7 +1083,7 @@
 <!-- ============ METAS E RESULTADOS ============ -->
 <div class="view" id="view-kpi">
 
-<div class="edit-banner">✏️ Modo de edição ativo — clique no alvo de qualquer meta pra mudar o número.</div>
+<div class="edit-banner">Modo de edição ativo — clique no alvo de qualquer meta pra mudar o número.</div>
 
 <div class="kpi-hero">
   <div class="hero-chart-card">
@@ -1112,7 +1105,6 @@
       <div class="pg-sub" id="pg-sub">Alvo: —</div>
     </div>
     <div class="highlight-card">
-      <div class="hc-icon">🎯</div>
       <div class="hc-title">Destaque do mês</div>
       <div class="hc-body" id="hc-body">—</div>
     </div>
@@ -1122,33 +1114,33 @@
 
 <div class="month-page active" data-month="agosto2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">📋 Metas por formato — Agosto</h2>
+  <h2 class="goals-title">Metas por formato — Agosto</h2>
   <div class="goals-grid">
-    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed252" data-original-html="2">2</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
-    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed253" data-original-html="8">8</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
-    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed254" data-original-html="2">2</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
-    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed255" data-original-html="4">4</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
-    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed256" data-original-html="3">3</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
-    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed257" data-original-html="3">3</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="longo"><div class="goal-label">Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed252" data-original-html="2">2</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed253" data-original-html="8">8</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed254" data-original-html="2">2</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed255" data-original-html="4">4</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed256" data-original-html="3">3</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target" data-edit-id="ed257" data-original-html="3">3</span></div><div class="goal-track"><span class="goal-fill" style="width: 0%;"></span></div></div>
     <div class="goal-card goal-task-card" data-goal-task="calSetembro"><label><input type="checkbox" id="goal-task-calSetembro"><span>Criação do calendário editorial de Setembro</span></label></div>
   </div>
   <p class="obs" style="margin-top:10px" data-edit-id="ed258" data-original-html="O número da esquerda conta sozinho: sempre que um item passa pro status &lt;b&gt;POSTADO&lt;/b&gt; na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em &quot;Editar textos&quot;, caso a meta mude.">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
 </div>
 <div class="cal" style="margin-top:18px">
-  <div class="kpi-charts"><div class="chart-card"><h4>Andamento da produção</h4><div class="stack-track"><span class="stack-seg" style="width:3.3333333333333335%;background:var(--pauta)"></span><span class="stack-seg" style="width:23.333333333333332%;background:var(--shoot)"></span><span class="stack-seg" style="width:40%;background:var(--edit)"></span><span class="stack-seg" style="width:33.33333333333333%;background:var(--ok)"></span><span class="stack-seg" style="width:0%;background:var(--posted)"></span></div><div class="stack-legend"><span><span class="sw" style="background:var(--pauta)"></span>Pauta · 1</span><span><span class="sw" style="background:var(--shoot)"></span>Gravar · 7</span><span><span class="sw" style="background:var(--edit)"></span>Edição · 12</span><span><span class="sw" style="background:var(--ok)"></span>Pronto · 10</span><span><span class="sw" style="background:var(--posted)"></span>Postado · 0</span></div></div><div class="chart-card"><h4>Peças por formato</h4><div class="bar-row"><span class="bar-label">🖼️ Carrossel</span><span class="bar-track"><span class="bar-fill" style="width:21.428571428571427%;background:var(--p500)"></span></span><span class="bar-count">3</span></div><div class="bar-row"><span class="bar-label">🧩 Estático</span><span class="bar-track"><span class="bar-fill" style="width:7.142857142857142%;background:var(--p500)"></span></span><span class="bar-count">1</span></div><div class="bar-row"><span class="bar-label">▶️ YouTube/Shorts</span><span class="bar-track"><span class="bar-fill" style="width:28.57142857142857%;background:var(--p500)"></span></span><span class="bar-count">4</span></div><div class="bar-row"><span class="bar-label">💼 LinkedIn</span><span class="bar-track"><span class="bar-fill" style="width:21.428571428571427%;background:var(--p500)"></span></span><span class="bar-count">3</span></div><div class="bar-row"><span class="bar-label">✍️ Blog</span><span class="bar-track"><span class="bar-fill" style="width:21.428571428571427%;background:var(--p500)"></span></span><span class="bar-count">3</span></div><div class="bar-row"><span class="bar-label">📅 Data comemorativa</span><span class="bar-track"><span class="bar-fill" style="width:14.285714285714285%;background:var(--p500)"></span></span><span class="bar-count">2</span></div><div class="bar-row"><span class="bar-label">🗂️ Aprovação/Gaveta</span><span class="bar-track"><span class="bar-fill" style="width:14.285714285714285%;background:var(--p500)"></span></span><span class="bar-count">2</span></div><div class="bar-row"><span class="bar-label">🎬 Reel</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:var(--p500)"></span></span><span class="bar-count">14</span></div></div><div class="chart-card"><h4>Distribuição por funil</h4><div class="bar-row"><span class="bar-label">Topo</span><span class="bar-track"><span class="bar-fill" style="width:64.28571428571429%;background:#1C6E79"></span></span><span class="bar-count">9</span></div><div class="bar-row"><span class="bar-label">Meio</span><span class="bar-track"><span class="bar-fill" style="width:50%;background:#0E4650"></span></span><span class="bar-count">7</span></div><div class="bar-row"><span class="bar-label">Relacionamento</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:#8A6D9A"></span></span><span class="bar-count">14</span></div></div></div>
+  <div class="kpi-charts"></div>
 </div>
 </div>
 
 <div class="month-page" data-month="setembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">📋 Metas por formato — Setembro</h2>
+  <h2 class="goals-title">Metas por formato — Setembro</h2>
   <div class="goals-grid">
-    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">8</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">4</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="longo"><div class="goal-label">Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">8</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">2</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">4</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">3</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card goal-task-card" data-goal-task="setembro2026-tarefa"><label><input type="checkbox"><span>Tarefa única do mês (preencher)</span></label></div>
   </div>
   <p class="obs" style="margin-top:10px">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
@@ -1160,14 +1152,14 @@
 
 <div class="month-page" data-month="outubro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">📋 Metas por formato — Outubro</h2>
+  <h2 class="goals-title">Metas por formato — Outubro</h2>
   <div class="goals-grid">
-    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="longo"><div class="goal-label">Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card goal-task-card" data-goal-task="outubro2026-tarefa"><label><input type="checkbox"><span>Tarefa única do mês (preencher)</span></label></div>
   </div>
   <p class="obs" style="margin-top:10px">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
@@ -1179,14 +1171,14 @@
 
 <div class="month-page" data-month="novembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">📋 Metas por formato — Novembro</h2>
+  <h2 class="goals-title">Metas por formato — Novembro</h2>
   <div class="goals-grid">
-    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="longo"><div class="goal-label">Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card goal-task-card" data-goal-task="novembro2026-tarefa"><label><input type="checkbox"><span>Tarefa única do mês (preencher)</span></label></div>
   </div>
   <p class="obs" style="margin-top:10px">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
@@ -1198,14 +1190,14 @@
 
 <div class="month-page" data-month="dezembro2026">
 <div class="cal" style="margin-top:18px">
-  <h2 class="goals-title">📋 Metas por formato — Dezembro</h2>
+  <h2 class="goals-title">Metas por formato — Dezembro</h2>
   <div class="goals-grid">
-    <div class="goal-card" data-goal="longo"><div class="goal-label">🎬 Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="curto"><div class="goal-label">📱 Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="blog"><div class="goal-label">✍️ Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="linkedin"><div class="goal-label">💼 LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="carrossel"><div class="goal-label">🖼️ Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
-    <div class="goal-card" data-goal="estatico"><div class="goal-label">🧩 Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="longo"><div class="goal-label">Vídeos longos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="curto"><div class="goal-label">Vídeos curtos</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="blog"><div class="goal-label">Blogs</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="linkedin"><div class="goal-label">LinkedIn</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="carrossel"><div class="goal-label">Carrossel</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
+    <div class="goal-card" data-goal="estatico"><div class="goal-label">Estático</div><div class="goal-num"><span class="goal-count">0</span><span class="sep">/</span><span class="goal-target">0</span></div><div class="goal-track"><span class="goal-fill"></span></div></div>
     <div class="goal-card goal-task-card" data-goal-task="dezembro2026-tarefa"><label><input type="checkbox"><span>Tarefa única do mês (preencher)</span></label></div>
   </div>
   <p class="obs" style="margin-top:10px">O número da esquerda conta sozinho: sempre que um item passa pro status <b>POSTADO</b> na aba Postagem, a meta correspondente soma aqui. O alvo (número da direita) é editável em "Editar textos", caso a meta mude.</p>
@@ -1220,7 +1212,7 @@
 <div class="drawer-overlay" id="drawer-overlay"></div>
 <div class="drawer" id="notes-drawer">
   <div class="drawer-header">
-    <h2>📋 Diretrizes &amp; Regras</h2>
+    <h2>Diretrizes &amp; Regras</h2>
     <button type="button" class="drawer-close" id="drawer-close" title="Fechar">✕</button>
   </div>
   <div class="drawer-body">
@@ -1288,11 +1280,11 @@
 <div class="fab-menu" id="fab-menu">
   <div class="fab-panel" id="fab-panel">
     <div class="fab-items" id="fab-items">
-      <button type="button" class="fab-item" data-action="today">📅 Hoje</button>
-      <button type="button" class="fab-item" data-action="search">🔎 Buscar</button>
-      <button type="button" class="fab-item" data-action="post">📅 Postagem</button>
-      <button type="button" class="fab-item" data-action="exec">🛠️ Execução</button>
-      <button type="button" class="fab-item" data-action="kpi">📊 Metas</button>
+      <button type="button" class="fab-item" data-action="today">Hoje</button>
+      <button type="button" class="fab-item" data-action="search">Buscar</button>
+      <button type="button" class="fab-item" data-action="post">Postagem</button>
+      <button type="button" class="fab-item" data-action="exec">Execução</button>
+      <button type="button" class="fab-item" data-action="kpi">Metas</button>
     </div>
     <div class="fab-bar" id="fab-bar">
       <span class="fab-label">Menu</span>
@@ -1372,8 +1364,8 @@ function saveState(){
 function setSyncIndicator(connected, loading){
   var el = document.getElementById('sync-indicator');
   if(!el) return;
-  if(loading){ el.textContent = '🔄 Conectando à nuvem…'; el.className = 'sync-indicator'; return; }
-  el.textContent = connected ? '🟢 Sincronizado' : '🔴 Sem conexão com a nuvem (alterações não são compartilhadas)';
+  if(loading){ el.innerHTML = '<span class="sync-dot"></span>Conectando à nuvem…'; el.className = 'sync-indicator'; return; }
+  el.innerHTML = '<span class="sync-dot"></span>' + (connected ? 'Sincronizado' : 'Sem conexão com a nuvem (alterações não são compartilhadas)');
   el.className = 'sync-indicator ' + (connected ? 'ok' : 'off');
 }
 
@@ -1493,7 +1485,7 @@ function renderAttachBadge(chip){
   var list = STATE.attach[id] || [];
   var badge = chip.querySelector('.attach-badge');
   if(!badge) return;
-  badge.textContent = list.length ? ('📎 ' + list.length) : '📎';
+  badge.textContent = list.length ? String(list.length) : '+';
   badge.classList.toggle('has', list.length > 0);
 }
 
@@ -1545,7 +1537,7 @@ function renderAttachList(){
     } else {
       link.target = '_blank'; link.rel = 'noopener';
     }
-    link.textContent = (a.type === 'link' ? '🔗 ' : '📄 ') + a.name;
+    link.textContent = a.name;
     var rm = document.createElement('button');
     rm.type = 'button'; rm.className = 'attach-rm'; rm.textContent = 'Remover';
     rm.addEventListener('click', function(){
@@ -1691,7 +1683,7 @@ function chipFunilKey(chip){
   return 'none';
 }
 
-var TYPE_ICONS = {reel:'🎬', carrossel:'🖼️', estatico:'🧩', yt:'▶️', li:'💼', blog:'✍️', data:'📅', aprova:'🗂️', exec:'🛠️', diaria:'🎥'};
+var TYPE_COLORS = {reel:'var(--p500)', carrossel:'var(--p900)', estatico:'#7FA8AD', yt:'var(--yt)', li:'var(--li)', blog:'var(--blog)', data:'var(--data)', aprova:'var(--p200)', exec:'var(--casa)', diaria:'var(--shoot)'};
 var FUNIL_COLORS = {topo:'#1C6E79', meio:'#0E4650', fundo:'#A34A2A', rel:'#8A6D9A'};
 
 function countChips(scope){
@@ -1738,7 +1730,7 @@ function computeInsights(scope){
         var pct = funilCounts[k] / funilTotal;
         if(pct >= 0.7){
           var label = (FUNIL_DEFS.filter(function(d){ return d.key === k; })[0] || {}).label || k;
-          insights.push('📊 <b>' + weekName + '</b>: ' + Math.round(pct * 100) + '% do conteúdo é funil ' + label + ' — considere balancear com outras etapas.');
+          insights.push('<b>' + weekName + '</b>: ' + Math.round(pct * 100) + '% do conteúdo é funil ' + label + ' — considere balancear com outras etapas.');
         }
       });
     }
@@ -1750,7 +1742,7 @@ function computeInsights(scope){
       var pct = typeCounts[t] / chips.length;
       if(typeCounts[t] >= 3 && pct >= 0.5){
         var tlabel = (TYPE_DEFS.filter(function(d){ return d.key === t; })[0] || {}).label || t;
-        insights.push('🎯 <b>' + weekName + '</b>: formato ' + tlabel + ' concentrado (' + typeCounts[t] + ' peças) — vale variar.');
+        insights.push('<b>' + weekName + '</b>: formato ' + tlabel + ' concentrado (' + typeCounts[t] + ' peças) — vale variar.');
       }
     });
 
@@ -1770,7 +1762,7 @@ function computeInsights(scope){
     } else {
       if(streak >= 3 && lastType && lastType !== 'reel'){
         var slabel = (TYPE_DEFS.filter(function(d){ return d.key === lastType; })[0] || {}).label || lastType;
-        insights.push('🔁 ' + streak + ' dias seguidos de ' + slabel + ' — pode cansar o feed.');
+        insights.push(streak + ' dias seguidos de ' + slabel + ' — pode cansar o feed.');
       }
       streak = 1;
     }
@@ -1778,7 +1770,7 @@ function computeInsights(scope){
   });
   if(streak >= 3 && lastType && lastType !== 'reel'){
     var slabel2 = (TYPE_DEFS.filter(function(d){ return d.key === lastType; })[0] || {}).label || lastType;
-    insights.push('🔁 ' + streak + ' dias seguidos de ' + slabel2 + ' — pode cansar o feed.');
+    insights.push(streak + ' dias seguidos de ' + slabel2 + ' — pode cansar o feed.');
   }
 
   for(var i = 0; i < allTitles.length; i++){
@@ -1787,7 +1779,7 @@ function computeInsights(scope){
       var w1 = insightKeyWords(allTitles[i].text), w2 = insightKeyWords(allTitles[j].text);
       var shared = w1.filter(function(w){ return w2.indexOf(w) !== -1; });
       if(shared.length >= 3){
-        insights.push('♻️ Temas parecidos: "<b>' + allTitles[i].text + '</b>" (' + allTitles[i].week + ') e "<b>' + allTitles[j].text + '</b>" (' + allTitles[j].week + ') — evite repetir.');
+        insights.push('Temas parecidos: "<b>' + allTitles[i].text + '</b>" (' + allTitles[i].week + ') e "<b>' + allTitles[j].text + '</b>" (' + allTitles[j].week + ') — evite repetir.');
       }
     }
   }
@@ -1800,7 +1792,7 @@ function renderInsights(box, scope){
   var insights = computeInsights(scope);
   box.innerHTML = insights.length
     ? insights.map(function(i){ return '<div class="insight-item">' + i + '</div>'; }).join('')
-    : '<div class="insight-item insight-ok">✅ Nenhum padrão de risco identificado no momento.</div>';
+    : '<div class="insight-item insight-ok">Nenhum padrão de risco identificado no momento.</div>';
 }
 
 /* ===================== DASHBOARD (status + formato + funil) ===================== */
@@ -1809,18 +1801,18 @@ function renderDashboard(box, scope){
   var c = countChips(scope);
 
   var statusHtml =
-    '<span class="summary-pill pauta">📋 ' + c.status.pauta + '<span>em pauta</span></span>' +
-    '<span class="summary-pill shoot">🎬 ' + c.status.shoot + '<span>para gravar</span></span>' +
-    '<span class="summary-pill edit">🖊️ ' + c.status.edit + '<span>em edição</span></span>' +
-    '<span class="summary-pill ok">✅ ' + c.status.ok + '<span>prontos</span></span>' +
-    '<span class="summary-pill posted">📤 ' + c.status.posted + '<span>postados</span></span>';
+    '<span class="summary-pill pauta">' + c.status.pauta + '<span>em pauta</span></span>' +
+    '<span class="summary-pill shoot">' + c.status.shoot + '<span>para gravar</span></span>' +
+    '<span class="summary-pill edit">' + c.status.edit + '<span>em edição</span></span>' +
+    '<span class="summary-pill ok">' + c.status.ok + '<span>prontos</span></span>' +
+    '<span class="summary-pill posted">' + c.status.posted + '<span>postados</span></span>';
 
   var typeHtml = TYPE_DEFS.filter(function(d){ return c.type[d.key]; }).map(function(d){
-    return '<span class="mini-pill">' + (TYPE_ICONS[d.key] || '') + ' <b>' + c.type[d.key] + '</b> ' + d.label + '</span>';
+    return '<span class="mini-pill"><span class="type-dot" style="background:' + (TYPE_COLORS[d.key] || 'var(--p500)') + '"></span><b>' + c.type[d.key] + '</b> ' + d.label + '</span>';
   }).join('');
 
   var funilHtml = FUNIL_DEFS.filter(function(d){ return d.key !== 'none' && c.funil[d.key]; }).map(function(d){
-    return '<span class="mini-pill">🔻 <b>' + c.funil[d.key] + '</b> ' + d.label + '</span>';
+    return '<span class="mini-pill"><b>' + c.funil[d.key] + '</b> ' + d.label + '</span>';
   }).join('');
 
   box.innerHTML =
@@ -1854,8 +1846,8 @@ function renderKpiCharts(box, scope){
   var maxType = Math.max.apply(null, TYPE_DEFS.map(function(d){ return c.type[d.key] || 0; }).concat([1]));
   var typeHtml = TYPE_DEFS.filter(function(d){ return c.type[d.key]; }).map(function(d){
     var v = c.type[d.key] || 0;
-    return '<div class="bar-row"><span class="bar-label">' + (TYPE_ICONS[d.key] || '') + ' ' + d.label + '</span>' +
-      '<span class="bar-track"><span class="bar-fill" style="width:' + (v / maxType * 100) + '%;background:var(--p500)"></span></span>' +
+    return '<div class="bar-row"><span class="bar-label">' + d.label + '</span>' +
+      '<span class="bar-track"><span class="bar-fill" style="width:' + (v / maxType * 100) + '%;background:' + (TYPE_COLORS[d.key] || 'var(--p500)') + '"></span></span>' +
       '<span class="bar-count">' + v + '</span></div>';
   }).join('');
 
@@ -2011,7 +2003,7 @@ function renderKpiHero(){
   });
   var hcBody = document.getElementById('hc-body');
   if(s.catTotal > 0 && s.hitCount >= s.catTotal){
-    hcBody.innerHTML = 'Todas as <b>' + s.catTotal + ' metas</b> de formato já bateram o alvo este mês. 🎉';
+    hcBody.innerHTML = 'Todas as <b>' + s.catTotal + ' metas</b> de formato já bateram o alvo este mês.';
   } else if(worst){
     hcBody.innerHTML = '<b>' + worst.label + '</b> é a meta mais atrasada: ' + worst.count + ' de ' + worst.target + ' já no ar.';
   } else {
@@ -2195,10 +2187,10 @@ function initEditMode(){
       el.contentEditable = editModeOn ? 'true' : 'false';
       if(!editModeOn) saveEditedEl(el);
     });
-    // a descrição da semana fica escondida atrás do ícone ℹ️; no modo de edição,
+    // a descrição da semana fica escondida atrás do botão "i"; no modo de edição,
     // abre todas pra dar pra editar sem precisar caçar o botão de cada uma
     if(editModeOn) Array.from(document.querySelectorAll('.wk-bar')).forEach(function(b){ b.classList.add('wd-open'); });
-    btn.textContent = editModeOn ? '💾 Concluir edição' : '✏️ Editar textos';
+    btn.textContent = editModeOn ? 'Concluir edição' : 'Editar textos';
     btn.classList.toggle('on', editModeOn);
   });
 }
@@ -2223,7 +2215,7 @@ function initWeekBarToggle(){
     btn.type = 'button';
     btn.className = 'wd-toggle';
     btn.title = 'Ver diretrizes desta semana';
-    btn.textContent = 'ℹ️';
+    btn.textContent = 'i';
     btn.addEventListener('click', function(){ bar.classList.toggle('wd-open'); });
     bar.insertBefore(btn, wd);
   });
@@ -2338,7 +2330,7 @@ function renderTodaySummary(){
   document.querySelectorAll('.day.is-today').forEach(function(d){ d.classList.remove('is-today'); });
 
   if(!cells.length){
-    box.innerHTML = '<div class="today-card"><h2>📅 Hoje é ' + dateLabel + '</h2><p class="today-empty">Nenhum item deste calendário cai em hoje (pode ser fim de semana ou fora do período coberto).</p></div>';
+    box.innerHTML = '<div class="today-card"><h2>Hoje é ' + dateLabel + '</h2><p class="today-empty">Nenhum item deste calendário cai em hoje (pode ser fim de semana ou fora do período coberto).</p></div>';
     return;
   }
 
@@ -2355,17 +2347,17 @@ function renderTodaySummary(){
     var body = pending.length
       ? pending.map(function(i){
           var marker = verb === 'POSTAR'
-            ? '<span class="ti-icon">' + (TYPE_ICONS[i.type] || '🎬') + '</span>'
+            ? '<span class="ti-icon" style="background:' + (TYPE_COLORS[i.type] || 'var(--p500)') + '"></span>'
             : '<span class="ti-badge">' + (i.kLabel || 'TAREFA') + '</span>';
           return '<div class="today-item today-item-' + (verb === 'POSTAR' ? 'post' : 'exec') + '">' + marker + '<a href="#" data-chip-id="' + i.id + '">' + i.title + '</a></div>';
         }).join('')
-      : '<div class="today-done">✅ Tudo ' + (verb === 'POSTAR' ? 'postado' : 'feito') + ' por hoje</div>';
+      : '<div class="today-done">Tudo ' + (verb === 'POSTAR' ? 'postado' : 'feito') + ' por hoje</div>';
     return '<div class="today-col"><h5>' + title + ' (' + pending.length + ' de ' + items.length + ')</h5>' + body + '</div>';
   }
 
   var cols = renderCol('Pra postar hoje', postItems, 'POSTAR') + renderCol('Pra fazer hoje', execItems, 'FAZER');
 
-  box.innerHTML = '<div class="today-card"><h2>📅 Hoje é ' + dateLabel + '</h2><div class="today-cols">' + (cols || '<p class="today-empty">Sem peças de conteúdo ou tarefas cadastradas para hoje.</p>') + '</div></div>';
+  box.innerHTML = '<div class="today-card"><h2>Hoje é ' + dateLabel + '</h2><div class="today-cols">' + (cols || '<p class="today-empty">Sem peças de conteúdo ou tarefas cadastradas para hoje.</p>') + '</div></div>';
 
   box.querySelectorAll('a[data-chip-id]').forEach(function(a){
     a.addEventListener('click', function(e){
