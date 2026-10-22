@@ -14,7 +14,7 @@
     --input-bg:#F4F4F5; --text-muted:#71717A;
     --yt:#B03A2E; --li:#0A66C2; --blog:#54707A; --data:#7A5C8A; --casa:#8A5A24;
     --ok:#1F7A4D; --edit:#8A6D1F; --shoot:#A34A2A;
-    --pauta:#6B7A7C; --posted:#5B3FA0;
+    --pauta:#6B7A7C; --posted:#5B3FA0; --review:#2F7A6E;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);padding:0 0 64px}
@@ -90,7 +90,7 @@
   .chip{border-left:4px solid var(--p500);background:var(--input-bg);border-radius:0 8px 8px 0;padding:8px 10px 9px;font-size:13.5px;line-height:1.4}
   .chip .k{display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--text-muted)}
   .chip .k .st{margin-left:auto;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:3px 9px;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-  .st.pauta{background:var(--pauta)} .st.shoot{background:var(--shoot)} .st.edit{background:var(--edit)} .st.ok{background:var(--ok)} .st.posted{background:var(--posted)}
+  .st.pauta{background:var(--pauta)} .st.review{background:var(--review)} .st.shoot{background:var(--shoot)} .st.edit{background:var(--edit)} .st.ok{background:var(--ok)} .st.posted{background:var(--posted)}
   /* funil: ponto colorido discreto (passe o mouse pra ver o nome) */
   .fu{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;overflow:hidden;white-space:nowrap;text-indent:9px;cursor:default}
   .fu.topo{background:var(--p500)}
@@ -219,6 +219,7 @@
   .dash-row-label{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);min-width:58px;flex:none}
   .summary-pill{display:inline-flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;border-radius:10px;padding:9px 15px;color:#fff}
   .summary-pill.pauta{background:var(--pauta)}
+  .summary-pill.review{background:var(--review)}
   .summary-pill.ok{background:var(--ok)}
   .summary-pill.edit{background:var(--edit)}
   .summary-pill.shoot{background:var(--shoot)}
@@ -1458,22 +1459,31 @@ function assignChipIds(){
   allChips().forEach(function(chip, i){
     chip.dataset.chipId = 'c' + i;
     var badge = chip.querySelector('.st');
-    if(badge) badge.dataset.originalCls = STATUS_CYCLE.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
+    if(badge) badge.dataset.originalCls = STATUS_CYCLE_FULL.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
   });
 }
 
 /* ===================== STATUS CLICÁVEL (pipeline único) ===================== */
-var STATUS_CYCLE = [
+var STATUS_CYCLE_FULL = [
   {cls:'pauta', label:'PAUTA'},
+  {cls:'review', label:'REVISÃO'},
   {cls:'shoot', label:'GRAVAR'},
   {cls:'edit', label:'EDIÇÃO'},
   {cls:'ok', label:'PRONTO'},
   {cls:'posted', label:'POSTADO'}
 ];
+// formatos sem vídeo (não tem o que "gravar") pulam a etapa Gravar no pipeline
+var NO_SHOOT_TYPES = ['li', 'blog', 'carrossel', 'estatico', 'data'];
+function statusCycleFor(chip){
+  if(NO_SHOOT_TYPES.indexOf(chipType(chip)) !== -1){
+    return STATUS_CYCLE_FULL.filter(function(s){ return s.cls !== 'shoot'; });
+  }
+  return STATUS_CYCLE_FULL;
+}
 
 function applyStatusBadge(badge, cls){
-  STATUS_CYCLE.forEach(function(s){ badge.classList.remove(s.cls); });
-  var found = STATUS_CYCLE.filter(function(s){ return s.cls === cls; })[0];
+  STATUS_CYCLE_FULL.forEach(function(s){ badge.classList.remove(s.cls); });
+  var found = STATUS_CYCLE_FULL.filter(function(s){ return s.cls === cls; })[0];
   if(!found) return;
   badge.classList.add(found.cls);
   badge.textContent = found.label;
@@ -1497,9 +1507,10 @@ function initStatusClicks(){
     badge.title = 'Clique para mudar o status';
     badge.addEventListener('click', function(e){
       e.stopPropagation();
+      var cycle = statusCycleFor(chip);
       var currentIdx = -1;
-      STATUS_CYCLE.forEach(function(s, i){ if(badge.classList.contains(s.cls)) currentIdx = i; });
-      var next = STATUS_CYCLE[(currentIdx + 1) % STATUS_CYCLE.length];
+      cycle.forEach(function(s, i){ if(badge.classList.contains(s.cls)) currentIdx = i; });
+      var next = cycle[(currentIdx + 1) % cycle.length];
       applyStatusBadge(badge, next.cls);
       STATE.status[id] = next.cls;
       saveState();
@@ -1688,6 +1699,7 @@ var TYPE_DEFS = [
 ];
 var STATUS_DEFS = [
   {key:'pauta', label:'Pauta'},
+  {key:'review', label:'Revisão'},
   {key:'shoot', label:'Gravar'},
   {key:'edit', label:'Edição'},
   {key:'ok', label:'Pronto'},
@@ -1724,7 +1736,7 @@ var FUNIL_COLORS = {topo:'var(--p500)', meio:'var(--p700)', fundo:'#A34A2A', rel
 
 function countChips(scope){
   var chips = Array.from(scope.querySelectorAll('.chip'));
-  var status = {pauta:0, shoot:0, edit:0, ok:0, posted:0};
+  var status = {pauta:0, review:0, shoot:0, edit:0, ok:0, posted:0};
   var type = {};
   var funil = {};
   chips.forEach(function(c){
@@ -1838,6 +1850,7 @@ function renderDashboard(box, scope){
 
   var statusHtml =
     '<span class="summary-pill pauta">' + c.status.pauta + '<span>em pauta</span></span>' +
+    '<span class="summary-pill review">' + c.status.review + '<span>em revisão</span></span>' +
     '<span class="summary-pill shoot">' + c.status.shoot + '<span>para gravar</span></span>' +
     '<span class="summary-pill edit">' + c.status.edit + '<span>em edição</span></span>' +
     '<span class="summary-pill ok">' + c.status.ok + '<span>prontos</span></span>' +
@@ -1861,11 +1874,12 @@ function renderDashboard(box, scope){
 function renderKpiCharts(box, scope){
   if(!box) return;
   var c = countChips(scope);
-  var totalStatus = (c.status.pauta + c.status.shoot + c.status.edit + c.status.ok + c.status.posted) || 1;
+  var totalStatus = (c.status.pauta + c.status.review + c.status.shoot + c.status.edit + c.status.ok + c.status.posted) || 1;
 
   var stackHtml =
     '<div class="stack-track">' +
       '<span class="stack-seg" style="width:' + (c.status.pauta / totalStatus * 100) + '%;background:var(--pauta)"></span>' +
+      '<span class="stack-seg" style="width:' + (c.status.review / totalStatus * 100) + '%;background:var(--review)"></span>' +
       '<span class="stack-seg" style="width:' + (c.status.shoot / totalStatus * 100) + '%;background:var(--shoot)"></span>' +
       '<span class="stack-seg" style="width:' + (c.status.edit / totalStatus * 100) + '%;background:var(--edit)"></span>' +
       '<span class="stack-seg" style="width:' + (c.status.ok / totalStatus * 100) + '%;background:var(--ok)"></span>' +
@@ -1873,6 +1887,7 @@ function renderKpiCharts(box, scope){
     '</div>' +
     '<div class="stack-legend">' +
       '<span><span class="sw" style="background:var(--pauta)"></span>Pauta · ' + c.status.pauta + '</span>' +
+      '<span><span class="sw" style="background:var(--review)"></span>Revisão · ' + c.status.review + '</span>' +
       '<span><span class="sw" style="background:var(--shoot)"></span>Gravar · ' + c.status.shoot + '</span>' +
       '<span><span class="sw" style="background:var(--edit)"></span>Edição · ' + c.status.edit + '</span>' +
       '<span><span class="sw" style="background:var(--ok)"></span>Pronto · ' + c.status.ok + '</span>' +
@@ -1960,8 +1975,8 @@ function computeMonthGoalStats(monthKey){
   var totalTarget = cats.reduce(function(s, c){ return s + c.target; }, 0);
   var hitCount = cats.filter(function(c){ return c.target > 0 && c.count >= c.target; }).length;
   var c = countChips(postPage);
-  var inProgress = c.status.shoot + c.status.edit + c.status.ok;
-  var totalPieces = c.status.pauta + c.status.shoot + c.status.edit + c.status.ok + c.status.posted;
+  var inProgress = c.status.review + c.status.shoot + c.status.edit + c.status.ok;
+  var totalPieces = c.status.pauta + c.status.review + c.status.shoot + c.status.edit + c.status.ok + c.status.posted;
   return {
     cats: cats, totalCount: totalCount, totalTarget: totalTarget,
     pct: totalTarget > 0 ? (totalCount / totalTarget * 100) : 0,
