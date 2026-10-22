@@ -1397,6 +1397,7 @@ function setSyncIndicator(connected, loading){
 if(firebaseAvailable){
   stateRef.on('value', function(snapshot){
     STATE = normalizeState(snapshot.val());
+    if(migrateLegacyChipState()) saveState();
     stateLoaded = true;
     renderAll();
   }, function(err){
@@ -1404,6 +1405,7 @@ if(firebaseAvailable){
     if(!stateLoaded){
       var backup = loadLocalBackup();
       if(backup) STATE = backup;
+      if(migrateLegacyChipState()) saveState();
       stateLoaded = true;
       renderAll();
     }
@@ -1421,6 +1423,7 @@ if(firebaseAvailable){
     if(!stateLoaded){
       var backup = loadLocalBackup();
       if(backup) STATE = backup;
+      if(migrateLegacyChipState()) saveState();
       stateLoaded = true;
       renderAll();
       setSyncIndicator(false);
@@ -1433,6 +1436,7 @@ if(firebaseAvailable){
   var localBackup = loadLocalBackup();
   if(localBackup) STATE = localBackup;
   setTimeout(function(){
+    if(migrateLegacyChipState()) saveState();
     stateLoaded = true;
     renderAll();
     setSyncIndicator(false);
@@ -1455,12 +1459,47 @@ function ensureStatusBadges(){
   });
 }
 
+// mapa do esquema antigo (posição no documento inteiro, tipo "c32") pro elemento do chip —
+// existe só pra migrar dado já salvo na nuvem pro esquema novo, depois de um bug grave em
+// que editar QUALQUER mês/aba deslocava o "número de posição" de todo chip que vinha depois
+// no documento, trocando o status/anexo de um item pelo de outro sem ninguém perceber.
+var LEGACY_CHIP_ID_MAP = {};
+
 function assignChipIds(){
-  allChips().forEach(function(chip, i){
-    chip.dataset.chipId = 'c' + i;
-    var badge = chip.querySelector('.st');
-    if(badge) badge.dataset.originalCls = STATUS_CYCLE_FULL.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
+  allChips().forEach(function(chip, i){ LEGACY_CHIP_ID_MAP['c' + i] = chip; });
+
+  // esquema novo: estável, baseado em mês + aba + posição DENTRO do próprio mês — editar
+  // Novembro não muda mais o id de nada em Agosto, Dezembro ou na Execução.
+  document.querySelectorAll('.view').forEach(function(view){
+    var viewId = view.id.replace('view-', '');
+    Array.from(view.querySelectorAll('.month-page')).forEach(function(monthPage){
+      var monthKey = monthPage.dataset.month || 'unico';
+      Array.from(monthPage.querySelectorAll('.chip')).forEach(function(chip, i){
+        chip.dataset.chipId = monthKey + '_' + viewId + '_' + i;
+        var badge = chip.querySelector('.st');
+        if(badge) badge.dataset.originalCls = STATUS_CYCLE_FULL.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
+      });
+    });
   });
+}
+
+// move status/anexo/feito salvos sob o id antigo (ex: "c32") pro novo id estável do mesmo
+// chip, uma única vez — depois que roda, não sobra mais chave no formato antigo pra migrar,
+// então é seguro chamar isso toda vez que os dados chegam da nuvem.
+function migrateLegacyChipState(){
+  var changed = false;
+  ['status', 'attach', 'done'].forEach(function(bucket){
+    var data = STATE[bucket];
+    Object.keys(data).forEach(function(oldId){
+      if(!/^c\d+$/.test(oldId)) return;
+      var chip = LEGACY_CHIP_ID_MAP[oldId];
+      var newId = chip && chip.dataset.chipId;
+      if(newId && !(newId in data)) data[newId] = data[oldId];
+      delete data[oldId];
+      changed = true;
+    });
+  });
+  return changed;
 }
 
 /* ===================== STATUS CLICÁVEL (pipeline único) ===================== */
