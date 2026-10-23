@@ -1459,23 +1459,41 @@ function ensureStatusBadges(){
   });
 }
 
-// mapa do esquema antigo (posição no documento inteiro, tipo "c32") pro elemento do chip —
-// existe só pra migrar dado já salvo na nuvem pro esquema novo, depois de um bug grave em
-// que editar QUALQUER mês/aba deslocava o "número de posição" de todo chip que vinha depois
-// no documento, trocando o status/anexo de um item pelo de outro sem ninguém perceber.
-var LEGACY_CHIP_ID_MAP = {};
+// mapas dos esquemas antigos (pro elemento do chip) — existem só pra migrar dado já salvo
+// na nuvem pro esquema novo, depois de dois bugs graves: o 1º usava a posição do chip no
+// documento inteiro ("c32"), o 2º (que corrigia o 1º mas ainda tinha o mesmo problema, só
+// que dentro de cada mês) usava a posição do chip DENTRO do mês ("novembro2026_post_5") —
+// em ambos, inserir ou mover qualquer peça deslocava o "número" de toda peça que vinha
+// depois, trocando o status/anexo de um item pelo de outro sem ninguém perceber.
+var LEGACY_CHIP_ID_MAP = {};       // esquema 1: "c" + posição no documento inteiro
+var LEGACY_CHIP_ID_MAP_V2 = {};    // esquema 2: monthKey_viewId_posiçãoNoMês
 
 function assignChipIds(){
   allChips().forEach(function(chip, i){ LEGACY_CHIP_ID_MAP['c' + i] = chip; });
 
-  // esquema novo: estável, baseado em mês + aba + posição DENTRO do próprio mês — editar
-  // Novembro não muda mais o id de nada em Agosto, Dezembro ou na Execução.
+  // esquema definitivo: NÃO depende de posição. Pra peça numerada (a maioria da Postagem),
+  // usa o próprio número (#24) — não muda nunca, mesmo inserindo peça em qualquer lugar.
+  // Pra peça sem número (Gaveta/Aprovação e tudo da Execução), usa o dia + posição DENTRO
+  // do dia — só desloca se outra peça sem número for inserida ANTES dela no mesmo dia
+  // (risco bem menor e bem mais raro que antes).
   document.querySelectorAll('.view').forEach(function(view){
     var viewId = view.id.replace('view-', '');
     Array.from(view.querySelectorAll('.month-page')).forEach(function(monthPage){
       var monthKey = monthPage.dataset.month || 'unico';
       Array.from(monthPage.querySelectorAll('.chip')).forEach(function(chip, i){
-        chip.dataset.chipId = monthKey + '_' + viewId + '_' + i;
+        LEGACY_CHIP_ID_MAP_V2[monthKey + '_' + viewId + '_' + i] = chip;
+        var numEl = chip.querySelector('.n');
+        var num = numEl ? numEl.textContent.trim().replace('#', '') : '';
+        var id;
+        if(num){
+          id = monthKey + '_' + viewId + '_n' + num;
+        } else {
+          var day = chip.closest('.day');
+          var dayLabel = (day && day.querySelector('.dnum b')) ? day.querySelector('.dnum b').textContent.trim().replace(/[^0-9a-z]/gi, '-') : 'x';
+          var posInDay = day ? Array.from(day.querySelectorAll('.chip')).indexOf(chip) : 0;
+          id = monthKey + '_' + viewId + '_d' + dayLabel + '_' + posInDay;
+        }
+        chip.dataset.chipId = id;
         var badge = chip.querySelector('.st');
         if(badge) badge.dataset.originalCls = STATUS_CYCLE_FULL.filter(function(s){ return badge.classList.contains(s.cls); })[0].cls;
       });
@@ -1483,16 +1501,23 @@ function assignChipIds(){
   });
 }
 
-// move status/anexo/feito salvos sob o id antigo (ex: "c32") pro novo id estável do mesmo
-// chip, uma única vez — depois que roda, não sobra mais chave no formato antigo pra migrar,
-// então é seguro chamar isso toda vez que os dados chegam da nuvem.
+// move status/anexo/feito salvos sob um id antigo (de qualquer um dos dois esquemas
+// anteriores) pro novo id estável do mesmo chip, uma única vez — depois que roda, não
+// sobra mais chave em formato antigo pra migrar, então é seguro chamar sempre que os
+// dados chegam da nuvem.
 function migrateLegacyChipState(){
   var changed = false;
   ['status', 'attach', 'done'].forEach(function(bucket){
     var data = STATE[bucket];
     Object.keys(data).forEach(function(oldId){
-      if(!/^c\d+$/.test(oldId)) return;
-      var chip = LEGACY_CHIP_ID_MAP[oldId];
+      var chip = null;
+      if(/^c\d+$/.test(oldId)){
+        chip = LEGACY_CHIP_ID_MAP[oldId];
+      } else if(/^[a-z]+\d{4}_(post|exec)_\d+$/.test(oldId)){
+        chip = LEGACY_CHIP_ID_MAP_V2[oldId];
+      } else {
+        return;
+      }
       var newId = chip && chip.dataset.chipId;
       if(newId && !(newId in data)) data[newId] = data[oldId];
       delete data[oldId];
